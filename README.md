@@ -115,7 +115,7 @@ Merge the Xdefaults into Xephyr's Resource Database
 Merge the defaults into the Xephyr display you are using:
 
 ```bash
-DISPLAY=:2 xrdb -merge ~/.Xdefaults-<your computer name>
+DISPLAY=:2 xrdb -merge ~/.Xdefaults-luke
 ```
 
 Verify that the resources have been merged by running:
