@@ -1,0 +1,245 @@
+/*
+ * Implements the str strms routines used by the XView io_stream
+ * module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+#include <xview_private/str_strms_.h>
+#include <xview_private/xv_.h>
+#include <xview/xv_error.h>
+#include <stdlib.h>		/* free() */
+
+/* STREAM FROM STRING */
+
+#define GetSISData struct string_input_stream_data	*data = (struct string_input_stream_data*) in->client_data
+
+static void string_input_stream_close(STREAM *in);
+static int string_input_stream_getc(STREAM *in);
+static struct posrec string_input_stream_get_pos(STREAM *in);
+static int string_input_stream_set_pos(STREAM *in, int n);
+static int string_input_stream_ungetc(char c, STREAM *in);
+static int string_input_stream_chars_avail(STREAM *in);
+static void string_output_stream_close(STREAM *out);
+static int string_output_stream_putc(char c, STREAM *out);
+static struct posrec string_output_stream_getpos(STREAM *out);
+
+struct string_input_stream_data {
+    char           *string;
+    int             charpos;
+};
+
+static void
+string_input_stream_close(in)
+    STREAM         *in;
+{
+    GetSISData;
+    free((char *) data);
+}
+
+static int
+string_input_stream_getc(in)
+    STREAM         *in;
+{
+    GetSISData;
+    char            c = data->string[data->charpos];
+
+    if (c == '\0')
+	return (EOF);
+    data->charpos++;
+    return (c);
+}
+
+/*ARGSUSED*/
+static struct posrec
+string_input_stream_get_pos(in)
+    STREAM         *in;
+{
+    struct posrec   p;
+    GetSISData;
+    p.charpos = data->charpos;
+    p.lineno = -1;		/* unlikely that lineno when reading from
+				 * string will be interesting */
+    return (p);
+}
+
+static int
+string_input_stream_set_pos(in, n)
+    STREAM         *in;
+    int             n;
+{
+    GetSISData;
+    data->charpos = n;
+    return (0);
+}
+
+static int
+string_input_stream_ungetc(c, in)
+    char            c;
+    STREAM         *in;
+{
+    GetSISData;
+
+    if (c == data->string[data->charpos - 1]) {
+	data->charpos--;
+	return (c);
+    } else			/* character being put back is not the one
+				 * that was read last */
+	return (EOF);
+}
+
+static int
+string_input_stream_chars_avail(in)
+    STREAM         *in;
+{
+    GetSISData;
+
+    return (strlen(data->string) - data->charpos);
+}
+
+static struct input_ops_vector string_input_stream_ops = {
+    string_input_stream_getc,
+    string_input_stream_ungetc,
+    NULL,			/* gets. IMPLEMENT USING strcpy */
+    string_input_stream_chars_avail,
+    string_input_stream_get_pos,
+    string_input_stream_set_pos,
+    string_input_stream_close
+};
+
+
+STREAM         *
+string_input_stream(s, in)
+    char           *s;
+    STREAM         *in;		/* if NULL, creates new one, otherwise reuses
+				 * this one */
+{
+    STREAM         *value;
+    if (in != NULL) {
+	GetSISData;
+	data->string = s;
+	data->charpos = 0;
+	return (in);
+    } else {
+	struct string_input_stream_data *data;
+
+	value = (STREAM *) xv_malloc(sizeof(STREAM));
+	if (value == NULL) {	/* malloc can fail */
+	    xv_error((Xv_object)NULL,
+		     ERROR_LAYER, ERROR_SYSTEM,
+		     NULL);
+	    return ((STREAM *)NULL);
+	}
+	value->stream_type = Input;
+	value->stream_class = "Input Stream From String";
+	value->ops.input_ops = &string_input_stream_ops;
+	data = (struct string_input_stream_data *) xv_malloc(
+				   sizeof(struct string_input_stream_data));
+	if (data == NULL) {
+	    xv_error((Xv_object)NULL,
+		     ERROR_LAYER, ERROR_SYSTEM,
+		     NULL);
+	    return ((STREAM *)NULL);
+	}
+	data->string = s;
+	data->charpos = 0;
+	value->client_data = (caddr_t) data;
+	return (value);
+    }
+}
+
+
+
+/* STREAM TO STRING */
+
+#define GetSOSData struct string_output_stream_data *data = (struct string_output_stream_data*) out->client_data
+
+struct string_output_stream_data {
+    char           *string;
+    int             charpos;
+};
+
+static void
+string_output_stream_close(out)
+    STREAM         *out;
+{
+    GetSOSData;
+    free((char *) data);
+}
+
+static int
+string_output_stream_putc(c, out)
+    char            c;
+    STREAM         *out;
+{
+    GetSOSData;
+
+    data->string[data->charpos++] = c;
+    data->string[data->charpos] = '\0';
+    return (c);
+}
+
+/*ARGSUSED*/
+static struct posrec
+string_output_stream_getpos(out)
+    STREAM         *out;
+{
+    struct posrec   p;
+    GetSOSData;
+    p.charpos = data->charpos;
+    p.lineno = -1;
+    return (p);
+}
+
+
+static struct output_ops_vector string_output_stream_ops = {
+    string_output_stream_putc,
+    NULL,			/* fputs. IMPLEMENT WITH strcpy */
+    string_output_stream_getpos,
+    NULL,			/* flush */
+    string_output_stream_close
+};
+
+
+STREAM         *
+string_output_stream(s, out)
+    char           *s;
+    STREAM         *out;	/* if NULL, creates new one, otherwise reuses
+				 * this one */
+{
+    STREAM         *value;
+    if (out != NULL) {
+	GetSOSData;
+	data->string = s;
+	data->charpos = 0;
+	return (out);
+    } else {
+	struct string_output_stream_data *data;
+
+	value = (STREAM *) xv_malloc(sizeof(STREAM));
+	if (value == NULL) {	/* malloc can fail */
+	    xv_error((Xv_object)NULL,
+		     ERROR_LAYER, ERROR_SYSTEM,
+		     NULL);
+	    return ((STREAM *)NULL);
+	}
+	value->stream_type = Output;
+	value->stream_class = "Output Stream To String";
+	value->ops.output_ops = &string_output_stream_ops;
+	data = (struct string_output_stream_data *) xv_malloc(
+				  sizeof(struct string_output_stream_data));
+	if (data == NULL) {
+	    xv_error((Xv_object)NULL,
+		     ERROR_LAYER, ERROR_SYSTEM,
+		     NULL);
+	    return ((STREAM *)NULL);
+	}
+	data->string = s;
+	data->charpos = 0;
+	value->client_data = (caddr_t) data;
+	return (value);
+    }
+}

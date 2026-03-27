@@ -1,10 +1,11 @@
-/* 
- * @(#) olgx.h 1.48 93/06/28 
- */
-
 /*
- * OPEN LOOK object drawing package
- * Sun Microsystems, Inc.,
+ * Public OPEN LOOK graphics constants and drawing API declarations.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef OL_PUBLIC_DEFINED
@@ -21,7 +22,6 @@
  * Package constant definitions
  */
 
-
 /*
  * Monitor dependent  definitons  
  */
@@ -29,9 +29,6 @@
 #define OLGX_2D                0
 #define OLGX_3D_COLOR          1
 #define OLGX_3D_MONO           2
-
-
-
 
 /* 	GC number definitions 	*/
 
@@ -350,16 +347,13 @@
 #define NUMERIC_SCROLL_BUTTON_LEFT_INV          233
 #define NUMERIC_SCROLL_BUTTON_RIGHT_INV         234
 
-
 /*
  * Definitions needed for XView 
  */
 
-
 #define OLGX_VAR_HEIGHT_BTN_MARGIN              10
 #define OLGX_CHOICE_MARGIN                      10
 #define OLGX_VAR_HEIGHT_BTN_ENDCAP_WIDTH        5
-
 
 #ifdef OW_I18N
 
@@ -374,7 +368,6 @@
  /*
  * Type and Structure Definitions
  */
-
 
 typedef struct _GC_rec {
   GC gc;
@@ -480,19 +473,15 @@ typedef struct graphics_info {
   short dtarget_swidth;                 /* Drop Target Stroke Width */
   short dtarget_ewidth;                 /* Drop Target Edge Width */
 
-
 } Graphics_info;
 
-
 /* Public macro definitions to get info from the Ginfo struct  */
-
 
 #define ScrollbarElevator_Height(info)   	\
   (info->three_d)?((info)->sb_height-1):((info)->sb_height)		
 
 #define ScrollbarElevator_Width(info)   	\
   (info->three_d)?((info)->sb_width-1):((info) ->sb_width)		
-
 
 #define HorizSliderControl_Width(info)  ((info)->slider_width)
 #define HorizSliderControl_Height(info) ((info)->slider_height)
@@ -562,17 +551,21 @@ typedef struct graphics_info {
  * Public function declarations
  */
 
-
 Graphics_info *   olgx_main_initialize();
 #ifdef OW_I18N
+/* olgx_i18n_initialize: Initialize i 18 n. */
 Graphics_info *   olgx_i18n_initialize();
 #endif
+/* olgx_initialize: Initialize module state. */
 Graphics_info *   olgx_initialize();
+/* olgx_calculate_3Dcolors: Process calculate 3 dcolors. */
 void              olgx_calculate_3Dcolors();
+/* olgx_get_single_color: Return single color. */
 unsigned long     olgx_get_single_color();
+/* olgx_closedown: Process closedown. */
 void          olgx_closedown();
+/* olgx_destroy: Destroy associated state. */
 void          olgx_destroy();
-
 
 #define olgx_draw_accel_text   olgx_draw_accel_label
 
@@ -608,6 +601,5 @@ void
   olgx_draw_text(),
   olgx_draw_text_ledge(),
   olgx_draw_check_box();
-
 
 #endif	/* !OL_PUBLIC_DEFINED */

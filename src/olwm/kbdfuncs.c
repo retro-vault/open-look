@@ -1,20 +1,15 @@
-#ident	"@(#)kbdfuncs.c	1.18	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * kbdfuncs.c: implementation of the kbdfuncs module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <stdio.h>
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -912,4 +907,3 @@ KeyMakeVisibleAll(dpy, ke)
 
     ListApply(ActiveClientList, makeVisible, ke->time);
 }
-

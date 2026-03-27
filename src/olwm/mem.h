@@ -1,26 +1,33 @@
-#ident	"@(#)mem.h	26.15	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * mem.h: declarations and shared types for the mem module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_MEM_H
 #define _OLWM_MEM_H
 
+/* MemAlloc: Alloc mem. */
 extern void *MemAlloc();	/* malloc frontend */
+/* MemCalloc: Process mem calloc. */
 extern void *MemCalloc();	/* calloc frontend */
+/* MemFree: Free mem. */
 extern void MemFree();		/* free frontend */
+/* MemRealloc: Process mem realloc. */
 extern void *MemRealloc();	/* realloc frontend */
 
 #ifdef MEMDEBUG
+/* d_MemAlloc: Alloc d mem. */
 extern void *d_MemAlloc();
+/* d_MemFree: Free d mem. */
 extern void d_MemFree();
+/* d_MemRealloc: Process d mem realloc. */
 extern void *d_MemRealloc();
+/* d_MemCalloc: Process d mem calloc. */
 extern void *d_MemCalloc();
 
 #define MemAlloc(s)	d_MemAlloc((s), __FILE__, __LINE__, NULL)

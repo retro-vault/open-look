@@ -1,12 +1,11 @@
-#ident	"@(#)selection.h	1.3	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1992 Sun Microsystems, Inc.
- */
-
-/*
- *	Sun design patents pending in the U.S. and foreign countries. See
- *	LEGAL_NOTICE file for terms of the license.
+ * selection.h: declarations and shared types for the selection module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_SELECTION_H
@@ -14,19 +13,23 @@
 
 extern	Time	SelectionTime;
 
+/* IsSelected: Check whether selected. */
 extern	Bool	IsSelected(/*  client  */);
+/* AddSelection: Add selection. */
 extern	int	AddSelection(/*  client, time  */);
+/* RemoveSelection: Remove selection. */
 extern	Bool	RemoveSelection(/*  client  */);
+/* ToggleSelection: Toggle selection. */
 extern	Bool	ToggleSelection(/*  client, time  */);
+/* ClearSelections: Clear selections. */
 extern	void	ClearSelections(/*  dpy  */);
+/* EnumSelections: Process enum selections. */
 extern	Client* EnumSelections(/*  void*  */);
 
+/* SelectionInit: Initialize selection. */
 extern	void	SelectionInit();
-#ifdef __STDC__
 extern	void	SelectionRegister(Atom selection, Bool (*handler)());
-#else
-extern	void	SelectionRegister(/*  seln, handler  */);
-#endif
+/* SelectionResponse: Response selection. */
 extern	void	SelectionResponse(/*  event  */);
 
 #endif /* _OLWM_SELECTION_H */

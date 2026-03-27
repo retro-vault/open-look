@@ -1,22 +1,15 @@
-#ident	"@(#)environ.c	1.9	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * environ.c: implementation of the environ module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <stdio.h>
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-extern char *strrchr();
-extern char *strchr();
-#endif
 #include <X11/Xos.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>

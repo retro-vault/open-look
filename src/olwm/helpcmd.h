@@ -1,12 +1,11 @@
-#ident	"@(#)helpcmd.h	26.9	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * helpcmd.h: declarations and shared types for the helpcmd module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_HELPCMD_H
@@ -35,10 +34,7 @@ static Command helpCommand = {
 	"SHOWHELP", 0, HW_ATTR_COUNT, helpCmdAttr
 };
 
-#ifdef __STDC__
+/* ShowHelpWindow: Show help window. */
 int ShowHelpWindow(int nscreen, int mousex, int mousey, char *helpkey);
-#else
-int ShowHelpWindow();
-#endif
 
 #endif /* _OLWM_HELPCMD_H */

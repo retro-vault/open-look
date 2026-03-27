@@ -1,26 +1,17 @@
-#ident "@(#)dsdm.c	1.5	93/06/28"
-
 /*
- *	(c) Copyright 1992 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/*
- * DSDM - Drop Site Database Manager for drag'n'drop.
+ * dsdm.c: DSDM - Drop Site Database Manager for drag'n'drop.
  *
- * Master algorithm:
+ * NOTES:
+ *  Master algorithm:.
+ *  Start with visible region as whole screen.
+ *  For each top-level window, do.
+ *  (0) flatten its interest rectangles.
  *
- * Start with visible region as whole screen.
- * For each top-level window, do
- * (0) flatten its interest rectangles
- * (1) intersect interest rects with the top-level window
- * (2) intersect them with the visible region
- * (3) append them to the master list
- * (4) subtract this top-level frame from the visible region
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <stdio.h>

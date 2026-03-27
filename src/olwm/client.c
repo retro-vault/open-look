@@ -1,15 +1,11 @@
-#ident	"@(#)client.c	26.56	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/* client.c - functions relating to clients as a whole 
+ * client.c: client.c - functions relating to clients as a whole.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <errno.h>

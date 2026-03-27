@@ -1,13 +1,14 @@
-/*#ident "@(#)ol_slider.c	1.23 93/06/28 SMI" */
-
 /*
- * Copyright 1990 Sun Microsystems
- */
-
-/*
- * OPEN LOOK object drawing package
+ * ol_slider.c: OPEN LOOK object drawing package.
  *
- * ol_slider.c Slider Module
+ * NOTES:
+ *  ol_slider.c Slider Module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ol_slider_.h>

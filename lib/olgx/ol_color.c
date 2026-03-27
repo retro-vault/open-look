@@ -1,11 +1,12 @@
-/*#ident "@(#)ol_color.c	1.9 93/06/28 SMI" */
-
 /*
- * Copyright (c) 1990 by Sun Microsystems, Inc.
- */
-
-/*
- * Referernce: Hearn/Baker, "Computer Graphics", Prentice Hall, Section 14-4.
+ * ol_color.c: Referernce: Hearn/Baker, "Computer Graphics", Prentice
+ * Hall, Section 14-4.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ol_color_.h>

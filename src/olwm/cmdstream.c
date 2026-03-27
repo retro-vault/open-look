@@ -1,27 +1,16 @@
-#ident	"@(#)cmdstream.c	26.9	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * cmdstream.c: implementation of the cmdstream module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/* ----------------------------------------------------------------------
- *      cmdstream.c
- * ---------------------------------------------------------------------*/
 
 #include <stdio.h>
-#if defined(SYSV) || defined(__linux__)
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-#ifdef __linux__
 #include <stdlib.h>		/* strtol() */
-#endif
 #include "cmdstream.h"
 #include "mem.h"
 

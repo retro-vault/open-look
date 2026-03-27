@@ -1,13 +1,11 @@
 /*
- *#ident "@(#)olgx_impl.h	1.20 93/06/28 SMI"
- */
-
-/*
- * Copyright 1990 Sun Microsystems
- */
-
-/*
- * OPEN LOOK object drawing package
+ * olgx_impl.h: OPEN LOOK object drawing package.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef OL_PRIVATE_DEFINED

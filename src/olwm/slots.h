@@ -1,10 +1,12 @@
 /*
- *      (c) Copyright 1990 Sun Microsystems, Inc. Sun design patents
- *      pending in the U.S. and foreign countries. See LEGAL_NOTICE
- *      file for terms of the license.
+ * slots.h: file for terms of the license.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
-
-#ident	"@(#)slots.h	26.8	93/06/28 SMI"
 
 #ifndef _OLWM_SLOT_H
 #define _OLWM_SLOT_H
@@ -26,11 +28,13 @@ typedef struct _iconGrid {
 	int		pixhoriz,pixvert;
 } IconGrid;
 
+/* SlotInit: Initialize slot. */
 extern IconGrid *SlotInit();	 /* Display *dpy, int screeno */
 	/* initialises the Slots package; should be called for
 	 * each screen
 	 */
 
+/* SlotAlloc: Alloc slot. */
 extern struct _iconSlot *SlotAlloc();	/* WinIcon *, Bool, Bool */
 	/* given a sized and possibly positioned icon window, allocate 
 	 * the appropriate slots for it.  If the window is positioned, 
@@ -42,11 +46,13 @@ extern struct _iconSlot *SlotAlloc();	/* WinIcon *, Bool, Bool */
 	 * parameter; False should be passed otherwise.
 	 */
 
+/* SlotFree: Free slot. */
 extern Bool SlotFree();		/* WinIcon * */
  	/* An icon is going away, so its references to slots should also go
 	 * away. 
 	 */
 
+/* SlotSetLocations: Set slot locations. */
 extern Bool SlotSetLocations();	/* Display *dpy */
 	/* sets the order in which slots are allocated for icons which are
 	 * not explicitly positioned.  The new order is obtained from the

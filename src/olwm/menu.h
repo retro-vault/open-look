@@ -1,29 +1,24 @@
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * menu.h: declarations and shared types for the menu module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_MENU_H
 #define _OLWM_MENU_H
 
-#pragma ident "@(#)menu.h	26.35	93/06/28 SMI"
-
 #include "events.h"
 
-
 /* constants */
-
 
 #define NOBUTTON	-1	/* no button is active */
 #define PINBUTTON	-2	/* the pin is active */
 
-
 /* types */
-
 
 typedef int (*FuncPtr) ();	/* pointer to function returning int */
 
@@ -134,7 +129,6 @@ typedef struct _menuInfo {
     Bool		hasAccelerators;
 } MenuInfo;
 
-
 /*
  * MenuCache: a per-screen cache of menu information.
  */
@@ -146,12 +140,10 @@ typedef struct _menuCache {
     int			maxDepth;
 } MenuCache;
 
-
 typedef enum _menuTrackMode {
     MODE_DRAG,				/* press-drag-release */
     MODE_CLICK				/* click-move-click */
 } MenuTrackMode;
-
 
 typedef enum _menuLocation {
     ML_BUTTON,				/* on a button */
@@ -175,43 +167,61 @@ typedef struct _defaults {
 }           Defaults, *DefaultsP;
 #endif
 
-
 /*
  *****************************************************************************
  * External functions
  *****************************************************************************
  */
 
+/* SetMenuDefault: Set menu default. */
 void SetMenuDefault();
+/* NewNamedMenu: Create a new named menu. */
 Menu *NewNamedMenu();
+/* AppendMenuItem: Append menu item to the target container. */
 Bool AppendMenuItem();
+/* CreateMenu: Create menu. */
 Menu *CreateMenu();
+/* GetEnabledMenu: Return enabled menu. */
 Menu *GetEnabledMenu();
 MenuInfo *MenuInfoCreate();
+/* ShowStandardMenu: Show standard menu. */
 void ShowStandardMenu();
+/* ShowStandardMenuSync: Show standard menu sync. */
 void ShowStandardMenuSync();
+/* SetClickCallback: Set click callback. */
 void SetClickCallback();
 
+/* InitMenus: Initialize menus. */
 extern void InitMenus();
+/* InitScreenMenus: Initialize screen menus. */
 extern MenuCache *InitScreenMenus( /* Display *dpy, ScreenInfo *scrInfo */ );
+/* MenuCreate: Create menu. */
 extern void MenuCreate( /* dpy, menu */ );
+/* MenuShow: Show menu. */
 extern void MenuShow( /* dpy, WinGeneric, menu, event */ );
+/* SetButton: Set button. */
 extern void SetButton( /* dpy, menu, bindex, Bool */ );
+/* ExecButtonAction: Execute button action. */
 extern void ExecButtonAction( /* dpy, winInfo, menu, btn, Bool */ );
+/* DrawMenu: Draw menu. */
 extern void DrawMenu( /* dpy, menu */ );
+/* PointInRect: Check whether a point lies inside a rectangle. */
 extern int  PointInRect( /* x, y, rx, ry, rw, rh */ );
-
 
 /*
  * generically useful region code that happens to live in menu.c
  */
 
+/* InitRegions: Initialize regions. */
 void InitRegions();
+/* EmptyRegion: Clear a region to the empty set. */
 void EmptyRegion();
+/* RectRegion: Set a region to the specified rectangle. */
 void RectRegion();
+/* AppendExposeDamage: Append expose damage to the target container. */
 void AppendExposeDamage();
+/* MakeExposeDamage: Create expose damage. */
 void MakeExposeDamage();
-
 
 /*
  *	WinMenu Functions (from winmenu.c)
@@ -231,11 +241,10 @@ UnmapMenuWindow(/* Display *dpy,
 		   MenuInfo *menuInfo */ 
 		);
 
-
+/* MenuEventExpose: Process menu event expose. */
 int MenuEventExpose();
+/* MenuEventDrawMenu: Draw menu event menu. */
 int MenuEventDrawMenu();
-
-
 
 SemanticAction MenuMouseAction(/*Display *dpy,
 				 XEvent *pevent,
@@ -250,7 +259,6 @@ MakePinMenu(/* Display *dpy,
 	       WinRoot *winInfo, 
 	       MenuInfo *menuInfo */ 
 	    );
-
 
 /*
  * macros for setting menu items

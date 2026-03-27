@@ -1,12 +1,11 @@
-#ident	"@(#)olwm.c	26.66	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * olwm.c: implementation of the olwm module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <errno.h>
@@ -47,7 +46,7 @@
 #include "dsdm.h"
 #include "client.h"
 
-#if defined(__linux__) && !defined(MAXPID)
+#ifndef MAXPID
 #define MAXPID 32767
 #endif
 
@@ -244,17 +243,10 @@ olwm: Warning: '%s' is invalid locale for the LC_CTYPE category,\n\
 	 * Set up signal handlers.  Clean up and exit on SIGHUP, SIGINT, and 
 	 * SIGTERM; note child process changes on SIGCHLD.
 	 */
-#ifdef SYSV
-	sigset(SIGHUP, (VoidFunc)ExitOLWM);
-	sigset(SIGINT, (VoidFunc)ExitOLWM);
-	sigset(SIGTERM, (VoidFunc)ExitOLWM);
-	sigset(SIGCHLD, handleChildSignal);
-#else
 	signal(SIGHUP, (VoidFunc)ExitOLWM);
 	signal(SIGINT, (VoidFunc)ExitOLWM);
 	signal(SIGTERM, (VoidFunc)ExitOLWM);
 	signal(SIGCHLD, handleChildSignal);
-#endif
 
 	XrmInitialize();
 
@@ -622,10 +614,8 @@ ExitOLWM()
 static void
 handleChildSignal()
 {
-#ifdef __linux__
 /* Reinitialize signal catcher */
 	signal(SIGCHLD, handleChildSignal);
-#endif
 	deadChildren = True;
 }
 
@@ -637,32 +627,18 @@ handleChildSignal()
 void
 ReapChildren()
 {
-#if defined(SYSV) || defined(__linux__)
-        pid_t pid;
-        int status;
-#else
-	int oldmask;
-	int pid;
-	union wait status;
-#endif
+	pid_t pid;
+	int status;
 
 	if (!deadChildren)
 		return;
-#if defined(SYSV) || defined(__linux__)
 	sighold(SIGCHLD);
-#else
-	oldmask = sigblock(sigmask(SIGCHLD));
-#endif
 
 	/* clean up children until there are no more to be cleaned up */
 
 	while (1) {
 
-#if defined(SYSV) || defined(__linux__)
-                pid = waitpid(-1, &status, WNOHANG);
-#else
-                pid = wait3(&status, WNOHANG, (struct rusage *)0);
-#endif
+		pid = waitpid(-1, &status, WNOHANG);
 
 		if (pid == 0)
 			break;
@@ -685,11 +661,7 @@ ReapChildren()
 
 	deadChildren = False;
 
-#if defined(SYSV) || defined(__linux__)
 	sigrelse(SIGCHLD);
-#else
-        (void) sigsetmask(oldmask);
-#endif
 }
 
 

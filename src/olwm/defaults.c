@@ -1,17 +1,12 @@
-#ident "@(#)defaults.c	26.22    93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * defaults.c: implementation of the defaults module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-#ifdef SYSV
-#include <sys/types.h>
-#endif
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -56,9 +51,6 @@ Display *dpy;
     char *homedir = getenv("HOME");
     char *envfile = getenv("XENVIRONMENT");
     char hostname[100];
-#ifndef __linux__
-    int namelen;
-#endif
 
     rsrcstr = GetWindowProperty(dpy, RootWindow(dpy, 0), XA_RESOURCE_MANAGER,
                                 0L, 100000000L, /* REMIND: use ENTIRE_CONTENTS */
@@ -87,13 +79,8 @@ Display *dpy;
         {
             (void)strcpy(filename, homedir);
             (void)strcat(filename, "/.Xdefaults-");
-#ifndef __linux__
-            if (0 == gethostname(hostname, sizeof(hostname), &namelen))
-            {
-#else
             if (0 == gethostname(hostname, sizeof(hostname)))
             {
-#endif
                 (void)strcat(filename, hostname);
                 fileDB = XrmGetFileDatabase(filename);
             }

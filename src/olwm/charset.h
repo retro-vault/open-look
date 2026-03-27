@@ -1,18 +1,20 @@
-#ident	"@(#)charset.h	1.4    93/06/28 SMI"
-
 /*
- *	(c) Copyright 1989 Sun Microsystems, Inc. Sun design patents 
- *	pending in the U.S. and foreign countries. See LEGAL NOTICE 
- *	file for terms of the license.
+ * charset.h: pending in the U.S. and foreign countries. See LEGAL
+ * NOTICE.
+ *
+ * NOTES:
+ *  file for terms of the license.
+ *  Misc definition about character set, EUC wide characters, and
+ *  such.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
-/* Misc definition about character set, EUC wide characters, and such. */
-/* @(#)charset.h	50.3 91/01/29 */
-
 #include <widec.h>
-#if defined (SVR4) && ! defined (LONG_WCHAR_T)
-#	define	LONG_WCHAR_T
-#endif
 
 /* Wide characters... */
 #ifndef	WCHAR_CS0	
@@ -32,7 +34,6 @@
 #else
 #define	WCHAR_BYTE_OF(wc,i) (((wc&~0x8080)>>(8*i))&0x7f)
 #endif
-	/* NOTE: WCHAR_BYTE_OF in eariler versoins of xLE is wrong.*/
 
 /* Following values are used to record the current character set
  * assigned for GL and GR.

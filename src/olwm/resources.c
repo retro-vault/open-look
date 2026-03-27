@@ -1,18 +1,13 @@
-#ident	"@(#)resources.c	26.75	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * resources.c: implementation of the resources module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-
-#ifdef SYSV
-#include <sys/types.h>
-#endif
 #include <ctype.h>
 #include <errno.h>
 #include <memory.h>
@@ -40,7 +35,7 @@
 #include "events.h"
 #include "error.h"
 
-#if defined(__linux__) && !defined(LC_MESSAGES)
+#ifndef LC_MESSAGES
 #define LC_MESSAGES LC_RESPONSE
 #endif
 

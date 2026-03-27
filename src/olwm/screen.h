@@ -1,12 +1,11 @@
-#ident	"@(#)screen.h	26.24	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * screen.h: declarations and shared types for the screen module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_SCREEN_H
@@ -123,53 +122,47 @@ typedef struct _screeninfo {
 /*
  *	Global functions from screen.c
  */
-#if defined(__STDC__)
-
+/* InitScreens: Initialize screens. */
 extern	void		InitScreens(Display *dpy);
+/* DestroyScreens: Destroy screens. */
 extern	void		DestroyScreens(Display *dpy);
+/* GetFirstScrInfo: Return first scr info. */
 extern	ScreenInfo	*GetFirstScrInfo(void);
+/* GetScrInfoOfScreen: Return scr info of screen. */
 extern	ScreenInfo	*GetScrInfoOfScreen(int screen);
+/* GetScrInfoOfRoot: Return scr info of root. */
 extern	ScreenInfo	*GetScrInfoOfRoot(Window root);
+/* SetWorkspaceBackground: Set workspace background. */
 extern	void		SetWorkspaceBackground(Display *dpy);
+/* SetWindowColor: Set window color. */
 extern	void		SetWindowColor(Display *dpy);
+/* SetForegroundColor: Set foreground color. */
 extern	void		SetForegroundColor(Display *dpy);
+/* SetBackgroundColor: Set background color. */
 extern	void		SetBackgroundColor(Display *dpy);
+/* SetBorderColor: Set border color. */
 extern	void		SetBorderColor(Display *dpy);
+/* SetTitleFont: Set title font. */
 extern	void		SetTitleFont(Display *dpy);
+/* SetTextFont: Set text font. */
 extern	void		SetTextFont(Display *dpy);
+/* SetButtonFont: Set button font. */
 extern	void		SetButtonFont(Display *dpy);
+/* SetIconFont: Set icon font. */
 extern	void		SetIconFont(Display *dpy);
+/* SetGlyphFont: Set glyph font. */
 extern	void		SetGlyphFont(Display *dpy);
+/* SetIconLocation: Set icon location. */
 extern	void		SetIconLocation(Display *dpy);
+/* ScreenCreateWindow: Create screen window. */
 extern	Window		ScreenCreateWindow(ScreenInfo*, Window, 
 					   int, int, int, int, unsigned long, 
 					   XSetWindowAttributes*);
+/* ScreenDestroyWindow: Destroy screen window. */
 extern	void		ScreenDestroyWindow(ScreenInfo*, Window);
+/* ScreenUpdateWinCacheSize: Update screen win cache size. */
 extern	void		ScreenUpdateWinCacheSize(Display *dpy);
+/* ReparentScreens: Reparent screens. */
 extern	void		ReparentScreens(Display *dpy);
-
-#else
-
-extern	void		InitScreens();
-extern	void		DestroyScreens();
-extern	ScreenInfo	*GetFirstScrInfo();
-extern	ScreenInfo	*GetScrInfoOfScreen();
-extern	ScreenInfo	*GetScrInfoOfRoot();
-extern	void		SetWorkspaceBackground();
-extern	void		SetWindowColor();
-extern	void		SetForegroundColor();
-extern	void		SetBackgroundColor();
-extern	void		SetBorderColor();
-extern	void		SetTitleFont();
-extern	void		SetTextFont();
-extern	void		SetButtonFont();
-extern	void		SetIconFont();
-extern	void		SetGlyphFont();
-extern	void		SetIconLocation();
-extern	Window		ScreenCreateWindow();
-extern	void		ScreenDestroyWindow();
-extern	void		ScreenUpdateWinCacheSize();
-extern	void		ReparentScreens();
-#endif /* STDC */
 
 #endif	/* _OLWM_SCREEN_H */

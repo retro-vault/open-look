@@ -1,14 +1,12 @@
-#ident	"@(#)events.c	26.50	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * events.c: implementation of the events module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
 
 #include <errno.h>
 #include <stdio.h>
@@ -578,16 +576,11 @@ AwaitEvents(dpy, timeout)
     Display *dpy;
     struct timeval *timeout;
 {
-    struct timeval starttime, curtime, diff1, diff2;
     fd_set rfds;
     int s;
 
     if (timeout->tv_sec < 0)
 	return False;
-
-#ifndef __linux__
-    (void) gettimeofday(&starttime, NULL);
-#endif
 
     while (1) {
 	FD_ZERO(&rfds);
@@ -612,23 +605,6 @@ AwaitEvents(dpy, timeout)
 #endif
 	    return False;
 	}
-
-	/*
-	 * Either we got interrupted or the descriptor became ready, or both.
-	 * Compute the remaining time on the timeout.  This can be negative, 
-	 * because there is a slight window for delays between the select() 
-	 * call above and this gettimeofday() call.  This means that we can 
-	 * return an indication of valid data to the caller, yet also return
-	 * a value for the time remaining that is less than or equal to zero.
-	 */
-#ifndef __linux__
-/* Linux: select does the remaining time calculation for us. */
-	(void) gettimeofday(&curtime, NULL);
-	tvdiff(&starttime, &curtime, &diff1);
-	tvdiff(&diff1, timeout, &diff2);
-	*timeout = diff2;
-#endif
-	starttime = curtime;
 
 	/*
 	 * If we got some data, return True.  Otherwise, we were interrupted.

@@ -1,0 +1,59 @@
+/*
+ * SunView 1.X compatibility routines.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+#include <xview_private/win_compat_.h>
+#include <xview_private/gettext_.h>
+#include <xview_private/i18n_impl.h>
+#include <xview/pkg.h>
+#include <xview/window.h>
+#include <xview/win_input.h>
+#include <xview/fullscreen.h>
+
+/* ARGSUSED */
+void
+win_getinputmask(window, im, nextwindownumber)
+    Xv_object       window;
+    Inputmask      *im;
+    Xv_opaque      *nextwindownumber;
+{
+    *im = *((Inputmask *) xv_get(window, WIN_INPUT_MASK));
+}
+
+/* ARGSUSED */
+void
+win_setinputmask(window, im, im_flush, nextwindownumber)
+    Xv_object       window;
+    Xv_opaque       nextwindownumber;
+    Inputmask      *im, *im_flush;
+{
+
+    if (xv_get(window, WIN_IS_IN_FULLSCREEN_MODE)) {
+	fprintf(stderr,
+		XV_MSG(" Attempting to set the input mask of a window in fullscreen mode!\n"));
+	abort();
+    }
+    xv_set(window, WIN_INPUT_MASK, im, NULL);
+}
+
+
+coord
+win_getheight(window)
+    Xv_object       window;
+{
+
+    return ((int) window_get(window, WIN_GET_HEIGHT));
+}
+
+coord
+win_getwidth(window)
+    Xv_object       window;
+{
+
+    return ((int) window_get(window, WIN_GET_WIDTH));
+}

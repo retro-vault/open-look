@@ -1,0 +1,15 @@
+--- lib/libxview/textsw/ev_op_bdry.c	1993-06-29 07:17:30.000000000 +0200
++++ lib/libxview/textsw/ev_op_bdry.c	2005-04-19 20:49:21.000000000 +0200
+@@ -26,8 +26,12 @@
+ 
+ Pkg_private void ev_clear_from_margins();
+ static Ev_finger_handle ev_insert_finger();
++static int ev_find_finger_internal();
++static void ev_remove_finger_internal();
+ static Ev_mark_object last_generated_id;
+ 
++Es_index ev_line_start();
++
+ #define FORALL(index_var)						\
+ 	for (index_var = 0; index_var < fingers->last_plus_one; index_var++)
+ 

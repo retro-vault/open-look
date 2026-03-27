@@ -1,12 +1,11 @@
-#ident	"@(#)i18n.h	1.26	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * i18n.h: declarations and shared types for the i18n module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_I18N_H
@@ -31,6 +30,7 @@ typedef struct {
         XFontSetExtents	*fsx;
 } XFontSetInfo;
 
+/* mbstowcsdup: Process mbstowcsdup. */
 extern wchar_t  *mbstowcsdup();
 
 #endif /* OW_I18N_L4 */
@@ -55,7 +55,6 @@ extern wchar_t  *mbstowcsdup();
  *		- In non-i18n and L3, FreeText() is a no-op since GetText()
  *		  does not allocate memory
  */
-
 
 /*
  *	Text Convenience Functions
@@ -103,8 +102,10 @@ typedef enum {	FontWidthOp,
 		FontDescentOp
 		} FontInfoOp;
 
+/* DrawText: Draw text. */
 extern	void	DrawText();
 
+/* FontInfo: Process font info. */
 extern	int	FontInfo();
 
 #define	FontWidth(font,text,len)	FontInfo(font,FontWidthOp,text,len)
@@ -139,6 +140,7 @@ extern	int	FontInfo();
 
 #ifdef OW_I18N_L4
 
+/* gettext: Process gettext. */
 extern		char			*gettext();
 #define		GetString(s)		gettext(s)
 #define		GetText(s)		mbstowcsdup(gettext(s))
@@ -147,6 +149,7 @@ extern		char			*gettext();
 
 #elif defined OW_I18N_L3
 
+/* gettext: Process gettext. */
 extern		char			*gettext();
 #define		GetString(s)		gettext(s)
 #define		GetText(s)		gettext(s)
@@ -161,7 +164,6 @@ extern		char			*gettext();
 #define		GetNewText(s)		MemNewString(s)
 
 #endif
-
 
 /*
  *	OLGX macros

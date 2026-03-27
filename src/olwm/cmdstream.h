@@ -1,14 +1,13 @@
-#ident	"@(#)cmdstream.h	26.9	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * cmdstream.h: declarations and shared types for the cmdstream module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
- 
 #ifndef _OLWM_CMDSTREAM_H
 #define _OLWM_CMDSTREAM_H
 #include <stdio.h>
@@ -51,11 +50,15 @@ typedef struct _Command {
 /* ----------------------------------------------------------------------
  *      Function Definitions
  * ---------------------------------------------------------------------*/
+/* SetCmdStream: Set cmd stream. */
 void SetCmdStream(FILE *instream, FILE *outstream);
+/* SendCmd: Send cmd. */
 int SendCmd(Command *cmd);
+/* RegisterCmd: Register cmd. */
 void RegisterCmd(Command *cmd);
+/* GetCmd: Return cmd. */
 int GetCmd(void);
+/* ParseCmd: Parse cmd. */
 int ParseCmd(char *line);
-
 
 #endif /* _OLWM_CMDSTREAM_H */

@@ -1,6 +1,13 @@
-#ident	"@(#)st.h	26.7	93/06/28 SMI"
-
-/* This is a general purpose hash table package written by Peter Moore @ UCB. */
+/*
+ * st.h: This is a general purpose hash table package written by Peter
+ * Moore @ UCB.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
 
 #ifndef _OLWM_ST_H
 #define _OLWM_ST_H
@@ -30,22 +37,19 @@ struct st_table {
 
 enum st_retval {ST_CONTINUE, ST_STOP, ST_DELETE};
 
+/* st_insert: Process st insert. */
 int st_delete(), st_insert();
+/* st_add_direct: Add st direct. */
 void st_foreach(), st_add_direct();
+/* st_find_or_add: Return or add. */
 int st_lookup(), st_find_or_add();
 
-#ifdef __STDC__
 st_table *st_init_table(int (*compare)(), int (*hash)());
 st_table *st_init_table_with_params(int (*compare)(), int (*hash)(), int size, int density, double grow_factor, int reorder_flag);
+/* st_free_table: Free st table. */
 void st_free_table(st_table *table);
+/* st_lookup: Return st. */
 int st_lookup(st_table *table, char *key, char **value);
-#else
-st_table *st_init_table();
-st_table *st_init_table_with_params();
-void st_free_table();
-int st_lookup();
-#endif
-
 
 #define ST_NUMCMP	((int (*)()) 0)
 #define ST_NUMHASH	((int (*)()) -2)
@@ -63,6 +67,7 @@ int st_lookup();
 #define ST_DEFAULT_GROW_FACTOR 2.0
 #define ST_DEFAULT_REORDER_FLAG 0
 
+/* st_strhash: Strhash st. */
 int st_strhash();
 
 #endif /* _OLWM_ST_H */

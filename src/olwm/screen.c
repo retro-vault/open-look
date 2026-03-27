@@ -1,12 +1,11 @@
-#ident	"@(#)screen.c	26.46	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * screen.c: implementation of the screen module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <assert.h>
@@ -111,21 +110,12 @@ static XrmQuark reverseVideoIQ;
 static XrmQuark stippledRubberBandsCQ;
 static XrmQuark stippledRubberBandsIQ;
 
-#ifdef __STDC__
 static void updateScreenWorkspaceColor(Display *dpy, ScreenInfo *scrInfo);
 static void updateScreenWindowColor(Display *dpy, ScreenInfo *scrInfo);
 static void updateScreenForegroundColor(Display *dpy, ScreenInfo *scrInfo);
 static void updateScreenBackgroundColor(Display *dpy, ScreenInfo *scrInfo);
 static void updateScreenBorderColor(Display *dpy, ScreenInfo *scrInfo);
 static void updateScreenGlyphFont(Display *dpy, ScreenInfo *scrInfo);
-#else
-static void updateScreenWorkspaceColor();
-static void updateScreenWindowColor();
-static void updateScreenForegroundColor();
-static void updateScreenBackgroundColor();
-static void updateScreenBorderColor();
-static void updateScreenGlyphFont();
-#endif
 
 
 /*-------------------------------------------------------------------------
@@ -474,9 +464,10 @@ static	char	**bitmapSearchPath;		/* bitmap search path */
  * makeBitmapSearchPath
  *
  * 	Construct bitmap search path as follows:
+ *		$OPENWINHOME/include/bitmaps
+ *		$OPENWINHOME/include/X11/bitmaps
  *		$OPENWINHOME/etc/workspace/patterns
- *		$OPENWINHOME/include/X11/include/bitmaps
- *		/usr/X11/include/X11/include/bitmaps
+ *		/usr/include/X11/bitmaps
  *
  * REMIND: this should be cleaned up so that it doesn't use a fixed-size 
  * array.
@@ -496,15 +487,18 @@ makeBitmapSearchPath()
 		owHome = "/usr/openwin";
 #endif
 
-	bitmapSearchPath = (char **)MemAlloc(4 * sizeof(char *));
+	bitmapSearchPath = (char **)MemAlloc(5 * sizeof(char *));
 
-	(void)sprintf(bmPath, "%s/etc/workspace/patterns",owHome);
+	(void)sprintf(bmPath, "%s/include/bitmaps",owHome);
 	bitmapSearchPath[i++] = MemNewString(bmPath);
 
 	(void)sprintf(bmPath, "%s/include/X11/bitmaps",owHome);
 	bitmapSearchPath[i++] = MemNewString(bmPath);
 
-	bitmapSearchPath[i++] = MemNewString("/usr/X11/include/X11/bitmaps");
+	(void)sprintf(bmPath, "%s/etc/workspace/patterns",owHome);
+	bitmapSearchPath[i++] = MemNewString(bmPath);
+
+	bitmapSearchPath[i++] = MemNewString("/usr/include/X11/bitmaps");
 
 	bitmapSearchPath[i] = (char *)NULL;
 }
@@ -517,13 +511,7 @@ makeBitmapSearchPath()
  *	fullpath to the bitmap file.
  */
 static char *
-#if defined(__STDC__)
-findBitmapFile(
-	char	*fileName)
-#else
-findBitmapFile(fileName)
-	char	*fileName;
-#endif /* __STDC__ */
+findBitmapFile(char *fileName)
 {
 	char	**dir;
 	char	fullPath[MAXPATHLEN];
@@ -552,19 +540,11 @@ findBitmapFile(fileName)
  *			  or built-in default
  */
 static Bool
-#if defined(__STDC__)
 makePixmap(
 	Display		*dpy,
 	ScreenInfo	*scrInfo,
 	char		*bitmapfile,
 	Pixmap		*pixmap)		/* RETURN */
-#else
-makePixmap(dpy, scrInfo, bitmapfile, pixmap)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-	char		*bitmapfile;
-	Pixmap		*pixmap;		/* RETURN */
-#endif /* __STDC__ */
 {
 	char		*bmPath;
 	Pixmap		bitmap;
@@ -624,21 +604,12 @@ makePixmap(dpy, scrInfo, bitmapfile, pixmap)
  *	makeColor	- alloc a color using colorname or defaultcolor
  */
 static Bool
-#if defined(__STDC__)
 makeColor(
 	Display		*dpy,
 	ScreenInfo	*scrInfo,
 	char		*colorname,
 	char		*defaultcolor,
 	XColor		*color)		/* RETURN */
-#else
-makeColor(dpy, scrInfo, colorname, defaultcolor, color)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-	char		*colorname;
-	char		*defaultcolor;
-	XColor		*color;		/* RETURN */
-#endif /* __STDC__ */
 {
 	Colormap	cmap = scrInfo->colormap;
 
@@ -671,7 +642,6 @@ makeColor(dpy, scrInfo, colorname, defaultcolor, color)
  * both from the default colormap and from the colormap for olwm's visual.
  */
 static Bool
-#if defined(__STDC__)
 makeRootColors(
 	Display		*dpy,
 	ScreenInfo	*scrInfo,
@@ -679,15 +649,6 @@ makeRootColors(
 	char		*defaultcolor,
 	XColor		*olwmcolor,
 	XColor		*rootcolor)
-#else
-makeRootColors(dpy, scrInfo, colorname, defaultcolor, olwmcolor, rootcolor)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-	char		*colorname;
-	char		*defaultcolor;
-	XColor		*olwmcolor;
-	XColor		*rootcolor;
-#endif /* __STDC__ */
 {
 
 	if (!scrInfo->iscolor) 
@@ -718,7 +679,6 @@ makeRootColors(dpy, scrInfo, colorname, defaultcolor, olwmcolor, rootcolor)
  *	Returns True only if both colors were alloced
  */
 static Bool
-#if defined(__STDC__)
 makeBitmapColors(
 	Display		*dpy,
 	ScreenInfo	*scrInfo,
@@ -726,15 +686,6 @@ makeBitmapColors(
 	XColor		*fgColor,
 	char		*bgColorName,
 	XColor		*bgColor)
-#else
-makeBitmapColors(dpy, scrInfo, fgColorName, fgColor, bgColorName, bgColor)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-	char		*fgColorName;
-	XColor		*fgColor;
-	char		*bgColorName;
-	XColor		*bgColor;
-#endif /* __STDC__ */
 {
 	Colormap	cmap = DefaultColormap(dpy,scrInfo->screen);
 
@@ -764,15 +715,9 @@ makeBitmapColors(dpy, scrInfo, fgColorName, fgColor, bgColorName, bgColor)
  * 	a color, a pixmap or none/default.
  */
 static void
-#if defined(__STDC__)
 setScreenWorkspaceColor(
 	Display		*dpy,
 	ScreenInfo	*scrInfo)
-#else
-setScreenWorkspaceColor(dpy, scrInfo)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-#endif /* __STDC__ */
 {
 	Bool		update = False;
 	XColor		oColor;
@@ -820,15 +765,9 @@ setScreenWorkspaceColor(dpy, scrInfo)
  * setScreenWorkspaceBitmap
  */
 static void
-#if defined(__STDC__)
 setScreenWorkspaceBitmap(
 	Display		*dpy,
 	ScreenInfo	*scrInfo)
-#else
-setScreenWorkspaceBitmap(dpy, scrInfo)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-#endif /* __STDC__ */
 {
 	XColor		fgColor;
 	XColor		bgColor;
@@ -894,15 +833,9 @@ setScreenWorkspaceBitmap(dpy, scrInfo)
  * setScreenWorkspaceBackground
  */
 static void
-#if defined(__STDC__)
 setScreenWorkspaceBackground(
 	Display		*dpy,
 	ScreenInfo	*scrInfo)
-#else
-setScreenWorkspaceBackground(dpy, scrInfo)
-	Display		*dpy;
-	ScreenInfo	*scrInfo;
-#endif /* __STDC__ */
 {
 	scrInfo->colorInfo.workspaceStyle = GRV.WorkspaceStyle;
 

@@ -1,0 +1,19 @@
+--- lib/libxview/frame/fmcmd_set.c	1993-06-29 07:16:07.000000000 +0200
++++ lib/libxview/frame/fmcmd_set.c	2005-05-03 15:18:14.000000000 +0200
+@@ -36,14 +42,13 @@
+     int             result = XV_OK;
+     int             add_decor, delete_decor, set_win_attr;
+     Atom            add_decor_list[WM_MAX_DECOR], delete_decor_list[WM_MAX_DECOR];
+-    int 	    update_default_pin_state();
+ 
+     DRAWABLE_INFO_MACRO(frame_public, info);
+     server_public = xv_server(info);
+     set_win_attr = add_decor = delete_decor = 0;
+ 
+-    for (attrs = avlist; *attrs; attrs = attr_next(attrs)) {
+-	switch (attrs[0]) {
++    for (attrs = avlist; (int)*attrs; attrs = attr_next(attrs)) {
++	switch ((int)attrs[0]) {
+ 
+ 	  case FRAME_CMD_PUSHPIN_IN:  
+ 

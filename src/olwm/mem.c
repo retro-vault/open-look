@@ -1,19 +1,13 @@
-#ident	"@(#)mem.c	26.9	91/08/25 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/*
- * Safe memory allocation/free routines - front-ends the C library functions
+ * mem.c: Safe memory allocation/free routines - front-ends the C
+ * library functions.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
  *
  */
-
 
 #include <malloc.h>
 #include <memory.h>
@@ -137,10 +131,8 @@ MemAlloc(sz
 {
     void       *p;
 
-#ifdef __linux__
     if (!sz)    /* Linux malloc(0) returns NULL, unlike BSD */
       sz = 1;
-#endif
 
     if ((p = malloc(sz)) == NULL)
 	ErrorGeneral(GetString("Memory allocation failure."));

@@ -1,10 +1,11 @@
-/*#ident "@(#)ol_init.c	1.60 93/06/28 SMI" */
 /*
- * Copyright 1990 Sun Microsystems
- */
-
-/*
- * OPEN LOOK object drawing package Sun Microsystems, Inc.,
+ * ol_init.c: OPEN LOOK object drawing package Sun Microsystems, Inc.,.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ol_init_.h>
@@ -1006,15 +1007,7 @@ void
 {
     (void)fprintf(stderr, "olgx Error:  %s\n", string);
 
-/*
- * ifdef because EXIT_FAILURE is not defined anywhere on
- * SunOS4.x
- */
-#ifdef SVR4
-    (void)exit(EXIT_FAILURE);
-#else
     (void)exit(1);
-#endif /* SVR4 */
 }
 
 /*

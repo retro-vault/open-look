@@ -1,11 +1,11 @@
-/*#ident "@(#)ol_draw.c	1.34 93/06/28 SMI" */
-
 /*
- * Copyright 1990 Sun Microsystems
- */
-
-/*
- * OPEN LOOK object drawing package Sun Microsystems, Inc.
+ * ol_draw.c: OPEN LOOK object drawing package Sun Microsystems, Inc.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ol_draw_.h>

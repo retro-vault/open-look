@@ -1,0 +1,22 @@
+--- lib/libxview/selection/sel_req.c	2005-07-27 11:24:28.549720315 +0200
++++ lib/libxview/selection/sel_req.c	2005-06-13 13:13:53.414746848 +0200
+@@ -122,8 +140,8 @@
+ 
+     sel_info = SEL_PRIVATE( sel_req->public_self );
+ 
+-    for (attrs = avlist; *attrs; attrs = attr_next(attrs)) {
+-	switch (attrs[0]) {
++    for (attrs = avlist; (int)*attrs; attrs = attr_next(attrs)) {
++	switch ((int)attrs[0]) {
+ 	  case SEL_REPLY_PROC:
+ 	    sel_req->reply_proc = (void (*) ()) attrs[1];
+ 	    break;
+@@ -290,7 +308,7 @@
+     static Atom         *types=NULL;
+     static char         **typeNames=NULL;
+ 
+-    switch (attr) {
++    switch ((int)attr) {
+       case SEL_DATA:
+ 	/* Initiate a blocking request */
+         arg = va_arg(valist, int);

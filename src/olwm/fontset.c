@@ -1,19 +1,13 @@
-#ident  "@(#)fontset.c	1.10    93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
- 
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * fontset.c: implementation of the fontset module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
-
-#ifdef SYSV
-#include <sys/types.h>
-#include <unistd.h>
-#endif
 #ifdef OW_I18N_L4
 #include <sys/types.h>
 #include <sys/param.h>

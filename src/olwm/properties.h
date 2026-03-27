@@ -1,12 +1,12 @@
-#ident	"@(#)properties.h	26.8	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * properties.h: declarations and shared types for the properties
+ * module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_PROPERTIES_H
@@ -57,7 +57,7 @@ typedef struct {
 
 #define ENTIRE_CONTENTS		(10000000L)
 
+/* PropGetOLWindowState: Return ol window state. */
 Bool PropGetOLWindowState(Display *dpy, Window win, OLWindowState *winState);
-
 
 #endif /* _OLWM_PROPERTIES_H */

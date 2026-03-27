@@ -2,8 +2,6 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-option(BUILD_SHARED_LIBS "Build olgx as a shared library" ON)
-
 # Source files
 set(SOURCES
     ol_button.c
@@ -29,12 +27,31 @@ set(HEADERS_PRIVATE
     ol_slider_.h
 )
 
-# Define the library
-add_library(olgx ${SOURCES})
+# Build both shared and static variants.
+add_library(olgx SHARED ${SOURCES})
+add_library(olgx_static STATIC ${SOURCES})
+
+# Public header is now in <root>/include/olgx/
+set(HEADERS_PUBLIC
+    ${PROJECT_SOURCE_DIR}/include/olgx/olgx.h
+)
 
 # Link against X11
 find_package(X11 REQUIRED)
-target_link_libraries(olgx PRIVATE ${X11_LIBRARIES})
+
+foreach(target olgx olgx_static)
+    target_link_libraries(${target}
+        PRIVATE
+            ${X11_LIBRARIES}
+    )
+
+    target_include_directories(${target}
+        PUBLIC
+            ${PROJECT_SOURCE_DIR}/include
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endforeach()
 
 # Set version and output name
 set_target_properties(olgx PROPERTIES
@@ -43,21 +60,12 @@ set_target_properties(olgx PROPERTIES
     OUTPUT_NAME olgx
 )
 
-# Public header is now in <root>/include/olgx/
-set(HEADERS_PUBLIC
-    ${PROJECT_SOURCE_DIR}/include/olgx/olgx.h
-)
-
-# Include directories
-target_include_directories(olgx
-    PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
+set_target_properties(olgx_static PROPERTIES
+    OUTPUT_NAME olgx
 )
 
 # Install the library
-install(TARGETS olgx
+install(TARGETS olgx olgx_static
     EXPORT olgxTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib

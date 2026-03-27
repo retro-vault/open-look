@@ -1,101 +1,24 @@
-#ident "@(#)usermenu.c	26.62	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/*
- * This file contains all of the functions for manipulating the user menu
+ * usermenu.c: This file contains all of the functions for manipulating
+ * the user menu.
  *
- * Global Functions:
- * InitUserMenu 	-- load the user menu and initialise
- * ReInitUserMenu 	-- reload the user menu and re-initialise
- * RootMenuShow		-- call MenuShow on the root menu
+ * NOTES:
+ *  Global Functions:.
+ *  InitUserMenu    -- load the user menu and initialise.
+ *  ReInitUserMenu  -- reload the user menu and re-initialise.
+ *  RootMenuShow            -- call MenuShow on the root menu.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
  *
  */
 
-/*
- * Syntax of the user menu file should be identical to that used by
- *	buildmenu (SunView style RootMenu files).
- *
- *	NOTICE that SunView compatibility has resulted in old-style
- *	olwm menus no longer being supported.
- *
- *	There are two new reserved keywords:
- *
- *		DEFAULT tags a default button
- *		TITLE tags a title string for a menu (for titlebar)
- *
- *	One syntax in sunview menus is not supported:
- *		<icon_file> can not be used as a menu item
- *
- *	Here are the common reserved keywords:
- *		MENU and END are used to delimit a submenu
- *		PIN (appearing after END) indicates the menu is pinnable
- *		EXIT (built-in - olwm service)
- *		REFRESH (built-in - olwm service)
- *		POSTSCRIPT will invoke psh on the named command
- *
- * 	The file is line-oriented, however commands to be executed can
- *	extend to the next line if the newline is escaped (\).
- *
- *	Each line consists of up to three fields:  a label (a string
- *	corresponding to either the menu label or menu option label),
- *	up to two tags (keywords), and a command to be executed
- *	(or a file from which to read a submenu).  Two tags are allowed
- *	if one of them is "DEFAULT" or "END".
- *
- *	The tag is used to indicate the start and end of menu definitions,
- *	pinnability, built-in functions, and default options.
- *	The label indicates the text which appears on the user's menu,
- *	and the command describes what should be done when each item
- *	is selected.
- *
- *	Labels must be enclosed in double quotes if they contain
- *	whitespace.  Commands may be enclosed in double quotes (but
- *	do not have to be).
- *
- *	Comments can be embedded in a file by starting a line with a
- *	pound sign (#).  Comments may not be preserved as the file is
- *	used.
- *
- *	There are several functions which aren't invoked as programs;
- *	rather, they are built in to window manager.  These built-in
- *	services are each denoted by a single keyword.  The keywords are
- *	listed in the svctokenlookup[] array initialization.
- *
- *	example (will always have label: "Workspace Menu"):
- *
- *	"Workspace Menu"	TITLE
- *	Programs	MENU
- *		"Helpful Programs"	TITLE
- *		"Command Tool"	cmdtool
- *		"Blue Xterm"	DEFAULT xterm -fg white \
- *				-bg blue
- *	Programs	END	PIN
- *	Utilities	MENU
- *		"Refresh Screen" DEFAULT REFRESH
- *		"Clipboard"	 CLIPBOARD
- *	Utilities	END
- */
-
-#ifdef SYSV
-#include <sys/types.h>
-#include <unistd.h>
-#endif
 #include <errno.h>
 #include <stdio.h>
 #include <ctype.h>
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
 #include <sys/file.h>
 #include <sys/param.h>
 #include <sys/stat.h> /* for stat(2) */
@@ -105,7 +28,6 @@
 #include <X11/Xatom.h>
 
 #include <assert.h>
-#include <string.h>
 #include <pwd.h>
 
 #include "i18n.h"
@@ -201,11 +123,7 @@ static Bool menuFileModified();
 static void addToMenuInfo();
 static void freeFileInfoList();
 static int firstEnabledItem();
-#ifdef __STDC__
 static void SetWindowMenuTitle(void);
-#else
-static void SetWindowMenuTitle();
-#endif
 
 /*
  *****************************************************************************
@@ -773,10 +691,10 @@ makeMenuSearchPath()
 
 	if ((owHome = getenv("OPENWINHOME")) == NULL)
 #ifdef OPENWINHOME_DEFAULT
-		/* martin-2.buck@student.uni-ulm.de */
-		owHome = OPENWINHOME_DEFAULT;
+			/* martin-2.buck@student.uni-ulm.de */
+			owHome = OPENWINHOME_DEFAULT;
 #else
-		owHome = "/usr/openwin";
+			owHome = "/usr/openwin";
 #endif
 
 	menuSearchPath = (char **)MemAlloc(NUM_SEARCH_PATH * sizeof(char *));
@@ -791,10 +709,8 @@ makeMenuSearchPath()
 	sprintf(buf, "%s/.%%s", home);
 	menuSearchPath[i++] = MemNewString(buf);
 
-#ifdef __linux__
 	/* ++roman: /etc/X11/olwm/<menufile> */
 	menuSearchPath[i++] = MemNewString("/etc/X11/olwm/%s");
-#endif
 
 #ifdef OW_I18N_L3
 	/* $OPENWINHOME/share/locale/<locale>/olwm/<menufile> */
@@ -806,12 +722,9 @@ makeMenuSearchPath()
 	menuSearchPath[i++] = MemNewString(buf);
 #endif
 
-	/* $OPENWINHOME/lib/<menufile> */
-	sprintf(buf, "%s/lib/%%s", owHome);
-	menuSearchPath[i++] = MemNewString(buf);
-
-	/* /usr/openwin/lib/<menufile> */
-	menuSearchPath[i++] = MemNewString("/usr/openwin/lib/%s");
+		/* $OPENWINHOME/lib/<menufile> */
+		sprintf(buf, "%s/lib/%%s", owHome);
+		menuSearchPath[i++] = MemNewString(buf);
 
 	menuSearchPath[i] = (char *)NULL;
 
@@ -822,17 +735,10 @@ makeMenuSearchPath()
  * menuFromFileSearch
  */
 static int
-#if defined(__STDC__)
 menuFromFileSearch(
 	char *file,
 	menudata *menu,
 	Bool messages)
-#else
-menuFromFileSearch(file, menu, messages)
-char *file;
-menudata *menu;
-Bool messages;
-#endif /* __STDC__ */
 {
 	char **pFmt;
 	char fullPath[MAXPATHLEN];
@@ -1737,8 +1643,6 @@ static char *windowMenuHelpString = "window:WindowMenu";
  *	Buttons used to build the frame and icon menus
  *	REMIND: right now, toggles always use the same actions!
  */
-#ifdef __STDC__
-
 static Button
 	openButton = {
 		{NULL, NULL},
@@ -1895,21 +1799,6 @@ static Button
 		ACTION_OWNER,
 };
 
-#else
-static Button openButton;
-static Button fullSizeButton;
-static Button moveButton;
-static Button resizeButton;
-static Button propertiesButton;
-static Button backButton;
-static Button refreshButton;
-static Button quitButton;
-static Button dismissButton;
-static Button dismissThisButton;
-static Button dismissAllButton;
-static Button ownerButton;
-#endif /* __STDC__ */
-
 /*
  *	Actual frame/icon menus using shared buttons
  */
@@ -2014,165 +1903,6 @@ void SetWindowMenuTitle()
 	MenuTable[MENU_LIMITED]->buttons[0]->action.submenu->title = windowTitle;
 }
 
-#ifndef __STDC__
-/*
- * InitButton	-- initalizes button struct
- * This was added specifically for the MIT release, due to the fact
- * that initialization of union structures is not allowed by /bin/cc
- * on SunOS4.x.
- */
-void
-	InitButton(button, help1, help2, which, has_submenu,
-			   enabled, visible, callback, semantic)
-		Button *button;
-char *help1;
-char *help2;
-int which;
-Bool has_submenu;
-Bool enabled;
-Bool visible;
-FuncPtr callback;
-SemanticAction semantic;
-{
-	button->label[0] = NULL;
-	button->label[1] = NULL;
-
-	button->helpstring[0] = help1 ? strdup(help1) : (char *)NULL;
-	button->helpstring[1] = help2 ? strdup(help2) : (char *)NULL;
-
-	button->which = which;
-
-	button->has_submenu = has_submenu;
-
-	button->enabled = enabled;
-
-	button->visible = visible;
-
-	button->callback = callback;
-
-	button->action.other = (void *)NULL;
-
-	button->semantic = semantic;
-}
-
-/*
- * InitAllButtons-- initalizes all relevant button structs
- * This was added specifically for the MIT release, due to the fact
- * that initialization of union structures is not allowed by /bin/cc
- * on SunOS4.x.
- */
-void InitAllButtons()
-{
-	InitButton(&openButton,
-			   "window:Open", "window:Close",
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowOpenCloseAction,
-			   ACTION_OPEN_CLOSE);
-
-	InitButton(&fullSizeButton,
-			   "window:FullSize", "window:RestoreSize",
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowFullRestoreSizeAction,
-			   ACTION_FULL_RESTORE);
-
-	InitButton(&moveButton,
-			   "window:Move", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowMoveAction,
-			   ACTION_MOVE);
-
-	InitButton(&resizeButton,
-			   "window:Resize", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowResizeAction,
-			   ACTION_RESIZE);
-
-	InitButton(&propertiesButton,
-			   "window:Properties", NULL,
-			   0,
-			   False,
-			   False,
-			   True,
-			   WindowPropsAction,
-			   ACTION_PROPS);
-
-	InitButton(&backButton,
-			   "window:Back", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowBackAction,
-			   ACTION_BACK);
-
-	InitButton(&refreshButton,
-			   "window:Refresh", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowRefreshAction,
-			   ACTION_REFRESH);
-
-	InitButton(&quitButton,
-			   "window:Quit", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowQuitAction,
-			   ACTION_QUIT);
-
-	InitButton(&dismissButton,
-			   "window:Dismiss", "window:Dismiss",
-			   0,
-			   False,
-			   True,
-			   True,
-			   NULL,
-			   ACTION_NONE);
-
-	InitButton(&dismissThisButton,
-			   "window:DismissThis", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowDismissThisAction,
-			   ACTION_OPEN_CLOSE);
-
-	InitButton(&dismissAllButton,
-			   "window:DismissAll", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowDismissAllAction,
-			   ACTION_NONE);
-
-	InitButton(&ownerButton,
-			   "window:Owner", NULL,
-			   0,
-			   False,
-			   True,
-			   True,
-			   WindowFlashOwnerAction,
-			   ACTION_OWNER);
-}
-#endif /* __STDC__ */
-
 /*
  * InitMenus	-- Creates the built-in screen-independent menus
  */
@@ -2180,21 +1910,6 @@ void
 	InitMenus(dpy)
 		Display *dpy;
 {
-#ifndef __STDC__
-	static int init_all_buttons_done = False;
-	/*
-	 * Initialize all buttons
-	 * This was added specifically for the MIT release to fix
-	 * a problem where union initializing was not allowed in
-	 * SunOS4.x using /bin/cc
-	 */
-	if (!init_all_buttons_done)
-	{
-		InitAllButtons();
-		init_all_buttons_done = True;
-	}
-#endif /* __STDC__ */
-
 	SetWindowMenuLabels();
 
 	MenuTable[MENU_FULL] = CreateMenu(windowTitle, windowMenuFullButtons,

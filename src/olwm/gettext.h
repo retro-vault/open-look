@@ -1,19 +1,22 @@
-#ident	"@(#)gettext.h	1.7	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * gettext.h: declarations and shared types for the gettext module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_GETTEXT_H
 #define _OLWM_GETTEXT_H
 
 #define DEFAULT_DOMAIN	"default"
+#ifdef OPENWINHOME_DEFAULT
+#define DEFAULT_BINDING OPENWINHOME_DEFAULT "/lib/locale\n"
+#else
 #define DEFAULT_BINDING "/usr/lib/locale\n"
+#endif
 #define COOKIE 0xFF
 #define BINDINGLISTDELIM '\n'
 
@@ -33,7 +36,6 @@ struct domain_binding {
     char    *binding;
     struct   domain_binding *nextdomain;
 };
-
 
 #include <fcntl.h> 
 #include <sys/file.h> 

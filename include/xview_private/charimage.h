@@ -1,0 +1,31 @@
+/*
+ * Declares private XView interfaces, types, and macros for charimage.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+extern CHAR	**image;
+extern char	**screenmode;
+extern int	ttysw_top, ttysw_bottom, ttysw_left, ttysw_right;
+extern int	cursrow, curscol;
+ 
+#ifdef OW_I18N
+#define LINE_LENGTH(line)     (((unsigned char)((unsigned char *)(line))[-1]))
+#define       TTY_NON_WCHAR   0xffff
+#define       TTY_LINE_INF_INDEX      0x7fffffff
+#else
+#define LINE_LENGTH(line)	((unsigned char)((line)[-1]))
+#endif
+
+#define MODE_CLEAR	0
+#define MODE_INVERT	1
+#define MODE_UNDERSCORE	2
+#define MODE_BOLD	4
+
+#define	setlinelength(line, column) \
+	{ int _col = ((column)>ttysw_right)?ttysw_right:(column); \
+	  (line)[(_col)] = '\0'; \
+	  line[-1] = (unsigned char) (_col);}

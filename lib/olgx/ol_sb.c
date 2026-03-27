@@ -1,13 +1,14 @@
-/*#ident "@(#)ol_sb.c	1.28 92/01/15 SMI" */
-
 /*
- * Copyright 1990 Sun Microsystems
- */
-
-/*
- * OPEN LOOK object drawing package
+ * ol_sb.c: OPEN LOOK object drawing package.
  *
- * ol_sb.c Scrollbar Module
+ * NOTES:
+ *  ol_sb.c Scrollbar Module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ol_sb_.h>

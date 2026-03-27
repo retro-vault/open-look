@@ -1,16 +1,14 @@
-#ident	"@(#)states.c	26.66	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/* states.c - functions relating to changes in client state 
- *	(Normal, Iconic, Withdrawn)
+ * states.c: states.c - functions relating to changes in client state.
+ *
+ * NOTES:
+ *  (Normal, Iconic, Withdrawn).
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <errno.h>

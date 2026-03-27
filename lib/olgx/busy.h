@@ -1,3 +1,13 @@
+/*
+ * busy.h: declarations and shared types for the busy module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+
 #define busy_width 16
 #define busy_height 16
 #define busy_x_hot -1

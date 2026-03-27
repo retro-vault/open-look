@@ -1,0 +1,57 @@
+/*
+ * Implements the p view routines used by the XView panel module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+#include <xview_private/p_view_.h>
+#include <xview_private/defaults_.h>
+#include <xview_private/p_event_.h>
+#include <xview/notify.h>
+
+
+/*ARGSUSED*/
+Pkg_private int
+panel_view_init(parent, view_public, avlist)
+    Panel           parent;
+    Panel_view      view_public;
+    Attr_attribute  avlist[];
+{
+    Xv_Window       pw;
+    Xv_Screen       screen;
+
+    if (view_public) {
+	/* Scrollable Panel: register the new paint window */
+	pw = (Xv_Window) xv_get(view_public, CANVAS_VIEW_PAINT_WINDOW);
+    } else
+	pw = parent;
+    screen = (Xv_Screen) xv_get(pw, XV_SCREEN);
+    if (pw != (Xv_Window)NULL) {
+	(void) xv_set(pw,
+		      WIN_RETAINED,
+		      ((int) xv_get(screen, SCREEN_RETAIN_WINDOWS)),
+		      WIN_NOTIFY_SAFE_EVENT_PROC, panel_notify_event,
+		      WIN_NOTIFY_IMMEDIATE_EVENT_PROC, panel_notify_event,
+		      WIN_CONSUME_EVENTS,
+			  WIN_UP_EVENTS, WIN_ASCII_EVENTS,
+			  KBD_USE, LOC_DRAG,
+			  WIN_MOUSE_BUTTONS,
+			  ACTION_RESCALE,
+			  ACTION_OPEN, ACTION_FRONT,
+			  ACTION_CUT, ACTION_COPY, ACTION_PASTE,
+			  ACTION_SELECT_FIELD_FORWARD, ACTION_FIND_FORWARD,
+	/* BUG: enable IM_ISO if ecd_input enabled */
+			  ACTION_HELP,
+			  WIN_EDIT_KEYS,
+			  KEY_RIGHT(8), KEY_RIGHT(10), KEY_RIGHT(12),
+			  KEY_RIGHT(14),
+			  0,
+		      0);
+	return (XV_OK);
+    } else {
+	return (XV_ERROR);
+    }
+}

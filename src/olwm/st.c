@@ -1,17 +1,20 @@
-#ident	"@(#)st.c	26.8	93/06/28 SMI"
-
-/* This is a general purpose hash table package written by Peter Moore @ UCB. */
+/*
+ * st.c: This is a general purpose hash table package written by Peter
+ * Moore @ UCB.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>			/* free() */
 #include "st.h"
 #include "mem.h"
 
-#ifdef __STDC__
 static void rehash(st_table *table);
-#else
-static void rehash();
-#endif
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 #define nil(type) ((type *) 0)

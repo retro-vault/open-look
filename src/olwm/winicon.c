@@ -1,12 +1,11 @@
-#ident	"@(#)winicon.c	26.42	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * winicon.c: implementation of the winicon module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <errno.h>
@@ -47,20 +46,6 @@ static ClassIconFrame classIconFrame;
 static int heightTopIcon(WinIconFrame *win);
 static int heightBottomIcon(WinIconFrame *win);
 static int widthBothIcon(WinIconFrame *win);
-
-/***************************************************************************
-* forward declarations
-***************************************************************************/
-
-#ifdef __STDC__
-static int heightTopIcon(WinIconFrame *win);
-static int heightBottomIcon(WinIconFrame *win);
-static int widthBothIcon(WinIconFrame *win);
-#else
-static int heightTopIcon();
-static int heightBottomIcon();
-static int widthBothIcon();
-#endif
 
 /***************************************************************************
 * private event functions

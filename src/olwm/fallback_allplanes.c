@@ -1,3 +1,14 @@
+/*
+ * fallback_allplanes.c: implementation of the fallback_allplanes
+ * module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+
 #include <X11/Xlib.h>
 
 Bool XAllPlanesQueryExtension(Display *dpy, int *event_base, int *error_base)

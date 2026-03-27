@@ -1,12 +1,11 @@
-#ident	"@(#)resources.h	26.18	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * resources.h: declarations and shared types for the resources module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_RESOURCES_H
@@ -34,9 +33,11 @@ extern XrmQuark TopInstanceQ;
 extern XrmQuark OpenWinQ;
 extern XrmDatabase OlwmDB;
 
+/* BoolString: Process bool string. */
 Bool BoolString(char *s, Bool dflt);
 
 #ifdef OW_I18N_L3
+/* EffectOLLC: Process effect ollc. */
 extern void EffectOLLC();
 #endif /* OW_I18N_L3 */
 

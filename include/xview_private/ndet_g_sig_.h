@@ -1,0 +1,19 @@
+/*
+ * Declares private XView interfaces, types, and macros for ndet g sig.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+#if !defined(NDET_G_SIG__H)
+#define NDET_G_SIG__H
+
+#include <xview/pkg.h>
+#include <xview_private/ntfy.h>
+
+
+Notify_func notify_get_signal_func(Notify_client nclient, int signal, Notify_signal_mode mode);
+
+#endif

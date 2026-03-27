@@ -1,0 +1,19 @@
+/*
+ * Declares public XView interfaces, types, and attributes for ndet s
+ * sig.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+#if !defined(NDET_S_SIG__H)
+#define NDET_S_SIG__H
+
+#include <xview/pkg.h>
+#include <xview_private/ntfy.h>
+
+Notify_func notify_set_signal_func(Notify_client nclient, Notify_func func, int sig, Notify_signal_mode mode);
+
+#endif

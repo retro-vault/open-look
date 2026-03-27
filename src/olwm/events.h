@@ -1,12 +1,11 @@
-#ident	"@(#)events.h	26.19	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * events.h: declarations and shared types for the events module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_EVENTS_H
@@ -97,7 +96,6 @@ typedef enum {
     ACTION_PROPS
 } SemanticAction;
 
-
 /* key bindings */
 
 typedef struct {
@@ -124,9 +122,10 @@ typedef struct _keyBinding {
     KeyDescriptor	*desc;
 } KeyBinding;
 
+/* LookupKeyBinding: Return key binding. */
 extern KeyBinding *LookupKeyBinding(/* SemanticAction */);
+/* ModifierToKeysym: Convert modifier to keysym. */
 extern KeySym ModifierToKeysym();
-
 
 /* convert a button number to a button mask */
 #define ButtonToMask(b) (1<<(b+7))
@@ -144,7 +143,9 @@ extern KeySym ModifierToKeysym();
 
 /* timeouts */
 typedef void (*TimeoutFunc)();
+/* TimeoutRequest: Request timeout. */
 extern void TimeoutRequest();	/* int time, TimeoutFunc f, void *closure */
+/* TimeoutCancel: Process timeout cancel. */
 extern void TimeoutCancel();	/* no params */
 
 /*
@@ -153,20 +154,33 @@ extern void TimeoutCancel();	/* no params */
 extern Bool mouselessSuspended;
 struct _wingeneric;
 struct _wingeneric *lookupWindow(XEvent *event);
+/* saveTimestamp: Process save timestamp. */
 void saveTimestamp(XEvent *event);
+/* handleMappingNotify: Process handle mapping notify. */
 void handleMappingNotify(Display *dpy, XEvent *e);
+/* EventLoop: Process event loop. */
 void EventLoop(Display *dpy);
+/* PropagateEventToParent: Convert propagate event to parent. */
 int PropagateEventToParent(Display *dpy, XEvent *event, struct _wingeneric *win);
+/* PropagatePressEventToChild: Convert propagate press event to child. */
 void PropagatePressEventToChild(Display *dpy, XButtonPressedEvent *event, struct _wingeneric *win);
+/* FindModifierMask: Return modifier mask. */
 unsigned int FindModifierMask(KeyCode kc);
 KeySym ModifierToKeysym(unsigned intmod);
+/* AwaitEvents: Process await events. */
 Bool AwaitEvents(Display *dpy, struct timeval *timeout);
+/* InstallInterposer: Install interposer. */
 void InstallInterposer(InterposerFunc func,void * cl);
+/* UninstallInterposer: Uninstall interposer. */
 void UninstallInterposer(void);
 InterposerFunc InterposerInstalled(void);
+/* EnableInterposerDelegation: Enable interposer delegation. */
 void EnableInterposerDelegation(void);
+/* TimeoutRequest: Request timeout. */
 void TimeoutRequest(int t, TimeoutFunc f, void *c);
+/* TimeoutCancel: Process timeout cancel. */
 void TimeoutCancel(void);
+/* InitEvents: Initialize events. */
 void InitEvents(Display *dpy);
 
 #endif /* _OLWM_EVENTS_H */

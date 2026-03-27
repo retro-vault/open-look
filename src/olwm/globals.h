@@ -1,12 +1,11 @@
-#ident	"@(#)globals.h	26.45	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * globals.h: declarations and shared types for the globals module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_GLOBALS_H
@@ -139,7 +138,6 @@ typedef struct _globalResourceVariables {
 
 extern GlobalResourceVariables	GRV;
 
-
 #ifdef OW_I18N_L3
 
 /* shortcuts for getting at locale category items */
@@ -150,7 +148,6 @@ extern GlobalResourceVariables	GRV;
 #define lc_datefmt		LC[OLLC_LC_DATE_FORMAT]
 
 #endif
-
 
 #endif /* _OLWM_GLOBALS_H */
 

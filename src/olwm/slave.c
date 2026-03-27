@@ -1,22 +1,15 @@
-#ident	"@(#)slave.c	26.13	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * slave.c: implementation of the slave module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-
-/* ----------------------------------------------------------------------
- *	slave.c
- * ---------------------------------------------------------------------*/
 
 #include <sys/types.h>
 #include <sys/time.h>
-#include <sys/resource.h>
 #include <X11/Xos.h>
 #include <X11/Xlib.h>
 #include <signal.h>
@@ -45,11 +38,7 @@ static SlaveInfo slaveInfo = {
  *	Local Forward Declarations
  * ---------------------------------------------------------------------*/
 
-#ifdef __STDC__
 static void	SlaveFailure(void);
-#else
-static void	SlaveFailure();
-#endif
 
 
 /* ----------------------------------------------------------------------
@@ -61,7 +50,6 @@ SlaveStart(argv)
 	char		**argv;
 {
 	int		input[2],output[2];
-	struct rlimit	rlimit;
 	int		fd,maxfd;
 
 	if (pipe(input) == -1) {
@@ -92,14 +80,7 @@ SlaveStart(argv)
 	case 0:				/* Slave */
 		dup2(input[0],0);
 		dup2(output[1],1);
-#ifndef __linux__
-		if (getrlimit(RLIMIT_NOFILE,&rlimit) == -1)
-			maxfd = 0;
-		else
-			maxfd = rlimit.rlim_cur;	
-#else
 		maxfd = sysconf(_SC_OPEN_MAX);
-#endif
 		for (fd=3; fd<maxfd ; fd++) {
 			(void)close(fd);
 		}

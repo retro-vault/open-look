@@ -1,14 +1,12 @@
-#ident	"@(#)services.c	26.53	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
+ * services.c: implementation of the services module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
 
 #include <stdio.h>
 #include <string.h>
@@ -80,11 +78,7 @@ execCommand(winInfo,cmd)
 	return 1;
     } else if (pid == 0) {
 	/* child */
-#if defined(SYSV) || defined(__linux__)
 	setpgrp();
-#else
-	setpgrp(0, getpid());
-#endif
 	execve(args[0], args, env);
 	perror("olwm: exec");
 	exit(1);
@@ -238,11 +232,7 @@ PshFunc(dpy, winInfo, menuInfo, idx)
 		close( pshPipe[1] );
 		close( 1 );		/* close stdout */
 		dup( 2 );		/* make olwm stderr = psh stdout */
-#if defined(SYSV) || defined(__linux__)
 		setpgrp();
-#else
-		setpgrp(0, getpid());
-#endif
 		execve( commArgv[0], commArgv, env );
 		fprintf( stderr, GetString("olwm: psh error: %d\n"), errno );
 	}

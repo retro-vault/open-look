@@ -1,13 +1,14 @@
-/*#ident "@(#)ol_button.c	1.62 93/06/28 SMI" */
-
 /*
- * Copyright 1989-1990 Sun Microsystems
- */
-
-/*
- * OPEN LOOK object drawing package Sun Microsystems, Inc.
+ * ol_button.c: OPEN LOOK object drawing package Sun Microsystems, Inc.
  *
- * OLGX_button.c Menu button module
+ * NOTES:
+ *  OLGX_button.c Menu button module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ol_button_.h>

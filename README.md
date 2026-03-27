@@ -1,189 +1,167 @@
-# Welcome to open-look
+# open-look
 
-OpenLook is an ICCCM-compliant window manager originally designed for use with the XView toolkit. This repository contains a modern, minimalist port of the classic system—now built with CMake. The source code is organized into just two components: a single library, olgx, which provides the necessary graphics routines, and one window manager program, olvw. In the original distribution, OpenLook depended on additional fonts (located in the contrib/toolkits/XView/fonts directory) supplied with older X11 releases. In this port, the build process has been streamlined for modern Unix-like environments.
+OpenLook and XView codebase modernized for Linux with CMake.
 
-A manual page for olvw, olvw.man, is included in the repository.
+## Release status
 
-DISCLAIMER: This is the very first build of the modern port of OpenLook. Things can and will go wrong. Use at your own risk, and be prepared for unexpected issues as you explore and customize this legacy software in a modern environment.
+This repository is the initial release preview of the full package:
+`olwm`, `olgx`, `xview`, public headers, and runtime resources.
 
-## Changes for this release
+- Preview quality: not tested in depth yet.
+- Target release date: April 1, 2026.
+- Current state: usable for early testing, integration, and porting work.
 
-This release introduces a complete port to CMake, replacing the old Imakefile-based build system. The source has been reorganized into two components: the graphics library olgx and the window manager olvw. In addition, several bug fixes have been applied to improve stability and compliance with modern X servers. These fixes incorporate changes from previous versions distributed with X11 Release 4 FCS, along with further enhancements to the code.
+## What is in the package
 
-# Compiling and running open-look
+Source tree:
 
-This project has been modernized with CMake, streamlining the build process and making it compatible with modern Unix-like environments. The source code is organized into two main components: the graphics library **olgx** and the window manager program **olvw**.
+- `src/olwm`: Open Look window manager sources (`olwm`)
+- `lib/olgx`: OPEN LOOK graphics library (`libolgx`)
+- `lib/libxview`: XView toolkit library (`libxview`)
+- `include/olgx`, `include/pixrect`, `include/xview`,
+  `include/xview_private`: exported/public-style headers
+- `resources/images`, `resources/bitmaps`, `resources/fonts`:
+  runtime assets
+- `config`: default menus and app-defaults
+- `docs/olwm.man`: manual page source
 
-> **Note:** This port has been adapted to work with Xephyr, a nested X server. When using Xephyr, ensure that the required fonts are installed on your system and that you merge the X resource defaults appropriately.
+Build/staging layout:
 
-## Prerequisites
+All build intermediates stay in `build/`.
+Final staged output is assembled under `bin/` as an `OPENWINHOME` tree.
 
-Before compiling, ensure you have the following installed:
+- `bin/bin`: executables (currently `olwm`)
+- `bin/lib`: shared/static libs and runtime menu/config files
+- `bin/include`: headers plus runtime `images` and `bitmaps`
+- `bin/share/man`: man pages
+- `bin/share/fonts/openlook`: packaged font files
 
-- A C compiler supporting C99 (e.g., gcc or clang)
-- CMake (version 3.16 or newer)
-- X11 development libraries (Xlib, Xext, etc.)
-- Standard X11 utilities (such as `xlsfonts`, `xrdb`)
-- Xephyr (to run a nested X server)
+## Build
 
-For example, on Ubuntu you can install these with:
+Requirements:
+
+- C compiler with C99 support
+- CMake 3.16+
+- X11 development packages
+
+Build commands:
 
 ```bash
-sudo apt-get install build-essential cmake libx11-dev libxext-dev x11-xserver-utils xserver-xephyr
+cmake -S . -B build
+cmake --build build -j"$(nproc)"
 ```
 
-## How it all works together?
+## Installation
 
-Components: The repository contains two main parts: the olgx graphics library and the olvw window manager.
+This preview supports two installation models.
 
-Build System: The project uses CMake for building.
+1. Staged local install in this repository
+2. System install under a prefix (for example `/usr/local`)
 
-Xephyr: Xephyr is used as a nested X server. You must manually launch Xephyr on a free display (e.g., :2), merge the provided Xdefaults from the config/ directory into your Xephyr resource database, and ensure that the necessary fonts are installed on your system.
+### 1) Staged local install (recommended for preview testing)
 
-Running: Once everything is configured, run olvw with the DISPLAY variable set to your Xephyr display.
+After build, everything is staged in `bin/` as an `OPENWINHOME` tree.
 
-Following these steps should yield a working build of open-look running under Xephyr. Enjoy exploring and customizing this modern port of the classic OpenLook window manager!
+```bash
+source ./bin/use-openwinhome.sh
+```
 
-## Build instructions
+This sets:
 
-1. Clone the Repository
+- `OPENWINHOME=<repo>/bin`
+- `PATH=$OPENWINHOME/bin:$PATH`
+- `LD_LIBRARY_PATH=$OPENWINHOME/lib:$LD_LIBRARY_PATH`
 
-   Clone the repository to your local machine:
+### 2) System install with CMake
 
-   ```bash
-   git clone https://github.com/yourusername/open-look.git
-   cd open-look
-   ```
+```bash
+cmake --install build --prefix /usr/local
+sudo ldconfig
+```
 
-2. Configure the Build
+If you use a different prefix, set `OPENWINHOME` to that prefix when running.
 
-   Create a build directory and run CMake to configure the project. This port uses the Debug build type by default:
+## Font installation (important)
 
-   ```bash
-   mkdir build
-   cd build
-   cmake -DCMAKE_BUILD_TYPE=Debug ..
-   ```
+XView/Open Look applications require Open Look fonts to be visible in the
+X server font path. If fonts are missing you may get `BadFont` failures.
 
-3. Compile the Code
+Install the packaged BDF font sets:
 
-   Build the project with your preferred number of parallel jobs. For example:
+```bash
+sudo mkdir -p /usr/local/share/fonts/openlook/bdf/{misc,75dpi,100dpi}
+sudo cp -a bin/share/fonts/openlook/bdf/. /usr/local/share/fonts/openlook/bdf/
+sudo mkfontdir /usr/local/share/fonts/openlook/bdf/misc
+sudo mkfontdir /usr/local/share/fonts/openlook/bdf/75dpi
+sudo mkfontdir /usr/local/share/fonts/openlook/bdf/100dpi
+```
 
-   ```bash
-   cmake --build . -j$(nproc)
-   ```
+Enable them for the current X session:
 
-   This will compile both the olgx library and the olvw window manager.
+```bash
+xset +fp /usr/local/share/fonts/openlook/bdf/misc
+xset +fp /usr/local/share/fonts/openlook/bdf/75dpi
+xset +fp /usr/local/share/fonts/openlook/bdf/100dpi
+xset fp rehash
+```
 
-## Post-Compilation
+Quick check:
 
-After a successful build, you will have the following executables in the build directory:
+```bash
+xlsfonts | grep -Ei 'open look|olglyph|olcursor|lucida'
+```
 
-- olgx: the graphics library (typically as a shared or static library)
-- olvw: the OpenLook window manager
+If `mkfontdir` is missing, install your distro's X font utilities package.
 
-A manual page for olvw, olvw.man, is also provided in the repository.
+## Runtime resources and defaults
 
-## Configuration
+The runtime package expects these assets to exist under `OPENWINHOME`:
 
-### Xephyr
+- `lib/openwin-menu*`
+- `lib/app-defaults/Olwm`
+- `include/images`
+- `include/bitmaps` and `include/X11/bitmaps`
 
-To run olvw, you must use Xephyr as a nested X server. Follow these steps:
+For staged local runs (`OPENWINHOME=<repo>/bin`), these are already in place
+after build.
 
-- Launch Xephyr
-- Start Xephyr on a chosen display (for example, :2):
+## Running from the staged tree
+
+Use the generated helper so runtime lookup paths point to `bin/`:
+
+```bash
+source ./bin/use-openwinhome.sh
+```
+
+Then launch, for example:
+
+```bash
+olwm
+```
+
+For nested testing with Xephyr:
 
 ```bash
 Xephyr :2 -ac -screen 1024x768 &
+DISPLAY=:2 xrdb -merge bin/lib/app-defaults/Olwm
+DISPLAY=:2 olwm
 ```
 
-### Prepare X Resource Defaults
+## Notes
 
-In the repository, you'll find an Xdefaults file in the config/ directory. Copy this file to your home directory with a name that identifies your computer. For example, if your computer's hostname is luke, run:
+- Linux is the target platform in this port.
+- Legacy non-Linux path branches have been reduced where possible.
+- More validation and compatibility testing is still required before final
+  release.
 
-```bash
-cp config/Xdefaults ~/.Xdefaults-luke
-```
+## Legal notice
 
-Edit this file if necessary to adjust font settings or other preferences. Ensure that the fonts specified in the file exist on your computer. You can verify available fonts with:
+NOTICE TO USER: The source code, including the glyphs or icons forming a
+part of the OPEN LOOK TM Graphic User Interface, in these files is
+copyrighted under U.S. and international laws.
 
-```bash
-xlsfonts | grep -i helvetica
-```
+(c) Copyright 1989 Sun Microsystems, Inc.
+Sun design patents pending in the U.S. and foreign countries.
+OPEN LOOK is a trademark of AT&T.
 
-Merge the Xdefaults into Xephyr's Resource Database
-Merge the defaults into the Xephyr display you are using:
-
-```bash
-DISPLAY=:2 xrdb -merge ~/.Xdefaults-luke
-```
-
-Verify that the resources have been merged by running:
-
-```bash
-DISPLAY=:2 xrdb -query
-```
-
-## Running olvw
-
-When running olvw in Xephyr, set the DISPLAY environment variable to the Xephyr display. For example:
-
-```bash
-DISPLAY=:2 ./build/src/olwm/olvw
-```
-
-This will start the OpenLook window manager inside Xephyr, using the merged Xdefaults for configuration.
-
-# Legal Notice
-
-NOTICE TO USER: The source code, including the glyphs or icons
-forming a par of the OPEN LOOK TM Graphic User Interface, on this
-tape and in these files is copyrighted under U.S. and international
-laws. Sun Microsystems, Inc. of Mountain View, California owns
-the copyright and has design patents pending on many of the icons.
-AT&T is the owner of the OPEN LOOK trademark associated with the
-materials on this tape. Users and possessors of this source code
-are hereby granted a nonexclusive, royalty-free copyright and
-design patent license to use this code in individual and
-commercial software. A royalty-free, nonexclusive trademark
-license to refer to the code and output as "OPEN LOOK" compatible
-is available from AT&T if, and only if, the appearance of the
-icons or glyphs is not changed in any manner except as absolutely
-necessary to accommodate the standard resolution of the screen or
-other output device, the code and output is not changed except as
-authorized herein, and the code and output is validated by AT&T.
-Bigelow & Holmes is the owner of the Lucida (R) trademark for the
-fonts and bit-mapped images associated with the materials on this
-tape. Users are granted a royalty-free, nonexclusive license to use
-the trademark only to identify the fonts and bit-mapped images if,
-and only if, the fonts and bit-mapped images are not modified in any
-way by the user.
-
-Any use of this source code must include, in the user documentation
-and internal comments to the code, notices to the end user as  
-follows:
-
-(c) Copyright 1989 Sun Microsystems, Inc. Sun design patents
-pending in the U.S. and foreign countries. OPEN LOOK is a
-trademark of AT&T. Used by written permission of the owners.
-
-(c) Copyright Bigelow & Holmes 1986, 1985. Lucida is a registered
-trademark of Bigelow & Holmes. Permission to use the Lucida
-trademark is hereby granted only in association with the images
-and fonts described in this file.
-
-SUN MICROSYSTEMS, INC., AT&T, AND BIGELOW & HOLMES
-MAKE NO REPRESENTATIONS ABOUT THE SUITABILITY OF
-THIS SOURCE CODE FOR ANY PURPOSE. IT IS PROVIDED "AS IS"
-WITHOUT EXPRESS OR IMPLIED WARRANTY OF ANY KIND.
-SUN MICROSYSTEMS, INC., AT&T AND BIGELOW & HOLMES,
-SEVERALLY AND INDIVIDUALLY, DISCLAIM ALL WARRANTIES
-WITH REGARD TO THIS SOURCE CODE, INCLUDING ALL IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE. IN NO EVENT SHALL SUN MICROSYSTEMS,
-INC., AT&T OR BIGELOW & HOLMES BE LIABLE FOR ANY
-SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
-OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA
-OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
-OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
-WITH THE USE OR PERFORMANCE OF THIS SOURCE CODE.
+This source code is provided "as is" without express or implied warranty.

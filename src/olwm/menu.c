@@ -1,22 +1,18 @@
-#ident	"@(#)menu.c	26.76	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
- */
-
-/*
- * This file contains all of the functions for creating and displaying menus.
+ * menu.c: This file contains all of the functions for creating and
+ * displaying menus.
  *
- * Global Functions:
- * InitMenus	-- initialize menu stuff
- * MenuCreate	-- create a new menu
- * MenuDestroy	-- destroy an existing menu
- * MenuShow	-- display a menu
+ * NOTES:
+ *  Global Functions:.
+ *  InitMenus       -- initialize menu stuff.
+ *  MenuCreate      -- create a new menu.
+ *  MenuDestroy     -- destroy an existing menu.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include <ctype.h>
@@ -106,16 +102,10 @@ static void activateSubMenu();
 static void drawButton();
 static void drawRevButton();
 static Bool isClick();
-#ifdef __STDC__
 static Bool isEnabled(MenuInfo *mInfo, int item);
-#else
-static Bool isEnabled();
-#endif
 
 int MenuTrack();
 void DrawLocCursor();
-
-static Bool isEnabled(MenuInfo *mInfo, int item);
 
 /*
  *****************************************************************************
@@ -3370,4 +3360,3 @@ MakeExposeDamage(pr, ee)
 
     AppendExposeDamage(pr, ee);
 }
-

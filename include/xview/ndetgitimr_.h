@@ -1,0 +1,19 @@
+/*
+ * Declares public XView interfaces, types, and attributes for
+ * ndetgitimr.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
+ */
+#if !defined(NDETGITIMR__H)
+#define NDETGITIMR__H
+
+#include <xview/pkg.h>
+#include <xview_private/ntfy.h>
+
+Notify_func notify_get_itimer_func(Notify_client nclient, int which);
+
+#endif

@@ -1,39 +1,26 @@
-#ident	"@(#)gettext.c	1.10	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * gettext.c: implementation of the gettext module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #include "gettext.h"
 
-#if defined(__linux__) && !defined(LC_MESSAGES)
+#ifndef LC_MESSAGES
 #define LC_MESSAGES LC_RESPONSE
 #endif
 
-#ifdef SYSV
-#define bzero(a,b) memset(a,0,b)
-#endif
-
-#if !defined(__linux__) || !defined(__GLIBC__)
-char *malloc(), *strdup();
-#endif
 char * dgettext(char *, char *);
 char *_gettext();
 char *in_path();
 char *fgets(), *getenv();
-#if !defined(__linux__) || !defined(__GLIBC__)
-caddr_t mmap(), calloc();
-#endif
-#ifdef __linux__
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#endif
 
 static struct domain_binding *firstbind=0, *lastbind=0;
 
@@ -422,4 +409,3 @@ char *_gettext( messages, key_string )
         } /* if ((val= ... */
     } /* for (;;) */
 }
-

@@ -1,12 +1,11 @@
-#ident	"@(#)win.h	26.43	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * win.h: declarations and shared types for the win module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_WIN_H
@@ -339,7 +338,6 @@ typedef struct _wincore {
 #define ColorFocusClient(win) ((win)->core.client->scrInfo->cmapfocus.client)
 #define	ColorFocusLocked(win) ((win)->core.client->scrInfo->cmapfocus.locked)
 
-
 /* FrameCore defines fields common to all types of frame */
 typedef struct _winframecore {
 	struct _wingenericpane *panewin;/* pane inside frame */
@@ -379,7 +377,6 @@ typedef struct _wingenericframe {
 #define FrameHeightBottom(w) (WinFunc((w),fcore.heightbottom))((w))
 #define FrameWidthLeft(w) (WinFunc((w),fcore.widthleft))((w))
 #define FrameWidthRight(w) (WinFunc((w),fcore.widthright))((w))
-
 
 typedef struct _wingenericpane {
 	ClassGenericPane *class;
@@ -510,13 +507,19 @@ typedef WinGeneric WinColormap;
 
 /* functions mapping windows to infos */
 
+/* WIInstallInfo: Install wi info. */
 extern void WIInstallInfo();
+/* WIUninstallInfo: Uninstall wi info. */
 extern Bool WIUninstallInfo();
+/* WIGetInfo: Return info. */
 extern WinGeneric *WIGetInfo();
+/* WIApply: Execute wi. */
 extern void WIApply();
 
 /* window functions */
+/* WinAddChild: Add win child. */
 extern void WinAddChild();
+/* WinRemoveChild: Remove win child. */
 extern void WinRemoveChild();
 
 /* Useful client macros */
@@ -533,28 +536,25 @@ extern int  ShapeErrorBase;
 
 extern Client *CurrentClient;
 
-#ifdef __STDC__
+/* WinCallConfig: Call win config. */
 void WinCallConfig(Display *dpy, WinGeneric *win, XConfigureRequestEvent *pxcre);
+/* WinCallDestroy: Destroy win call. */
 void WinCallDestroy(Client *cli);
+/* WinCallDraw: Draw win call. */
 void WinCallDraw(WinGeneric *win);
+/* WinCallSelect: Select win call. */
 void WinCallSelect(Client *cli, Bool sel);
+/* WinRootPos: Process win root pos. */
 void WinRootPos(WinGeneric *win, int *px, int *py);
+/* LockColormap: Lock colormap. */
 void LockColormap(Display *dpy, Client *cli, WinGeneric *winInfo);
+/* FrameInit: Initialize frame. */
 void FrameInit(Display *dpy);
+/* FrameUnparentPane: Process frame unparent pane. */
 void FrameUnparentPane(Client *cli, WinPaneFrame *winFrame, WinPane *winPane);
+/* HandleHelpKey: Process handle help key. */
 void HandleHelpKey(Display *dpy, XEvent *pEvent);
+/* PushPinSetPinState: Set push pin pin state. */
 void PushPinSetPinState(Display *dpy, WinPushPin *winInfo, int newState, Bool sendDelete);
-#else
-void WinCallConfig();
-void WinCallDestroy();
-void WinCallDraw();
-void WinCallSelect();
-void WinRootPos();
-void LockColormap();
-void FrameInit();
-void FrameUnparentPane();
-void HandleHelpKey();
-void PushPinSetPinState();
-#endif
 
 #endif /* _OLWM_WIN_H */

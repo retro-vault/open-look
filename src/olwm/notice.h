@@ -1,12 +1,11 @@
-#ident	"@(#)notice.h	26.12	93/06/28 SMI"
-
 /*
- *      (c) Copyright 1989 Sun Microsystems, Inc.
- */
-
-/*
- *      Sun design patents pending in the U.S. and foreign countries. See
- *      LEGAL_NOTICE file for terms of the license.
+ * notice.h: declarations and shared types for the notice module.
+ *
+ * (c) Copyright 1989 Sun Microsystems, Inc.
+ * Sun design patents pending in the U.S. and foreign countries.
+ *
+ * Adapted to the CMake build system by Tomaz Stih
+ *
  */
 
 #ifndef _OLWM_NOTICE_H
@@ -26,6 +25,7 @@ typedef struct _noticeBox {
 } NoticeBox;
 
 /* function declarations */
+/* UseNoticeBox: Process use notice box. */
 extern int UseNoticeBox();
 
 #endif /* _OLWM_NOTICE_H */
