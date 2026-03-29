@@ -120,7 +120,7 @@ if [ ! -f "$WM_PID_FILE" ]; then
   )
 
   # Wait for olwm to stay alive and advertise OPEN LOOK WM protocols.
-  # Without this handshake, debug launches can race and map client windows
+  # Without this handshake, app launches can race and map client windows
   # before olwm owns redirection, resulting in undecorated top-left windows.
   wm_ready=0
   for _ in $(seq 1 120); do
@@ -141,16 +141,16 @@ if [ ! -f "$WM_PID_FILE" ]; then
   fi
 fi
 
-# Give olwm a brief grace period to finish initialization before debug target
+# Give olwm a brief grace period to finish initialization before app
 # maps its first top-level window.
 sleep "${OPENLOOK_WM_GRACE_SECONDS:-4}"
 
 # Some WM/session startup paths reset X font path; enforce OpenLook font
-# directories again right before launching debug targets.
+# directories again right before launching apps.
 apply_openlook_font_path
 
 # Start a watchdog that terminates workspace client apps on this display if
-# olwm exits unexpectedly. This prevents cppdbg sessions from hanging when the
+# olwm exits unexpectedly. This prevents IDE debug sessions from hanging when the
 # WM is closed manually.
 if [ ! -f "$WATCHDOG_PID_FILE" ]; then
   (
@@ -166,7 +166,7 @@ if [ ! -f "$WATCHDOG_PID_FILE" ]; then
   )
 fi
 
-echo "OpenLook debug session ready on DISPLAY=$DISPLAY_NUM"
+echo "OpenLook session ready on DISPLAY=$DISPLAY_NUM"
 
 # Optional: keep this task alive (for VS Code background preLaunch task mode)
 # so the task host does not reap process trees shortly after startup.

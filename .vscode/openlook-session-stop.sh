@@ -25,4 +25,4 @@ stop_from_pid_file "$WATCHDOG_PID_FILE"
 stop_from_pid_file "$WM_PID_FILE"
 stop_from_pid_file "$XE_PID_FILE"
 
-echo "OpenLook debug session stopped"
+echo "OpenLook session stopped"
