@@ -239,6 +239,7 @@
  */
 typedef unsigned long	 Attr_attribute;	/* 32 bit quantity */
 typedef Attr_attribute	*Attr_avlist;
+Attr_avlist attr_skip_value(Attr_attribute attr, Attr_avlist avlist);
 
 /*
  * Enumerations 

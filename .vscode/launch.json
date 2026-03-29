@@ -2,23 +2,190 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug olwm (Xephyr on :2)",
+      "name": "Debug hello",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/src/olwm/olwm",
+      "program": "${workspaceFolder}/bin/bin/hello",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [
         {
-          "name": "DISPLAY",
-          "value": ":2"
+          "name": "OPENWINHOME",
+          "value": "${workspaceFolder}/bin"
+        },
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/bin/lib:${env:LD_LIBRARY_PATH}"
+        },
+        {
+          "name": "PATH",
+          "value": "${workspaceFolder}/bin/bin:${env:PATH}"
         }
       ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/bin/gdb",
-      "preLaunchTask": "build",
+      "preLaunchTask": "build hello (Debug)",
+      "additionalSOLibSearchPath": "${workspaceFolder}/bin/lib",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Do not stop on SIGTERM from OpenLook watchdog",
+          "text": "handle SIGTERM nostop noprint pass",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "Debug clock",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/bin/clock",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "OPENWINHOME",
+          "value": "${workspaceFolder}/bin"
+        },
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/bin/lib:${env:LD_LIBRARY_PATH}"
+        },
+        {
+          "name": "PATH",
+          "value": "${workspaceFolder}/bin/bin:${env:PATH}"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "build clock (Debug)",
+      "additionalSOLibSearchPath": "${workspaceFolder}/bin/lib",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "Debug cmdtool",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/bin/cmdtool",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "OPENWINHOME",
+          "value": "${workspaceFolder}/bin"
+        },
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/bin/lib:${env:LD_LIBRARY_PATH}"
+        },
+        {
+          "name": "PATH",
+          "value": "${workspaceFolder}/bin/bin:${env:PATH}"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "build cmdtool (Debug)",
+      "additionalSOLibSearchPath": "${workspaceFolder}/bin/lib",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "Debug textedit (OpenLook)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/bin/textedit",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "OPENWINHOME",
+          "value": "${workspaceFolder}/bin"
+        },
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/bin/lib:${env:LD_LIBRARY_PATH}"
+        },
+        {
+          "name": "PATH",
+          "value": "${workspaceFolder}/bin/bin:${env:PATH}"
+        },
+        {
+          "name": "DISPLAY",
+          "value": ":2"
+        },
+        {
+          "name": "XENVIRONMENT",
+          "value": "${workspaceFolder}/config/Xdefaults"
+        },
+        {
+          "name": "XV_USE_XGETVISUALINFO_ALL",
+          "value": "1"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "prepare textedit (OpenLook Debug)",
+      "postDebugTask": "openlook: stop session (:2)",
+      "additionalSOLibSearchPath": "${workspaceFolder}/bin/lib",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "Debug props",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/bin/props",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "OPENWINHOME",
+          "value": "${workspaceFolder}/bin"
+        },
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/bin/lib:${env:LD_LIBRARY_PATH}"
+        },
+        {
+          "name": "PATH",
+          "value": "${workspaceFolder}/bin/bin:${env:PATH}"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "build props (Debug)",
+      "additionalSOLibSearchPath": "${workspaceFolder}/bin/lib",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

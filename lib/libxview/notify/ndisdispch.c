@@ -231,6 +231,9 @@ notify_client(nclient)
     /* Don't make register because take address of them */
     Notify_value(*pri_func) ();
     int             maxfds = GETDTABLESIZE();
+    if (maxfds > FD_SETSIZE) {
+	maxfds = FD_SETSIZE;
+    }
 
     /* Check if heap access protected */
     ntfy_assert((!NTFY_IN_INTERRUPT || NTFY_DEAF_INTERRUPT), 21

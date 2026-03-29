@@ -22,6 +22,13 @@ file(MAKE_DIRECTORY "${OPENWINHOME_STAGE_LIB_DIR}")
 file(MAKE_DIRECTORY "${OPENWINHOME_STAGE_INCLUDE_DIR}")
 file(MAKE_DIRECTORY "${OPENWINHOME_STAGE_SHARE_DIR}")
 
+# Default text extras menu file expected by XView textsw/textedit.
+# Keep it present to avoid startup warnings when OPENWINHOME is staged locally.
+set(OPENWINHOME_TEXT_EXTRAS_MENU "${OPENWINHOME_STAGE_LIB_DIR}/.text_extras_menu")
+file(WRITE "${OPENWINHOME_TEXT_EXTRAS_MENU}"
+"# Default empty text extras menu for local OpenLook builds.\n"
+)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OPENWINHOME_STAGE_BIN_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OPENWINHOME_STAGE_LIB_DIR}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OPENWINHOME_STAGE_LIB_DIR}")
@@ -56,6 +63,10 @@ file(WRITE "${OPENWINHOME_ENV_SCRIPT}"
 "else\n"
 "  export LD_LIBRARY_PATH=\"$OPENWINHOME/lib\"\n"
 "fi\n"
+"_owh_defaults=\"$OPENWINHOME/../config/Xdefaults\"\n"
+"if [ -n \"$DISPLAY\" ] && [ -f \"$_owh_defaults\" ] && command -v xrdb >/dev/null 2>&1; then\n"
+"  xrdb -merge \"$_owh_defaults\"\n"
+"fi\n"
 "echo \"OPENWINHOME=$OPENWINHOME\"\n"
 )
 execute_process(COMMAND chmod +x "${OPENWINHOME_ENV_SCRIPT}")
@@ -79,3 +90,4 @@ add_custom_target(openlook_headers ALL
 add_subdirectory(resources)
 add_subdirectory(lib)
 add_subdirectory(src)
+add_subdirectory(apps)

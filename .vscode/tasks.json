@@ -4,12 +4,60 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build -j",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build -j",
       "problemMatcher": ["$gcc"],
       "group": {
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "build hello (Debug)",
+      "type": "shell",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target hello -j",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "build clock (Debug)",
+      "type": "shell",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target clock -j",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "build cmdtool (Debug)",
+      "type": "shell",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target cmdtool -j",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "build textedit (Debug)",
+      "type": "shell",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target textedit -j",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "build props (Debug)",
+      "type": "shell",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target props -j",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "openlook: start session (:2)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/openlook-session-start.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "openlook: stop session (:2)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/openlook-session-stop.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "prepare textedit (OpenLook Debug)",
+      "type": "shell",
+      "command": "if [ -n \"$DISPLAY\" ] && command -v xrdb >/dev/null 2>&1; then xrdb -merge \"${workspaceFolder}/config/Xdefaults\"; fi && cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --target textedit -j && ${workspaceFolder}/.vscode/openlook-session-start.sh",
+      "problemMatcher": []
     }
   ]
 }

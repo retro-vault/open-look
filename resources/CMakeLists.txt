@@ -7,6 +7,23 @@ set(OPENWINHOME_RESOURCE_LIB_DIR "${OPENWINHOME_STAGE_LIB_DIR}")
 set(OPENWINHOME_RESOURCE_SHARE_DIR "${OPENWINHOME_STAGE_SHARE_DIR}")
 set(OPENWINHOME_MAN1_DIR "${OPENWINHOME_STAGE_SHARE_DIR}/man/man1")
 set(OPENWINHOME_FONT_DIR "${OPENWINHOME_STAGE_SHARE_DIR}/fonts/openlook")
+set(OPENLOOK_MAN_PAGES
+    clock
+    olwm
+    olwmslave
+    props
+    textedit
+    xtoolplaces
+)
+
+set(OPENLOOK_MAN_STAGE_COMMANDS)
+foreach(man_page IN LISTS OPENLOOK_MAN_PAGES)
+    list(APPEND OPENLOOK_MAN_STAGE_COMMANDS
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${PROJECT_SOURCE_DIR}/docs/man/${man_page}.man"
+                "${OPENWINHOME_MAN1_DIR}/${man_page}.1"
+    )
+endforeach()
 
 # Stage runtime resources into the OPENWINHOME tree.
 add_custom_target(openlook_resources ALL
@@ -46,9 +63,7 @@ add_custom_target(openlook_resources ALL
             "${OPENWINHOME_RESOURCE_LIB_DIR}/app-defaults/Olwm"
 
     # Manual pages in standard share/man hierarchy.
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${PROJECT_SOURCE_DIR}/docs/olwm.man"
-            "${OPENWINHOME_MAN1_DIR}/olwm.1"
+    ${OPENLOOK_MAN_STAGE_COMMANDS}
 
     # Fonts are staged under share; on a real install they should be added
     # to the system X font path.
@@ -77,7 +92,9 @@ install(FILES "${PROJECT_SOURCE_DIR}/config/Xdefaults"
     DESTINATION lib/app-defaults
     RENAME Olwm
 )
-install(FILES "${PROJECT_SOURCE_DIR}/docs/olwm.man"
-    DESTINATION share/man/man1
-    RENAME olwm.1
-)
+foreach(man_page IN LISTS OPENLOOK_MAN_PAGES)
+    install(FILES "${PROJECT_SOURCE_DIR}/docs/man/${man_page}.man"
+        DESTINATION share/man/man1
+        RENAME "${man_page}.1"
+    )
+endforeach()

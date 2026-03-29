@@ -26,6 +26,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <stdlib.h>		/* free() */
+#include <strings.h>
 
 typedef enum {
 	XvNewValue,
@@ -58,9 +59,12 @@ screen_init(parent, screen_public, avlist)
     register Attr_avlist 	attrs;
     Xv_screen_struct 	       *screen_object;
     Xv_object       		font;
+    Xv_singlecolor            default_colors[2];
     XVisualInfo			visual_template;
+    XVisualInfo                *default_info;
     Display        	       *display;
     char			cms_name[100];
+    char                       *use_legacy_visual_query;
     int             		font_id;
 
     /* Allocate private data and set up forward/backward links. */
@@ -97,11 +101,42 @@ screen_init(parent, screen_public, avlist)
 	}
     }
 
-    /* get information about all visuals supported by this window */
-    visual_template.screen = screen->number;
-    screen->visual_infos = XGetVisualInfo(display, VisualScreenMask, 
-					  &visual_template,
-					  &(screen->num_visuals));
+    /*
+     * Querying all visuals can block on some modern X11 stacks.
+     * Default behavior now is to synthesize a single default-visual entry.
+     * Set XV_USE_XGETVISUALINFO_ALL=1 (or true/yes) to force legacy behavior.
+     */
+    screen->visual_infos = (XVisualInfo *)NULL;
+    screen->num_visuals = 0;
+    use_legacy_visual_query = getenv("XV_USE_XGETVISUALINFO_ALL");
+    if (use_legacy_visual_query &&
+        (strcmp(use_legacy_visual_query, "1") == 0 ||
+         strcasecmp(use_legacy_visual_query, "true") == 0 ||
+         strcasecmp(use_legacy_visual_query, "yes") == 0)) {
+        visual_template.screen = screen->number;
+        screen->visual_infos = XGetVisualInfo(display, VisualScreenMask,
+                                              &visual_template,
+                                              &(screen->num_visuals));
+    }
+    if (!screen->visual_infos || screen->num_visuals <= 0) {
+        default_info = (XVisualInfo *)calloc(1, sizeof(XVisualInfo));
+        if (!default_info) {
+            xv_free(screen);
+            return XV_ERROR;
+        }
+        default_info->visual = DefaultVisual(display, screen->number);
+        default_info->visualid = XVisualIDFromVisual(default_info->visual);
+        default_info->screen = screen->number;
+        default_info->depth = DefaultDepth(display, screen->number);
+        default_info->class = default_info->visual->class;
+        default_info->red_mask = default_info->visual->red_mask;
+        default_info->green_mask = default_info->visual->green_mask;
+        default_info->blue_mask = default_info->visual->blue_mask;
+        default_info->colormap_size = default_info->visual->map_entries;
+        default_info->bits_per_rgb = default_info->visual->bits_per_rgb;
+        screen->visual_infos = default_info;
+        screen->num_visuals = 1;
+    }
 
     /* get the default visual from the list */
     screen->screen_visuals = screen_default_visual(display, screen);
@@ -111,12 +146,18 @@ screen_init(parent, screen_public, avlist)
      */
     sprintf(cms_name, "xv_default_cms_for_0x%x",
 	    (unsigned int)screen->screen_visuals->vinfo->visualid);
+    default_colors[0].red = 255;
+    default_colors[0].green = 255;
+    default_colors[0].blue = 255;
+    default_colors[1].red = 0;
+    default_colors[1].green = 0;
+    default_colors[1].blue = 0;
     screen->default_cms = (Cms)xv_create(screen_public, CMS,
         CMS_NAME, cms_name,
         XV_VISUAL, screen->screen_visuals->vinfo->visual,
         CMS_TYPE, (Cms_type)XV_STATIC_CMS,					 
         CMS_SIZE, 2L,
-        CMS_NAMED_COLORS, "White", "Black", NULL,
+        CMS_COLORS, default_colors,
         CMS_DEFAULT_CMS, TRUE,					 
         NULL);
 
@@ -135,14 +176,30 @@ screen_init(parent, screen_public, avlist)
 
     /* set the default font in the GC for this screen */
     font = (Xv_object) xv_get(screen->server, SERVER_FONT_WITH_NAME, NULL, NULL);
-    if (!font) {
-	XFree((char *)(screen->visual_infos));
-	xv_free(screen);
-	return XV_ERROR;
+    if (font) {
+	font_id = (int) xv_get(font, XV_XID);
+    } else {
+	XGCValues gc_values;
+	memset(&gc_values, 0, sizeof(gc_values));
+	font_id = 0;
+
+	/*
+	 * Some modern environments do not provide the legacy default XView
+	 * font object early enough during startup. Fall back to the display
+	 * default GC font (or "fixed" as a last resort) so server/screen
+	 * initialization can continue.
+	 */
+	if (XGetGCValues(display, DefaultGC(display, screen->number),
+			 GCFont, &gc_values) && gc_values.font) {
+	    font_id = (int) gc_values.font;
+	} else {
+	    font_id = (int) XLoadFont(display, "fixed");
+	}
     }
-    font_id = (int) xv_get(font, XV_XID);
-    xv_set_default_font((Display*)xv_get(screen->server, XV_DISPLAY),
-			screen->number, font_id);
+    if (font_id) {
+	xv_set_default_font((Display*)xv_get(screen->server, XV_DISPLAY),
+			    screen->number, font_id);
+    }
 
     /* NOTE: Do we really need the screen_layout proc? */
     screen->root_window =

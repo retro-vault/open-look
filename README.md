@@ -23,7 +23,7 @@ Source tree:
 - `resources/images`, `resources/bitmaps`, `resources/fonts`:
   runtime assets
 - `config`: default menus and app-defaults
-- `docs/olwm.man`: manual page source
+- `docs/man/olwm.man`: manual page source
 
 Build/staging layout:
 
@@ -42,7 +42,32 @@ Requirements:
 
 - C compiler with C99 support
 - CMake 3.16+
-- X11 development packages
+- X11 development libraries:
+  - `libX11`
+  - `libXext` (used by `olwm`)
+- `libtirpc` development library (used by XView selection/RPC code)
+- Standard C math library (`libm`, usually provided by libc toolchain)
+
+Recommended package install commands:
+
+Debian/Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev
+```
+
+Fedora/RHEL:
+
+```bash
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils
+```
+
+Arch Linux:
+
+```bash
+sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir
+```
 
 Build commands:
 

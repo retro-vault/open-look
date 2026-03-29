@@ -518,9 +518,18 @@ window_init(parent_public, win_public, avlist)
      */
     if (!win->font)  {
         win->font = (Xv_font) xv_font_with_name(server, (char *)NULL);
+        if (!win->font) {
+            /*
+             * Legacy Lucida defaults may be unavailable on modern systems.
+             * Fall back to the ubiquitous X11 "fixed" font.
+             */
+            win->font = (Xv_font) xv_font_with_name(server, "fixed");
+        }
     }
 
-    (void) xv_set(win->font, XV_INCREMENT_REF_COUNT, NULL);
+    if (win->font) {
+        (void) xv_set(win->font, XV_INCREMENT_REF_COUNT, NULL);
+    }
 
     /* register with the notifier */
     if (notify_set_event_func(win_public, window_default_event_func,

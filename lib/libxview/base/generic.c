@@ -476,8 +476,17 @@ generic_destroy(object, status)
     Xv_object       object;
     Destroy_status  status;
 {
+    Xv_generic_struct *gen_public = (Xv_generic_struct *)object;
     register Generic_node *node;
     Generic_info	*generic = GEN_PRIVATE(object);
+
+    /*
+     * Destroy notifications can be re-entered in multiple phases for the
+     * same public object. Make cleanup idempotent.
+     */
+    if (!generic) {
+	return XV_OK;
+    }
 
     switch ((int)status) {
       case DESTROY_CHECKING:
@@ -490,10 +499,12 @@ generic_destroy(object, status)
 	    delete_node(object, node, (Generic_node *) 0);
 	}
 	notify_remove(object);
+	gen_public->private_data = XV_NULL;
 	free(generic);
 	break;
       case DESTROY_PROCESS_DEATH:
 	notify_remove(object);
+	gen_public->private_data = XV_NULL;
 	free(generic);
 	break;
       default:

@@ -3487,9 +3487,8 @@ Font_return_attrs return_attrs;
     known_styles = linfo->known_styles;
     len_of_style = (return_attrs->style) ? strlen(return_attrs->style):0;
 
-    for (i=0, current_entry = known_styles[i]; 
-		i < FONT_NUM_KNOWN_STYLES; 
-		current_entry = known_styles[++i])  {
+    for (i = 0; i < FONT_NUM_KNOWN_STYLES; ++i) {
+	current_entry = known_styles[i];
 	if (font_string_compare_nchars(current_entry.style, return_attrs->style,
 		MAX((int)strlen(current_entry.style), len_of_style)) == 0) {
 
@@ -3519,9 +3518,8 @@ Font_return_attrs return_attrs;
     len_of_weight = (return_attrs->weight) ? strlen(return_attrs->weight):0;
     len_of_slant = (return_attrs->slant) ? strlen(return_attrs->slant):0;
 
-    for (i=0, current_entry = known_styles[i]; 
-		i < FONT_NUM_KNOWN_STYLES; 
-		current_entry = known_styles[++i])  {
+    for (i = 0; i < FONT_NUM_KNOWN_STYLES; ++i) {
+	current_entry = known_styles[i];
 	if ( (font_string_compare_nchars(current_entry.weight, return_attrs->weight,
 			      MAX((int)strlen(current_entry.weight), len_of_weight)) == 0) &&
 	     (font_string_compare_nchars(current_entry.slant, return_attrs->slant,
@@ -4259,9 +4257,8 @@ int			*min_char;
 	return((XID)NULL);
     }
 
-    for (style_index=0, cur_style = known_styles[style_index];
-	 style_index < FONT_NUM_KNOWN_STYLES;
-	 cur_style = known_styles[++style_index])  {
+    for (style_index = 0; style_index < FONT_NUM_KNOWN_STYLES; ++style_index) {
+	cur_style = known_styles[style_index];
 
 	/*
 	 * Try for every style that is equivalent to the one for this font

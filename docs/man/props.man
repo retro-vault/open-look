@@ -1,0 +1,80 @@
+.\" Copyright (C) 2000 by Martin Buck <mbuck@debian.org>
+.\" Licensed under the GNU General Public License
+.TH props 1 "Version 3.2p1" XView
+
+.SH NAME
+props \- Change OpenWindows settings
+
+.SH SYNOPSIS
+.B props
+[
+.I generic-tool-arguments
+] 
+
+.SH DESCRIPTION
+\fBprops\fP can be used to change certain settings for OpenWindows/XView
+programs using a GUI. As most of these settings are stored in
+OpenWindows-specific X resources, they won't have an influence on
+non-OpenWindows programs.
+.PP
+These are the settings that can be modified using \fBprops\fP (their meaning
+\is explained in \fBxview\fP (7)):
+.TP
+OpenWindows.Beep
+.TP
+OpenWindows.DragRightDistance
+.TP
+OpenWindows.IconLocation
+.TP
+OpenWindows.MultiClickTimeout
+.TP
+OpenWindows.PopupJumpCursor
+.TP
+OpenWindows.ScrollbarPlacement
+.TP
+OpenWindows.SelectDisplaysMenu
+.TP
+OpenWindows.SetInput
+.TP
+OpenWindows.WindowColor
+.TP
+OpenWindows.WorkspaceColor
+.TP
+Scrollbar.JumpCursor
+.TP
+*displayLang:   C
+.TP
+*timeFormat:    C
+.TP
+*basicLocale:   C
+.TP
+*inputLang:     C
+.TP
+*numeric:       C
+
+
+.SH OPTIONS
+.IP "\fIgeneric-tool-arguments\fP"
+\fBprops\fP accepts the \s-1XV\s0iew generic tool arguments described in
+\fBxview\fP (7).
+
+.SH FILES
+.IP ~/.Xdefaults
+Stores user's resource values. Modified by \fBprops\fP when new settings are
+applied.
+
+.SH AUTHOR
+This manual page was written by Martin Buck <mbuck@debian.org> for Debian
+GNU/Linux.
+
+.SH "SEE ALSO"
+.BR xview (7)
+
+.SH BUGS
+\fBprops\fP saves all resources currently defined in the X server to
+\fI~/.Xdefaults\fP, overwriting its current contents. This will remove
+comments and conditionals, reorder resources and also save resources which
+were originally loaded into the server by other means.
+.PP
+The color selector is available only on display classes GrayScale,
+PseudoColor and DirectColor.

@@ -2581,11 +2581,10 @@ menu_client_window_event_proc(win, event, arg, type)
     if (m->select_is_menu) {
 	if (event_action(event) == ACTION_SELECT)
 	    event_set_action(event, ACTION_MENU);
-	if (action_select_is_down(event))
+	if (action_select_is_down(event)) {
 	    /* BUG ALERT: The following is not remappable */
 	    event_set_shiftmask(event, MS_RIGHT_MASK);
-	    event_set_shiftmask(event, MS_SCROLLUP_MASK);
-	    event_set_shiftmask(event, MS_SCROLLDOWN_MASK);
+	}
     }
 
     /* Translate unmodified ISO (ASCII) Mouseless Keyboard Commands

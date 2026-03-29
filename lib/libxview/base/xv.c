@@ -841,5 +841,11 @@ xv_check_bad_attr(pkg, attr)
 Xv_private int
 xv_has_been_initialized()
 {
-    return (int) xv_initialized;
+    /*
+     * This helper is used by xv_init() to decide whether the default
+     * SERVER object still needs to be created. xv_initialized is set
+     * before xv_init() runs on first xv_create()/xv_find(), so using it
+     * here incorrectly reports "initialized" too early.
+     */
+    return (int) (xv_default_server != XV_NULL);
 }

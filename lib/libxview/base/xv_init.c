@@ -309,8 +309,10 @@ va_dcl
 			        ATTR_LIST,	attrs_start,
                                 NULL);
 	}
-	if (!server)
+	if (!server) {
 	    (void) xv_connection_error(server_name);
+	    return (Xv_Server) XV_NULL;
+	}
 	notify_exclude_fd = ConnectionNumber((Display *)xv_get(server, XV_DISPLAY));
     }
 

@@ -467,31 +467,17 @@ Attr_attribute  avlist[];
 		break;
 
 	      case ATTR_LIST_IS_PTR:
-		/*
-		 * Isa:
-		 * For pointer type recursive lists,
-		 * only recurse if the cardinality is 0
-		 * I don't know why yet - this is to be consistent
-		 * with attr_copy_customize and attr_copy
-		 */
-		if (cardinality == 0)  {
-		    Attr_avlist     new_avlist = (Attr_avlist)
-		    avlist_get(avlist);
-
-		    if (new_avlist)  {
-		        found = attr_check_use_custom(new_avlist);
-
 			/*
-			 * If found XV_USE_DB, return right away
+			 * This probe only needs to detect XV_USE_DB. Walking
+			 * pointer-based recursive values is fragile here because not all
+			 * pointer payloads are guaranteed to be traversable Attr_avlist
+			 * instances at this stage. Always consume the pointer slot and
+			 * continue scanning the current list.
 			 */
-		        if (found)  {
-		            return(found);
-		        }
+			(void) avlist_get(avlist);
+			break;
 		    }
-		}
-		break;
-	    }
-	    break;
+		    break;
 	}
     }
 

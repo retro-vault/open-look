@@ -25,6 +25,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #include <xview/win_input.h>
 #include <xview/win_struct.h>
 #include <xview_private/ntfy.h>
@@ -491,6 +492,23 @@ server_init(parent, server_public, avlist)
     }
 
     /*
+     * For local OpenLook builds, merge the project Xdefaults file so core
+     * OpenWindows resources (for example SelectDisplaysMenu) are available
+     * even when the nested X server has no RESOURCE_MANAGER property.
+     * Keep this as low precedence so user/server resources still win.
+     */
+    {
+	char *openwinhome = getenv("OPENWINHOME");
+	if (openwinhome &&
+	    snprintf(filename, sizeof(filename), "%s/../config/Xdefaults",
+		     openwinhome) < (int)sizeof(filename) &&
+	    (new_db = XrmGetFileDatabase(filename))) {
+	    XrmMergeDatabases(server->db, &new_db);
+	    server->db = new_db;
+	}
+    }
+
+    /*
      * Merge cmdline options into database
      * Note:
      * For the first server object created, this is actually
@@ -784,22 +802,15 @@ server_init(parent, server_public, avlist)
      *    defaults_load_db((char *) NULL);
      */
 
-    /* Used by atom mgr */
-#if 1
-    /* Avoid crash with newer xcb-based xlibs. According to 
-     * http://lists.freedesktop.org/archives/xorg/2007-November/030388.html
-     * using XAllocID() this way only worked by chance so far, so use
-     * XAllocIDs() instead which should be safe.
-     *
-     * mbuck@debian.org
+    /*
+     * Used by atom manager only as XContext keys for XSaveContext/XFindContext.
+     * Keep them independent from drawable/resource allocation to avoid xlib
+     * display-lock reentrancy issues during startup on modern stacks.
      */
-    XAllocIDs((Display *)server->xdisplay, server->atom_mgr, sizeof(server->atom_mgr) / sizeof(*server->atom_mgr));
-#else
-    server->atom_mgr[ATOM] = (XID) XAllocID((Display *)server->xdisplay);
-    server->atom_mgr[NAME] = (XID) XAllocID((Display *)server->xdisplay);
-    server->atom_mgr[TYPE] = (XID) XAllocID((Display *)server->xdisplay);
-    server->atom_mgr[DATA] = (XID) XAllocID((Display *)server->xdisplay);
-#endif
+    server->atom_mgr[ATOM] = (XID) XUniqueContext();
+    server->atom_mgr[NAME] = (XID) XUniqueContext();
+    server->atom_mgr[TYPE] = (XID) XUniqueContext();
+    server->atom_mgr[DATA] = (XID) XUniqueContext();
 
     /* Key for XV_KEY_DATA.  Used in local dnd ops. */
     server->dnd_ack_key = xv_unique_key();
@@ -1561,6 +1572,21 @@ server_init_atoms(server_public)
 {
     Server_info    *server = SERVER_PRIVATE(server_public);
     Atom            atom;
+    char           *enable_journal_sync;
+
+    /*
+     * Legacy Sun journaling sync support is optional and can block startup on
+     * some modern X11 stacks. Keep it disabled by default; opt in explicitly.
+     */
+    server->journalling = FALSE;
+    server->journalling_atom = (Xv_opaque)None;
+    enable_journal_sync = getenv("XV_ENABLE_JOURNAL_SYNC");
+    if (!enable_journal_sync ||
+        (strcmp(enable_journal_sync, "1") != 0 &&
+         strcasecmp(enable_journal_sync, "true") != 0 &&
+         strcasecmp(enable_journal_sync, "yes") != 0)) {
+        return;
+    }
 
     /*
      * do not create the SERVER_JOURNAL_ATOM atom if it does not already
@@ -1581,7 +1607,7 @@ server_init_atoms(server_public)
 	int             status, actual_format;
 	unsigned long   nitems, bytes;
 	Atom            actual_type;
-	unsigned char  *data;	/* default prompt */
+	unsigned char  *data = NULL;	/* default prompt */
 	char           *shell_ptr;
 	xv_shell_prompt = (char *) xv_calloc(40, sizeof(char));
 
@@ -1590,11 +1616,13 @@ server_init_atoms(server_public)
 	status = XGetWindowProperty(server->xdisplay,
 			    DefaultRootWindow(server->xdisplay),
 				atom, 0, 2, False, XA_INTEGER, &actual_type,
-				    &actual_format, &nitems, &bytes, &data);
+		&actual_format, &nitems, &bytes, &data);
 
 	if (status != Success || actual_type == None) {
 	    server->journalling = FALSE;
-	    XFree((char *)data);
+	    if (data) {
+		XFree((char *)data);
+	    }
 	} else {
 	    server->journalling = TRUE;
 	    if ((shell_ptr = getenv("PROMPT")) == NULL) {

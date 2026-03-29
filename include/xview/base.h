@@ -92,6 +92,7 @@
  */
 
 extern void *xv_alloc_save_ret;
+void xv_alloc_error(void);
 
 #ifdef XV_NO_STRDUP
 #ifdef __linux__

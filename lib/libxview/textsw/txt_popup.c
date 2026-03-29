@@ -306,10 +306,12 @@ textsw_create_popup_frame(view, popup_type)
            window_fit(panel);
            window_fit(popup_frame);
     }
+    textsw_set_pop_up_location(frame_parent, popup_frame);
     (void) xv_set(popup_frame, 
                   FRAME_LABEL, label,
 		  XV_KEY_DATA, (Attr_attribute)TEXTSW_CURRENT_POPUP_KEY, 
 		  FOLIO_REP_TO_ABS(FOLIO_FOR_VIEW(view)),
+                  WIN_FRONT,
 		  XV_SHOW, TRUE, NULL);
     notify_interpose_destroy_func(popup_frame,textsw_popup_destroy_func);
 }
@@ -353,7 +355,8 @@ textsw_get_and_set_selection(popup_frame, view, popup_type)
 
     }
 
-    (void) xv_set(popup_frame, XV_SHOW, TRUE,
+    (void) xv_set(popup_frame, WIN_FRONT,
+		  XV_SHOW, TRUE,
 		  WIN_CLIENT_DATA, view,
 		  NULL);
 
@@ -461,13 +464,12 @@ textsw_set_pop_up_location(frame_parent, pop_up_frame)
 
     Rect            base_rect, pop_up_rect, screen_rect;
     short           new_x, new_y;
-    int             pop_up_fd = (int) window_get(pop_up_frame, WIN_FD);
     int             max_cover_area;
 
     screen_rect = *((Rect *) window_get(frame_parent, WIN_SCREEN_RECT));
     base_rect = *((Rect *) window_get(frame_parent, WIN_RECT));
 
-    win_getrect(pop_up_fd, &pop_up_rect);
+    win_getrect(pop_up_frame, &pop_up_rect);
 
     new_x = pop_up_rect.r_left;
     new_y = pop_up_rect.r_top;
@@ -491,7 +493,7 @@ textsw_set_pop_up_location(frame_parent, pop_up_frame)
     pop_up_rect.r_top = new_y;
 
 
-    win_setrect(pop_up_fd, &pop_up_rect);
+    win_setrect(pop_up_frame, &pop_up_rect);
 #undef MY_OFFSET
 }
 
