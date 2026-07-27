@@ -45,7 +45,9 @@ Requirements:
 - X11 development libraries:
   - `libX11`
   - `libXext` (used by `olwm`)
-- `libtirpc` development library (used by XView selection/RPC code)
+- `libtirpc` development library (used by XView selection/RPC code).
+  Modern glibc no longer ships `<rpc/rpc.h>` at the top level; headers
+  live under `/usr/include/tirpc` and CMake adds that include path.
 - Standard C math library (`libm`, usually provided by libc toolchain)
 
 Recommended package install commands:

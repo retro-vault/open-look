@@ -11,7 +11,26 @@ add_library(xview_static STATIC ${XVIEW_SOURCES})
 # Linux-oriented compile definitions used by the historical build.
 # xview relies on pixrect/olgx and X11 APIs.
 find_package(X11 REQUIRED)
+
+# libtirpc provides <rpc/rpc.h>. On modern glibc (Debian 13+/many others)
+# the headers live under /usr/include/tirpc, not /usr/include/rpc.
+# PATH_SUFFIXES tirpc finds either layout.
+find_path(TIRPC_INCLUDE_DIR
+    NAMES rpc/rpc.h
+    PATH_SUFFIXES tirpc
+)
 find_library(TIRPC_LIBRARY NAMES tirpc)
+if(NOT TIRPC_INCLUDE_DIR OR NOT TIRPC_LIBRARY)
+    message(FATAL_ERROR
+        "libtirpc not found (need rpc/rpc.h and -ltirpc).\n"
+        "  Debian/Ubuntu: sudo apt install libtirpc-dev\n"
+        "  Fedora/RHEL:   sudo dnf install libtirpc-devel\n"
+        "  Arch:          sudo pacman -S libtirpc\n"
+        "Headers are usually at /usr/include/tirpc/rpc/rpc.h "
+        "(requires -I/usr/include/tirpc).")
+endif()
+message(STATUS "libtirpc include: ${TIRPC_INCLUDE_DIR}")
+message(STATUS "libtirpc library: ${TIRPC_LIBRARY}")
 
 foreach(target xview xview_static)
     # Linux-oriented compile definitions used by the historical build.
@@ -30,9 +49,11 @@ foreach(target xview xview_static)
     )
 
     # Public includes are exposed through include/xview and include/xview_private.
+    # TIRPC is PUBLIC because xview headers (e.g. sel_svc.h) include <rpc/rpc.h>.
     target_include_directories(${target}
         PUBLIC
             ${PROJECT_SOURCE_DIR}/include
+            ${TIRPC_INCLUDE_DIR}
     )
 endforeach()
 
