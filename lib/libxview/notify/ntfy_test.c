@@ -240,7 +240,6 @@ enum input_method {
 
 CONDITION      *nt_expected();
 
-extern          errno;
 char           *progname;
 Notify_value    nt_halt();
 Notify_value    nt_scheduler();

@@ -26,7 +26,6 @@ static int      ndet_select_nfds, ndet_select_timeout;
 
 static Notify_client ndet_select_nclient = (Notify_client) & ndet_select_ibits;
 
-extern          errno;
 extern int      notify_exclude_fd;
 
 extern int

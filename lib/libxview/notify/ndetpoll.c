@@ -29,8 +29,6 @@ static int          ndet_poll_out_nfds,
 
 static Notify_client ndet_poll_nclient = (Notify_client) & ndet_poll_ibits;
 
-extern          errno;
-
 extern int
 notify_poll(fds, nfds, timeout)
     register struct poll    *fds

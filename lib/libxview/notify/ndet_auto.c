@@ -26,8 +26,6 @@
 #include <stdlib.h> 
 #endif /* SVR4 */
 
-extern          errno;
-
 pkg_private_data sigset_t ndet_sigs_auto;
 pkg_private_data Notify_client ndet_auto_nclient =
 (Notify_client) & ndet_sigs_auto;
