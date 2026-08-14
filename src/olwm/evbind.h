@@ -25,7 +25,7 @@ void GrabKeys(Display *dpy, Bool grab);
 /* RefreshKeyGrabs: Refresh key grabs. */
 void RefreshKeyGrabs(Display *dpy, XrmDatabase rdb);
 /* GrabButtons: Grab buttons. */
-void GrabButtons(Display *dpy, grab);
+void GrabButtons(Display *dpy, Bool grab);
 /* RefreshButtonGrabs: Refresh button grabs. */
 void RefreshButtonGrabs(Display *dpy);
 /* UpdateBindings: Set bindings. */
@@ -34,4 +34,3 @@ Bool UpdateBindings(Display *dpy, XrmDatabase newDB, Bool regrabKeys);
 void InitBindings(Display *dpy);
 
 #endif
-

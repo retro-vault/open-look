@@ -162,13 +162,14 @@ eventExtension(dpy, event, winInfo)
 	/* it's a ShapeNotify event */
 	se = (XShapeEvent *) event;
 	if (se->kind != ShapeBounding)
-	    return;
+	    return 0;
 	cli = winInfo->core.client;
 	cli->isShaped = se->shaped;
 	
 	FrameUpdateShape(cli, cli->framewin);
     }
 #endif /* SHAPE */
+	return 0;
 }
 
 

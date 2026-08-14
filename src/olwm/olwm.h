@@ -80,6 +80,27 @@ extern	Pixmap	pixGray;
 /* miscellaneous functions */
 /* ExitOLWM: Process exit olwm. */
 extern int ExitOLWM();
+Bool ExitRequested(void);
+int ExitSignalFD(void);
+void DrainExitSignal(void);
+void Exit(Display *dpy);
+void ReapChildren(void);
+void RecursiveRefresh(Display *dpy, Window win);
+void InitAtoms(Display *dpy);
+void WIInit(Display *dpy);
+pid_t SlaveStart(char **argv);
+void SlaveStop(void);
+void SlaveStopped(void);
+int olwm_usleep(unsigned int usec);
+
+#ifdef ALLPLANES
+Bool XAllPlanesQueryExtension(Display *dpy, int *event_base,
+                              int *error_base);
+void XAllPlanesFillRectangles(Display *dpy, Drawable d,
+                              XRectangle *rects, int nrects);
+void XAllPlanesDrawSegments(Display *dpy, Drawable d,
+                            XSegment *segments, int nsegments);
+#endif
 /* GetWindowProperty: Return window property. */
 extern void *GetWindowProperty(Display *dpy, Window w, Atom property, long long_offset, long long_length, Atom req_type, int req_fmt, unsigned long *nitems, unsigned long *bytes_after);
 #ifdef OW_I18N_L4

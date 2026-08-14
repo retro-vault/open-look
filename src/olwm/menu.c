@@ -25,6 +25,7 @@
 #include <X11/Xatom.h>
 #include <X11/Xresource.h>
 #include <X11/keysym.h>
+#include <X11/XKBlib.h>
 
 #include "i18n.h"		/* needed by olgx.h */
 #include <olgx/olgx.h>
@@ -34,6 +35,7 @@
 #include "ollocale.h"
 #include "mem.h"
 #include "events.h"
+#include "evbind.h"
 #include "olwm.h"
 #include "win.h"
 #include "menu.h"
@@ -973,12 +975,12 @@ establishAccelerator(bInfo, binding)
     Text *modsep;
     Text *temp;
 
-    buf[0] = (Text) NULL;
+    buf[0] = 0;
     modsep = GetText("-");
 
     /* If the accelerator is a letter key, force it to upper case. */
 
-    ks = XKeycodeToKeysym(DefDpy, binding->keycode, 0);
+    ks = XkbKeycodeToKeysym(DefDpy, binding->keycode, 0, 0);
     if (ks >= XK_a && ks <= XK_z)
 	ks = ks - XK_a + XK_A;
 

@@ -27,6 +27,7 @@
 #include "win.h"
 #include "globals.h"
 #include "events.h"
+#include "evbind.h"
 #include "client.h"
 
 /***************************************************************************
@@ -78,7 +79,7 @@ WinResize	*winInfo;
 
         if (ResolveMouseBinding(dpy, event, ignoremask) != ACTION_SELECT) {
 	    FrameAllowEvents(winInfo->core.client, event->xbutton.time);
-	    return;
+	    return 0;
 	}
 
 	/* draw depressed corner */
@@ -88,6 +89,7 @@ WinResize	*winInfo;
 	/* resize function will eat button release */
 	ClientResize(winInfo->core.client,event,winInfo->which,
 		     resizeCallback,winInfo);
+	return 0;
 }
 
 

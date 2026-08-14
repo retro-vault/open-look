@@ -34,6 +34,7 @@ xrolo -Wp 29 278 -Ws 592 309 -WP 1085 241 1)" -Wl "Rolo - .work  (Card 1 of 1)"
   Locals:  pointer - pointer to go through string
   Globals: NULL    - 0
 */
+void
 fix_command(string)
 char *string;
 {
@@ -105,4 +106,3 @@ char *string;
 
         return(new_command_line);
 }
-

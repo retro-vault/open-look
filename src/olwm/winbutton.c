@@ -25,6 +25,7 @@
 #include "globals.h"
 #include "menu.h"
 #include "events.h"
+#include "client.h"
 
 extern void FrameAllowEvents();
 extern Bool DoDefaultMenuAction();
@@ -88,7 +89,7 @@ WinButton	*winInfo;
 
 	if (winInfo->ignore) {
 	    FrameAllowEvents(cli, event->xbutton.time);
-	    return;
+	    return 0;
 	}
 
         switch (a) {
@@ -116,8 +117,9 @@ WinButton	*winInfo;
 
 	default:
 	    FrameAllowEvents(cli, event->xbutton.time);
-	    return;
+	    return 0;
         }
+	return 0;
 }
 
 /* 
@@ -140,7 +142,7 @@ WinButton	*winInfo;
 	FrameAllowEvents(cli, event->xbutton.time);
 
 	if (!AllButtonsUp(event))
-	    return;
+	    return 0;
 
         XUngrabPointer(dpy, CurrentTime);
 
@@ -153,7 +155,7 @@ WinButton	*winInfo;
 	}
 
         if (!in_windowmark(winInfo,x,y) || currentAction != ACTION_SELECT) {
-	    return;
+	    return 0;
         }
 
 	if (! winInfo->ignore) {
@@ -170,6 +172,7 @@ WinButton	*winInfo;
 	}
 
 	currentAction = ACTION_NONE;
+	return 0;
 }
 
 /* 
@@ -185,7 +188,7 @@ WinButton	*winInfo;
 	Graphics_info	*gisNormal = WinGI(winInfo,NORMAL_GINFO);
 
 	if (!event->xmotion.same_screen || currentAction != ACTION_SELECT)
-		return;
+		return 0;
 
         x = event->xmotion.x;
         y = event->xmotion.y;
@@ -197,6 +200,7 @@ WinButton	*winInfo;
 	    	0, 0, OLGX_INVOKED);
             buttonActive = True;
         }
+	return 0;
 }
 
 
@@ -403,4 +407,3 @@ Display *dpy;
         classButton.core.heightfunc = heightfuncButton;
         classButton.core.widthfunc = widthfuncButton;
 }
-

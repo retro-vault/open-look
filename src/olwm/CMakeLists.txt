@@ -38,11 +38,6 @@ endif()
 # Executable
 add_executable(olwm ${OLWM_SOURCES})
 
-# Temporarily disable compiler warnings while porting
-if (CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(olwm PRIVATE -w)
-endif()
-
 # Includes: local + possibly OPENWINHOME (if emulated)
 target_include_directories(olwm
     PRIVATE

@@ -10,6 +10,7 @@
  */
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>			/* free() */
 #include "st.h"
 #include "mem.h"
@@ -38,17 +39,10 @@ static void rehash(st_table *table);
 
 /*#define do_hash(key, table) (*table->hash)(key, table->num_bins)*/
 
-#if defined(_XV_API_BROKEN_64BIT)
 #define do_hash(key, table)\
-    ((table->hash == ST_PTRHASH) ? (((long) (key) >> 2) % table->num_bins) :\
-	(table->hash == ST_NUMHASH) ? ((long) (key) % table->num_bins) :\
+    ((table->hash == ST_PTRHASH) ? (((uintptr_t)(key) >> 2) % table->num_bins) :\
+	(table->hash == ST_NUMHASH) ? ((uintptr_t)(key) % table->num_bins) :\
 	(*table->hash)((key), table->num_bins))
-#else
-#define do_hash(key, table)\
-    ((table->hash == ST_PTRHASH) ? (((int) (key) >> 2) % table->num_bins) :\
-	(table->hash == ST_NUMHASH) ? ((int) (key) % table->num_bins) :\
-	(*table->hash)((key), table->num_bins))
-#endif
 
 st_table *st_init_table_with_params(compare, hash, size, density, grow_factor,
 				    reorder_flag)

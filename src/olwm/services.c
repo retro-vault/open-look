@@ -41,7 +41,6 @@
 
 
 extern	char		*getenv();
-extern	void		ReInitUserMenu();
 
 /*
  * Externals

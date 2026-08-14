@@ -359,8 +359,8 @@ ResolveMouseBinding(dpy, pevent, ignoremask)
 	    return ACTION_NONE;
     }
 
-    m = searchMouseBindings(&e, &a);
-    if ((m == MATCH_PREFIX && !checkChording(dpy, timeout, &e))
+    m = searchMouseBindings(&e.xbutton, &a);
+    if ((m == MATCH_PREFIX && !checkChording(dpy, timeout, &e.xbutton))
 	|| m == MATCH_EXACT) {
 	return a;
     } else {

@@ -448,7 +448,7 @@ WinIconFrame *winicon;
 
 	if (winicon->iconslot == NULL)
 	{
-		return;
+		return False;
 	}
 
 	incrRegion(iconGrid,winicon->iconslot,-1);
@@ -464,6 +464,7 @@ WinIconFrame *winicon;
 		break;
 	    }
 	}
+	return True;
 }
 
 /* sets the order in which slots are allocated for icons which are
@@ -538,7 +539,7 @@ IconGrid *iconGrid;
 		for (ima = 0; ima<iconGrid->maslots; ima++)
 		    for (imi = 0; imi<iconGrid->mislots; imi++)
 			OCCUPANCY(iconGrid,ima,imi)=0;
-		return;
+		return True;
 	}
 
 	/* partition existing icons */
@@ -583,4 +584,5 @@ IconGrid *iconGrid;
 	    (WinFunc(win,core.setconfigfunc))(win->core.client->dpy,win);
 	}
 	ListDestroy(lauto);
+	return True;
 }

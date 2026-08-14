@@ -502,7 +502,7 @@ PropGetWMState(dpy,win,state,iconwin)
 	int	*state;			/* RETURN */
 	Window	*iconwin;		/* RETURN */
 {
-	unsigned int nItems,remain;
+	unsigned long nItems,remain;
 	int	*data;
 
 	if (!PropAvailable(win,WMStateAvail))
@@ -563,7 +563,7 @@ PropGetOLWindowState(dpy,win,winState)
 	OLWindowState	*winState;		/* RETURN */
 {
 	OLWindowState	*newState;
-	unsigned int	nItems,remain;
+	unsigned long	nItems,remain;
 
 	if (!PropAvailable(win,OLWindowStateAvail))
 		return False;

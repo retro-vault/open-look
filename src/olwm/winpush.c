@@ -24,6 +24,7 @@
 #include "mem.h"
 #include "olwm.h"
 #include "win.h"
+#include "evbind.h"
 #include "globals.h"
 #include "client.h"
 
@@ -100,7 +101,7 @@ WinPushPin	*winInfo;
 {
 	FrameAllowEvents(winInfo->core.client, event->xbutton.time);
 	if (!AllButtonsUp(event))
-	    return;
+	    return 0;
 
 	/*
 	 * If pushpinStateAfterPress equals the current pin state, we know 
@@ -113,6 +114,7 @@ WinPushPin	*winInfo;
 			       currentAction == ACTION_SELECT);
 	}
 	currentAction = ACTION_NONE;
+	return 0;
 }
 
 /* 
@@ -128,9 +130,9 @@ WinPushPin	*winInfo;
 	Graphics_info	*gisNormal = WinGI(winInfo,NORMAL_GINFO);
 
 	if (!event->xmotion.same_screen)
-	    return;
+	    return 0;
 	if (currentAction != ACTION_SELECT && currentAction != ACTION_ADJUST)
-	    return;
+	    return 0;
 
         /* When the user moves the cursor off the pushpin
          * while s/he has the button down we should pull
@@ -149,6 +151,7 @@ WinPushPin	*winInfo;
              (event->xmotion.y >= PushPinOut_Height(gisNormal)));
         locallyChangePushPinState(dpy, winInfo,
                 fInWindow?pushpinStateAfterPress:!pushpinStateAfterPress);
+	return 0;
 }
 
 

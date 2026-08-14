@@ -38,6 +38,7 @@
 #include "mem.h"
 #include "win.h"
 #include "menu.h"
+#include "client.h"
 
 static char *menuFileName = "openwin-menu";
 static char *workspaceHelpStub = "workspace";
@@ -2094,7 +2095,8 @@ void *data;
 	{
 		SetClickCallback(doClickCallback, &sdi);
 	}
-	MenuShowSync(win->core.client->dpy, win, sdi.menu, eve, setFrameDefault, &sdi,
+	MenuShowSync(win->core.client->dpy, (WinGeneric *)win, sdi.menu, eve,
+			 setFrameDefault, &sdi,
 				 (eve->type == KeyPress) || (eve->type == KeyRelease),
 				 flbutton);
 }

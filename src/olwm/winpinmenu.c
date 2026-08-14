@@ -86,12 +86,13 @@ eventButtonPress(dpy, event, winInfo)
     XEvent		*event;
     WinPinMenu		*winInfo;
 {
-    if (! StartMenuGrabs(dpy, winInfo))
-	return;
+    if (! StartMenuGrabs(dpy, (WinGeneric *)winInfo))
+	return 0;
 
     MenuMakeFirst(winInfo->menuInfo, afterMenuShow, winInfo);
 
-    MenuTrack(dpy, event, winInfo, winInfo);
+    MenuTrack(dpy, event, (WinGeneric *)winInfo, (WinGeneric *)winInfo);
+	return 0;
 }
 
 
@@ -103,10 +104,12 @@ eventKeyEvent(dpy, event, winInfo)
 {
     MenuMakeFirst(winInfo->menuInfo, afterMenuShow, winInfo);
 
-    if (MenuHandleKeyEvent(dpy, event, winInfo, winInfo)) {
-	if (! StartMenuGrabs(dpy, winInfo))
-	    return;
+    if (MenuHandleKeyEvent(dpy, event, (WinGeneric *)winInfo,
+			   (WinGeneric *)winInfo)) {
+	if (! StartMenuGrabs(dpy, (WinGeneric *)winInfo))
+	    return 0;
     }
+	return 0;
 }
 
 /* 

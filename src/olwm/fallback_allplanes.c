@@ -13,15 +13,26 @@
 
 Bool XAllPlanesQueryExtension(Display *dpy, int *event_base, int *error_base)
 {
+    (void)dpy;
+    (void)event_base;
+    (void)error_base;
     return False;
 }
 
-void XAllPlanesFillRectangles(Display *dpy, Drawable d, GC gc, XRectangle *rects, int n)
+void XAllPlanesFillRectangles(Display *dpy, Drawable d,
+                              XRectangle *rects, int n)
 {
-    XFillRectangles(dpy, d, gc, rects, n); // fallback
+    (void)dpy;
+    (void)d;
+    (void)rects;
+    (void)n;
 }
 
-void XAllPlanesDrawSegments(Display *dpy, Drawable d, GC gc, XSegment *segs, int n)
+void XAllPlanesDrawSegments(Display *dpy, Drawable d,
+                            XSegment *segs, int n)
 {
-    XDrawSegments(dpy, d, gc, segs, n); // fallback
+    (void)dpy;
+    (void)d;
+    (void)segs;
+    (void)n;
 }

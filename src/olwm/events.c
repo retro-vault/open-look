@@ -18,6 +18,7 @@
 #include <X11/Xresource.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
+#include <X11/XKBlib.h>
 
 #include "i18n.h"
 #include "ollocale.h"
@@ -26,6 +27,7 @@
 #include "debug.h"
 #include "globals.h"
 #include "events.h"
+#include "evbind.h"
 #include "list.h"
 #include "mem.h"
 #include "error.h"
@@ -63,7 +65,7 @@ static Bool explicitPointerGrab = False;
 static void dispatchEvent(Display *dpy, XEvent *event, WinGeneric *winInfo);
 static int dispatchInterposer(Display *dpy, XEvent *event);
 static void doTimeout(void);
-static void nextEventOrTimeout(Display *dpy, XEvent *event);
+static Bool nextEventOrTimeout(Display *dpy, XEvent *event);
 static void updateModifierMap(Display *dpy);
 static void updateKeyboardMap(Display *dpy);
 static void *redispatchEvent(XEvent *e, void *c);
@@ -279,17 +281,18 @@ doTimeout()
 	(*f)(closure);
 }
 
-static void
+static Bool
 nextEventOrTimeout(dpy, event)
 Display *dpy;
 XEvent *event;
 {
-	int fd = ConnectionNumber(dpy);
 	struct timeval polltime;
-	fd_set rdset, wrset, xset;
 	int ready = -1;
 
 	while (XPending(dpy) == 0 && ready <= 0 && timeoutFunc != NULL) {
+	    if (ExitRequested())
+		return False;
+
 	    gettimeofday(&polltime,NULL);
 	    if ((timeoutFunc != NULL) &&
 		((polltime.tv_sec > timeoutNext.tv_sec) ||
@@ -303,13 +306,9 @@ XEvent *event;
 	    polltime.tv_sec = timeoutNext.tv_sec - polltime.tv_sec;
 	    polltime.tv_usec = 0;
 
-	    FD_ZERO(&rdset);
-	    FD_SET(fd,&rdset);
-	    FD_ZERO(&wrset);
-	    FD_ZERO(&xset);
-	    FD_SET(fd,&xset);
-
-	    ready = select(fd+1,&rdset,&wrset,&xset,&polltime);
+	    ready = AwaitEvents(dpy, &polltime) ? 1 : 0;
+	    if (ExitRequested())
+		return False;
 
 	    gettimeofday(&polltime,NULL);
 	    if ((timeoutFunc != NULL) &&
@@ -321,7 +320,10 @@ XEvent *event;
 	    }
 	}
 
+	if (ExitRequested())
+	    return False;
 	XNextEvent(dpy, event);
+	return True;
 }
 
 
@@ -432,16 +434,27 @@ EventLoop( dpy )
 	XEvent		event;
 
 	for (;;) {
+		ReapChildren();
+		if (ExitRequested())
+		    return;
+
 		if (timeoutFunc == NULL)
 		{
-		    XNextEvent( dpy, &event );
+		    while (XPending(dpy) == 0) {
+			(void)AwaitEvents(dpy, NULL);
+			if (ExitRequested())
+			    return;
+		    }
+		    XNextEvent(dpy, &event);
 		} 
 		else
 		{
-		    nextEventOrTimeout(dpy, &event);
+		    if (!nextEventOrTimeout(dpy, &event))
+			return;
 		}
 
-		ReapChildren();
+		if (ExitRequested())
+		    return;
 
 		/*
 		 * Discard user events that have the Synthetic bit set.
@@ -509,7 +522,7 @@ PropagatePressEventToChild(dpy, event, win)
     event->subwindow = None;
     event->x -= win->core.x;
     event->y -= win->core.y;
-    dispatchEvent(dpy, event, win);
+    dispatchEvent(dpy, (XEvent *)event, win);
     explicitPointerGrab = True;
 }
 
@@ -561,15 +574,17 @@ ModifierToKeysym(mod)
     kc = ModMap->modifiermap[mod * ModMap->max_keypermod];
     if (kc == 0)
 	return NoSymbol;
-    return(XKeycodeToKeysym(DefDpy, kc, 0));
+    return XkbKeycodeToKeysym(DefDpy, kc, 0, 0);
 }
  
 
 /*
  * Wait on dpy for some events to come in or for a timeout to occur.  If
  * events come in, return True and change timeout to indicate the amount of
- * time remaining.  If no events come in before the timeout expires, return
- * False.  A negative timestamp is considered to have timed out immediately.
+ * time remaining.  If no events come in before the timeout expires or olwm
+ * receives a termination signal, return False.  A NULL timeout waits
+ * indefinitely.  A negative timestamp is considered to have timed out
+ * immediately.
  */
 Bool
 AwaitEvents(dpy, timeout)
@@ -577,15 +592,26 @@ AwaitEvents(dpy, timeout)
     struct timeval *timeout;
 {
     fd_set rfds;
+    int dpyFd = ConnectionNumber(dpy);
+    int signalFd = ExitSignalFD();
+    int maxFd = dpyFd;
     int s;
 
-    if (timeout->tv_sec < 0)
+	if (ExitRequested())
+	    return False;
+
+    if (timeout != NULL && timeout->tv_sec < 0)
 	return False;
 
     while (1) {
 	FD_ZERO(&rfds);
-	FD_SET(ConnectionNumber(dpy), &rfds);
-	s = select(ConnectionNumber(dpy)+1, &rfds, NULL, NULL, timeout);
+	FD_SET(dpyFd, &rfds);
+	if (signalFd != -1) {
+	    FD_SET(signalFd, &rfds);
+	    if (signalFd > maxFd)
+		maxFd = signalFd;
+	}
+	s = select(maxFd + 1, &rfds, NULL, NULL, timeout);
 	if (s == 0) {
 	    /* we timed out without getting anything */
 	    return False;
@@ -605,16 +631,24 @@ AwaitEvents(dpy, timeout)
 #endif
 	    return False;
 	}
+	if (s == -1 && ExitRequested())
+	    return False;
 
 	/*
 	 * If we got some data, return True.  Otherwise, we were interrupted.
 	 * If we timed out, return False.  If not, there is time remaining;
 	 * continue around the loop.
 	 */
-	if (s > 0)
-	    return True;
+	if (s > 0) {
+	    if (signalFd != -1 && FD_ISSET(signalFd, &rfds)) {
+		DrainExitSignal();
+		return False;
+	    }
+	    if (FD_ISSET(dpyFd, &rfds))
+		return True;
+	}
 
-	if (timeout->tv_sec < 0)
+	if (timeout != NULL && timeout->tv_sec < 0)
 	    return False;
     }
 }

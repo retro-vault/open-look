@@ -31,7 +31,8 @@ extern FILE *fp;
            stderr  - standard error
            NULL    - 0
 */
-read_addon()
+void
+read_addon(void)
 {
         char line[200];
         FILE *fp;
@@ -70,6 +71,7 @@ read_addon()
            ADDON   - structure holding program and command line info
            NULL    - 0
 */
+void
 insert(line)
 char *line;
 {
@@ -136,6 +138,7 @@ char *line;
            head    - pointer to head of linked list
            NULL    - 0
 */
+void
 addto(name)
 char *name;
 {
@@ -160,4 +163,3 @@ char *name;
         /*Put whitespace back to put the string back to normal*/
         if(pointer) *pointer = ' ';
 }
-

@@ -28,13 +28,6 @@ target_include_directories(xtoolplaces
         "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
-target_compile_options(xtoolplaces
-    PRIVATE
-        -Wno-implicit-int
-        -Wno-implicit-function-declaration
-        -Wno-return-type
-)
-
 target_link_libraries(xtoolplaces
     PRIVATE
         ${X11_LIBRARIES}

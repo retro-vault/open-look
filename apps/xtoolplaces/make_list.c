@@ -68,6 +68,7 @@ int default_screen,total_screens;
            pointer   - pointer to spaces in string
   Globals: none
 */
+int
 count_spaces(string)
 char *string;
 {
@@ -78,4 +79,3 @@ char *string;
 
         return(numspaces);
 }
-

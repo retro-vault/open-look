@@ -27,8 +27,9 @@ extern	void	ClearSelections(/*  dpy  */);
 extern	Client* EnumSelections(/*  void*  */);
 
 /* SelectionInit: Initialize selection. */
-extern	void	SelectionInit();
-extern	void	SelectionRegister(Atom selection, Bool (*handler)());
+extern	void	SelectionInit(void);
+extern	void	SelectionRegister(Atom selection,
+				  void (*handler)(XEvent *event));
 /* SelectionResponse: Response selection. */
 extern	void	SelectionResponse(/*  event  */);
 

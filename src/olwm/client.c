@@ -28,6 +28,7 @@
 #include "globals.h"
 #include "dsdm.h"
 #include "resources.h"
+#include "properties.h"
 #include "client.h"
 
 static void setComposeLed(Display *dpy, int mode);
@@ -1625,4 +1626,3 @@ ClientDistributeProperty(cli, event)
 		}
 	}
 }
-

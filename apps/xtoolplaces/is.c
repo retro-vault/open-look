@@ -28,6 +28,7 @@ extern FILE *fp;
   Locals:  none
   Globals: wm_save_yourself - WM_SAVE_YOURSELF atom
 */
+int
 is_save_yourself(protocols,count)
 int count;
 Atom *protocols;
@@ -60,6 +61,7 @@ Atom *protocols;
            prop          - pointer to the data in WM_COMMAND
            status        - status of get call
 */
+int
 isnull(window)
 Window window;
 {
@@ -98,6 +100,7 @@ Window window;
   Globals: display       - interface info to X display
            CONSOLE_CLASS - class name for console windows
 */
+int
 is_console(window,command_line)
 char *command_line;
 Window window;
@@ -140,6 +143,7 @@ Window window;
   Globals: display      - interface info to X display
            CONTOOL_NAME - name of contool window
 */
+int
 check_contool(window)
 Window window;
 {
@@ -171,6 +175,7 @@ Window window;
   Globals: display             - interface info to X display
            SUN_TOOLS_ICON_NAME - icon name for {shell,cmd}tool in console mode
 */
+int
 check_sun_tools(window)
 Window window;
 {
@@ -201,6 +206,7 @@ Window window;
   Locals:  xterm        - flag indicating if window is xterm in console mode
   Globals: XTERM_OPTION - xterm option to put it into console mode
 */
+int
 check_xterm(window,command_line)
 char *command_line;
 Window window;
@@ -228,6 +234,7 @@ Window window;
            tp       - window's text property
   Globals: display  - interface info to X display
 */
+int
 is_xterm(window)
 Window window;
 {
@@ -259,6 +266,7 @@ Window window;
            tp       - window's text property
   Globals: display  - interface info to X display
 */
+int
 is_dtterm(window)
 Window window;
 {
@@ -291,6 +299,7 @@ Window window;
            tp       - window's text property
   Globals: display  - interface info to X display
 */
+int
 is_dtapp(window)
 Window window;
 {
@@ -327,6 +336,7 @@ Window window;
            tp       - window's text property
   Globals: display  - interface info to X display
 */
+int
 is_1x1(window)
 Window window;
 {
@@ -360,6 +370,7 @@ Window window;
            tp       - window's text property
   Globals: display  - interface info to X display
 */
+int
 is_emacs(window)
 Window window;
 {
@@ -411,6 +422,7 @@ Window window;
            text_prop - window's text property
   Globals: display   - interface info to X display
 */
+int
 is_calctool(window)
 Window window;
 {
@@ -438,6 +450,7 @@ Window window;
            remote            - command to use for remote applications
            wm_client_machine - WM_CLIENT_MACHINE atom
 */
+void
 is_remote(window)
 Window window;
 {
@@ -476,4 +489,3 @@ Window window;
         if(status) return((char *) tp.value);
         else return(NULL);
 }
-

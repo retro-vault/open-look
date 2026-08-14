@@ -227,9 +227,9 @@ printError(dpy, err, tag)
 	err->request_code, buf);
     FPRINTF(stderr, GetString("  request minor code:  %d\n"),
 	err->minor_code);
-    FPRINTF(stderr, GetString("  resource ID in failed request:  0x%x\n"),
-	err->resourceid);
-    FPRINTF(stderr, GetString("  serial number of failed request:  %d\n"),
+    FPRINTF(stderr, GetString("  resource ID in failed request:  0x%lx\n"),
+	(unsigned long)err->resourceid);
+    FPRINTF(stderr, GetString("  serial number of failed request:  %lu\n"),
 	err->serial);
 #if 0
     /* How can we find this out in X11R6?  martin-2.buck@student.uni-ulm.de */

@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 #include <X11/Xos.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -27,6 +28,7 @@
 #include "win.h"
 #include "globals.h"
 #include "events.h"
+#include "evbind.h"
 #include "client.h"
 
 /***************************************************************************
@@ -63,9 +65,9 @@ static	SemanticAction	currentAction = ACTION_NONE;
  * nonexistent or not a frame, we assume the original frame has been destroyed 
  * and we ignore the raise request.
  */
-void
+static void
 autoRaise(frameid)
-    Window frameid;
+    void *frameid;
 {
     WinGenericFrame *frame;
     Bool samescreen;
@@ -74,7 +76,7 @@ autoRaise(frameid)
     unsigned int state;
     Client *cli;
 
-    frame = (WinGenericFrame *) WIGetInfo(frameid);
+    frame = (WinGenericFrame *)WIGetInfo((Window)(uintptr_t)frameid);
     if (frame == NULL ||
 	(frame->core.kind != WIN_FRAME && frame->core.kind != WIN_ICON))
     {
@@ -147,9 +149,9 @@ Bool		focus;
 		if (GRV.AutoRaiseDelay > 0) {
 		    TimeoutCancel();
 		    TimeoutRequest(GRV.AutoRaiseDelay, autoRaise,
-				   winInfo->core.self);
+			   (void *)(uintptr_t)winInfo->core.self);
 		} else {
-		    autoRaise(winInfo->core.self);
+		    autoRaise((void *)(uintptr_t)winInfo->core.self);
 		}
 	    }
 	}
@@ -260,7 +262,7 @@ WinGenericFrame *frameInfo;
         Client *cli = frameInfo->core.client;
 
 	if (!AllButtonsUp(event))
-	    return;
+	    return 0;
 
 #define bevent  (event->xbutton)
 
@@ -313,6 +315,7 @@ WinGenericFrame *frameInfo;
 		break;
 
         }
+	return 0;
 }
 
 /*
@@ -327,16 +330,16 @@ WinGenericFrame *frameInfo;
         /* We get this only after a Select press */
         if (hadSelect == False) /* watch for erroneous motions */
         {
-                return;
+                return 0;
         }
 
 	if (!event->xmotion.same_screen)
-		return;
+		return 0;
 
         /* See if we have moved more than the threshold amount. */
         if ((ABS(event->xmotion.x - buttonPressX) < GRV.MoveThreshold) &&
             (ABS(event->xmotion.y - buttonPressY) < GRV.MoveThreshold))
-                return;
+                return 0;
 
 	(WinFunc(frameInfo,fcore.selectDrag))(dpy, event, frameInfo, &lastSelectPress);
 
@@ -345,6 +348,7 @@ WinGenericFrame *frameInfo;
          * using an interposer, so we can clear the hadSelect flag.
          */
         hadSelect = False;
+	return 0;
 }
 
 /*

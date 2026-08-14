@@ -338,12 +338,17 @@ initVisual(dpy, scrInfo)
     }
 
     if ((buf = getResource(scrInfo,visidCQ,visidIQ)) != NULL) {
+	char *end;
+	unsigned long visualid;
 	/*
-	 * Note: %i converts from hex (if leading "0x"), from octal (if
+	 * Base zero converts from hex (if leading "0x"), from octal (if
 	 * leading "0"), otherwise from decimal.
 	 */
-	if (1 == sscanf(buf, "%i", &vtemplate.visualid))
+	visualid = strtoul(buf, &end, 0);
+	if (end != buf) {
+	    vtemplate.visualid = (VisualID)visualid;
 	    vinfomask |= VisualIDMask;
+	}
     }
 
     if (vinfomask != 0) {
@@ -1801,7 +1806,7 @@ initScreenInfo(dpy,screenno,visInfo,nvis)
 	/*
  	 *	Initalize the colormap focus for screen/root
 	 */
-	ColorFocusInit(dpy,scrInfo->rootwin);
+	ColorFocusInit(dpy, (WinGeneric *)scrInfo->rootwin);
 
 	/*
  	 *	Set the cursor for that screen's root window

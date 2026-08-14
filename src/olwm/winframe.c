@@ -28,6 +28,7 @@
 #include "globals.h"
 #include "error.h"
 #include "client.h"
+#include "properties.h"
 
 
 /***************************************************************************
@@ -463,10 +464,11 @@ WinPaneFrame *frameInfo;
 {
     /* ignore events caused by grabs */
     if (event->xcrossing.mode != NotifyNormal)
-	return;
+	return 0;
 
     if (event->xcrossing.detail != NotifyInferior)
 	frameInfo->pointerIsWarped = False;
+	return 0;
 }
 
 

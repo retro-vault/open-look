@@ -27,6 +27,7 @@ extern Display *display;
            stderr       - standard error
            NULL         - 0
 */
+void
 readfile(file, list, indx)
 int *indx;
 char *file, *list[50];
@@ -72,6 +73,7 @@ char *file, *list[50];
 	   status - status of get call
   Globals: none
 */
+int
 on_list(window, list, numval)
 char *list[50];
 int numval;
@@ -108,4 +110,3 @@ Window window;
 
         return(result);
 }
-

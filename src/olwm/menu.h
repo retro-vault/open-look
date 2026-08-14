@@ -190,6 +190,31 @@ void ShowStandardMenu();
 void ShowStandardMenuSync();
 /* SetClickCallback: Set click callback. */
 void SetClickCallback();
+void DrawMenuWithHints(Display *dpy, MenuInfo *menuInfo);
+void SetMenuRedrawHints(Display *dpy, XExposeEvent *event,
+                        MenuInfo *menuInfo);
+Bool StartMenuGrabs(Display *dpy, struct _wingeneric *winInfo);
+void MenuMakeFirst(MenuInfo *menuInfo, void (*syncFunc)(), void *syncInfo);
+void MenuShowSync(Display *dpy, struct _wingeneric *winInfo, Menu *menu,
+                  XEvent *event, void (*syncFunc)(), void *syncInfo,
+                  Bool fromKeyboard, Bool fromButton);
+Bool MenuHandleKeyEvent(Display *dpy, XEvent *event,
+                        struct _wingeneric *win,
+                        struct _wingeneric *closure);
+int MenuTrack(Display *dpy, XEvent *event, struct _wingeneric *win,
+              struct _wingeneric *closure);
+void DrawLocCursor(Display *dpy, MenuInfo *menuInfo, int x, int y);
+void ReplaceChars(char *string, char *targets, int replacement);
+void SetMenuHier(Menu *menu, int index, Menu *submenu);
+
+void RootMenuShow(Display *dpy, struct _wingeneric *winInfo, XEvent *event);
+void ReInitUserMenu(Display *dpy, Bool forceRebuild);
+void ReInitAllMenus(Display *dpy);
+
+int CreateWindowMenuInfo(Display *dpy, struct _screeninfo *scrInfo);
+int DestroyWindowMenuInfo(Display *dpy, struct _screeninfo *scrInfo);
+int CreateUserMenuInfo(Display *dpy, struct _screeninfo *scrInfo);
+int DestroyUserMenuInfo(Display *dpy, struct _screeninfo *scrInfo);
 
 /* InitMenus: Initialize menus. */
 extern void InitMenus();
@@ -283,4 +308,3 @@ MakePinMenu(/* Display *dpy,
 			 	} while (0)
 
 #endif /* _OLWM_MENU_H */
-

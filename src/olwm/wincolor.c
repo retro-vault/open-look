@@ -447,6 +447,8 @@ InstallPointerColormap(dpy, root, rootx, rooty, setfocusclient)
 void
 UnlockColormap(dpy, root, rootx, rooty)
     Display *dpy;
+    Window root;
+    int rootx, rooty;
 {
     WinGeneric *rootinfo = WIGetInfo(root);
 

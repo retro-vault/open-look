@@ -22,6 +22,7 @@
 #include "olwm.h"
 #include "win.h"
 #include "events.h"
+#include "evbind.h"
 #include "list.h"
 #include "globals.h"
 #include "error.h"

@@ -105,7 +105,9 @@ static Bool selectionOwned = False;
 static void *GetInterestProperty(Display *dpy, Window win, unsigned long *nitems);
 static Region MakeRegionFromRect(int x, int y, unsigned int w, unsigned int h);
 static Region GetWindowRegion(Display *dpy, WinGeneric *winInfo, Bool offset);
-static void SubtractWindowFromVisibleRegion(Display *dpy, Window winInfo, Region visrgn);
+static void SubtractWindowFromVisibleRegion(Display *dpy,
+                                            WinGeneric *winInfo,
+                                            Region visrgn);
 static void ProcessInterestProperty(Display *dpy, WinGeneric* winInfo, int screen, void *data, unsigned long datalen, Region visrgn, int xoff, int yoff);
 static void FindDropSites(Display *dpy);
 static void FreeDropSites(void);
@@ -246,7 +248,7 @@ GetWindowRegion(dpy, winInfo, offset)
 static void
 SubtractWindowFromVisibleRegion(dpy, winInfo, visrgn)
     Display *dpy;
-    Window winInfo;
+    WinGeneric *winInfo;
     Region visrgn;
 {
     Region winrgn = GetWindowRegion(dpy, winInfo, True);
@@ -435,7 +437,7 @@ FindDropSites(dpy)
 	if (rootInfo == NULL || rootInfo->core.kind != WIN_ROOT)
 	    continue;
 
-	visrgn = GetWindowRegion(dpy, rootInfo, False);
+	visrgn = GetWindowRegion(dpy, (WinGeneric *)rootInfo, False);
 
 	if (_XQueryTree((dpy, root, &junk, &junk, &children,
 			 (unsigned int *) &nchildren)) == 0)
@@ -481,14 +483,14 @@ FindDropSites(dpy)
 		    &datalen);
 		WinRootPos((WinGeneric *)paneInfo, &xoff, &yoff);
 		if (sitedata != NULL) {
-		    ProcessInterestProperty(dpy, paneInfo, s, sitedata,
+		    ProcessInterestProperty(dpy, (WinGeneric *)paneInfo, s, sitedata,
 					    datalen, visrgn, xoff, yoff);
 		    XFree(sitedata);
 
 		    if (fwdsitedata != NULL) {
 			framergn = GetWindowRegion(dpy, winInfo, True);
 			XIntersectRegion(framergn, visrgn, framergn);
-			toprgn = GetWindowRegion(dpy, paneInfo, False);
+			toprgn = GetWindowRegion(dpy, (WinGeneric *)paneInfo, False);
 			XOffsetRegion(toprgn, xoff, yoff);
 			XSubtractRegion(framergn, toprgn, framergn);
 			ProcessInterestProperty(dpy, winInfo, s, fwdsitedata,

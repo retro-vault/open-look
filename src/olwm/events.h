@@ -142,11 +142,7 @@ extern KeySym ModifierToKeysym();
   (((e)->xbutton.state & AnyButtonMask) == 0)
 
 /* timeouts */
-typedef void (*TimeoutFunc)();
-/* TimeoutRequest: Request timeout. */
-extern void TimeoutRequest();	/* int time, TimeoutFunc f, void *closure */
-/* TimeoutCancel: Process timeout cancel. */
-extern void TimeoutCancel();	/* no params */
+typedef void (*TimeoutFunc)(void *closure);
 
 /*
  * declared in evbind.c
@@ -166,7 +162,7 @@ int PropagateEventToParent(Display *dpy, XEvent *event, struct _wingeneric *win)
 void PropagatePressEventToChild(Display *dpy, XButtonPressedEvent *event, struct _wingeneric *win);
 /* FindModifierMask: Return modifier mask. */
 unsigned int FindModifierMask(KeyCode kc);
-KeySym ModifierToKeysym(unsigned intmod);
+KeySym ModifierToKeysym(unsigned int mod);
 /* AwaitEvents: Process await events. */
 Bool AwaitEvents(Display *dpy, struct timeval *timeout);
 /* InstallInterposer: Install interposer. */
@@ -177,7 +173,7 @@ InterposerFunc InterposerInstalled(void);
 /* EnableInterposerDelegation: Enable interposer delegation. */
 void EnableInterposerDelegation(void);
 /* TimeoutRequest: Request timeout. */
-void TimeoutRequest(int t, TimeoutFunc f, void *c);
+void TimeoutRequest(int t, TimeoutFunc f, void *closure);
 /* TimeoutCancel: Process timeout cancel. */
 void TimeoutCancel(void);
 /* InitEvents: Initialize events. */
