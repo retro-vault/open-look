@@ -318,6 +318,7 @@ WinPaneFrame *frameInfo;
             ErrorWarning("ignoring MapRequest event on frame.");
         }
 #endif /* DEBUG */
+    return 0;
 }
 
 /*
@@ -333,6 +334,7 @@ WinPaneFrame *frameInfo;
 	WinPane		*winPane = (WinPane*)frameInfo->fcore.panewin;
 
 	ClientConfigure(cli, (WinGeneric *)winPane, (XConfigureRequestEvent *)event);
+    return 0;
 }
 
 /*
@@ -350,6 +352,7 @@ WinPaneFrame *frameInfo;
         {
 		ClientSetFocus(cli,True,event->xbutton.time);
         }  
+    return 0;
 }
 
 /*
@@ -365,6 +368,7 @@ WinPaneFrame *frameInfo;
 	ClientBack(frameInfo->core.client);
     else
 	ClientFullRestoreSizeToggle(frameInfo->core.client,event->xbutton.time);
+    return 0;
 }
 
 /*
@@ -379,6 +383,7 @@ WinPaneFrame *frameInfo;
 XButtonEvent *lastpress;
 {
 	ClientMove(frameInfo->core.client, (XEvent *)lastpress);
+    return 0;
 }
 
 /*
@@ -392,6 +397,7 @@ WinPaneFrame *frameInfo;
 {
     if (frameInfo->core.client->wmDecors->menu_type != MENU_NONE)
 	ShowStandardMenu(frameInfo, event, False);
+    return 0;
 }
 
 /*
@@ -409,6 +415,7 @@ WinPaneFrame *frameInfo;
          * client, set the input focus.
          */
 	ClientSetFocus(cli,False,event->xbutton.time);
+    return 0;
 }
 
 
@@ -428,6 +435,7 @@ WinPaneFrame *frameInfo;
         {
 		ClientSetFocus(cli,True,event->xbutton.time);
         }  
+    return 0;
 }
 
 /*
@@ -446,6 +454,7 @@ WinPaneFrame *frameInfo;
 	frameInfo->pointerIsWarped = False;
 
     (void) GFrameEventEnterNotify(dpy, event, frameInfo);
+    return 0;
 }
 
 /*
@@ -466,9 +475,10 @@ WinPaneFrame *frameInfo;
     if (event->xcrossing.mode != NotifyNormal)
 	return 0;
 
-    if (event->xcrossing.detail != NotifyInferior)
+    if (event->xcrossing.detail != NotifyInferior) {
 	frameInfo->pointerIsWarped = False;
-	return 0;
+	}
+    return 0;
 }
 
 
@@ -1057,6 +1067,7 @@ WinPaneFrame *winInfo;
     if (cli->wmDecors->flags & WMDecorationIMStatus)
         drawIMStatus(dpy, winInfo, cli); /* no difference between 2D and 3D */
 #endif
+    return 0;
 }
 
 /*
@@ -1070,6 +1081,7 @@ Bool		focus;
 {
 	GFrameFocus(dpy,winInfo,focus);
 	(WinFunc(winInfo,core.drawfunc))(dpy,winInfo);
+    return 0;
 }
 
 /*
@@ -1118,6 +1130,7 @@ WinPaneFrame *winInfo;
 #endif /* DEBUG */
 
 	MemFree(winInfo);
+    return 0;
 }
 
 /*
@@ -1206,6 +1219,7 @@ setconfigFrame(dpy, winInfo)
 #endif /* SHAPE */
 
     GFrameSetConfigFunc(dpy, winInfo);
+    return 0;
 }
 
 
@@ -1229,6 +1243,7 @@ selectFrame(dpy, winInfo, selected)
 #endif /* SHAPE */
 
     GFrameSelect(dpy, winInfo, selected);
+    return 0;
 }
 
 
@@ -1585,6 +1600,7 @@ Time	timestamp;
 
 	frameInfo->fcore.fullsize = !frameInfo->fcore.fullsize;
 
+    return 0;
 }
 
 /***************************************************************************

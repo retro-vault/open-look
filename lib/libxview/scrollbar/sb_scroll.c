@@ -62,8 +62,6 @@ scrollbar_scroll_to_offset(sb, view_start)
       view_start = 0;
     else if (view_start > sb->object_length) {
 	view_start = sb->object_length;
-    } else if (view_start < 0) {
-	view_start = 0;
     }
     if (view_start != sb->view_start) {
 

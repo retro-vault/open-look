@@ -167,11 +167,12 @@ frame_set_cmdline_options(frame_public, from_init)
     *defaults = 0;
     
     /* Do a frame set if there are frame attrs */
-    if (!from_init)
+    if (!from_init) {
 	if (defaults_array[0])
 	    status = (int) xv_set_avlist(frame_public, defaults_array);
 	else
 	    status = XV_OK;
+    }
 
     /* Free any malloc'ed strings */
     if (defaults_string[0])

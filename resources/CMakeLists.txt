@@ -70,6 +70,9 @@ add_custom_target(openlook_resources ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_CURRENT_SOURCE_DIR}/fonts"
             "${OPENWINHOME_FONT_DIR}"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/locale"
+            "${OPENWINHOME_RESOURCE_SHARE_DIR}/locale"
     COMMENT "Staging OpenLook resources into ${OPENWINHOME_STAGE_DIR}"
 )
 
@@ -82,6 +85,9 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/images"
 )
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/fonts"
     DESTINATION share/fonts/openlook
+)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/locale/"
+    DESTINATION share/locale
 )
 install(FILES "${PROJECT_SOURCE_DIR}/config/openwin-menu"
               "${PROJECT_SOURCE_DIR}/config/openwin-menu-programs"

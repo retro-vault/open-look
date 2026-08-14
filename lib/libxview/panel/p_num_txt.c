@@ -863,7 +863,7 @@ num_txt_paint_btn(ip, dp)
     Graphics_info  *ginfo = ip->panel->ginfo;
     Xv_Drawable_info *info;
     Xv_Window	    pw;
-    int		    save_black;
+    int		    save_black = 0;
 
     if (ip->color_index >= 0)
 	save_black = olgx_get_single_color(ginfo, OLGX_BLACK);

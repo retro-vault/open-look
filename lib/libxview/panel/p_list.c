@@ -811,8 +811,9 @@ pls:
 		    node = node->next;
 		if (!node)
 		    break;
-		prev = node->prev;
-		/* Delete the requested number of rows */
+	prev = node->prev;
+	next = node;
+	/* Delete the requested number of rows */
 		for (i = 1; node && i <= (int) avlist[2]; i++) {
 		    next = node->next;
 #ifdef OW_I18N
@@ -1906,9 +1907,11 @@ show_focus_win(item_public)
     x = dp->list_box.r_left;
     if (dp->focus_row) {
 	make_row_visible(dp, dp->focus_row->row);
-	(void) get_row_rect(dp, dp->focus_row, &rect);
-	y = rect.r_top +
-	    (rect.r_height - FRAME_FOCUS_RIGHT_HEIGHT)/2;
+	if (get_row_rect(dp, dp->focus_row, &rect))
+	    y = rect.r_top +
+		(rect.r_height - FRAME_FOCUS_RIGHT_HEIGHT)/2;
+	else
+	    y = dp->list_box.r_top;
     } else
 	y = dp->list_box.r_top;
     if (!dp->focus_win_shown ||
@@ -3107,7 +3110,7 @@ paint_row(dp, row)
     Row_info *row;
 {
     Display	   *display;
-    int		    fg_pixval;	/* foreground pixel value */
+    int		    fg_pixval = 0;	/* foreground pixel value */
     Xv_Font	    font;
     int		    gc_mask;
     XGCValues	    gc_values;
@@ -3116,7 +3119,7 @@ paint_row(dp, row)
     GC		    gc;
     Xv_window	    pw;
     Rect	    row_rect;
-    int		    save_black;
+    int		    save_black = 0;
     Rect	    string_rect;
     Item_info	   *text_item_private;
     Drawable	    xid;

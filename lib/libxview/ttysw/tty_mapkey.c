@@ -191,6 +191,7 @@ ttysw_mapsetim(ttysw)
     win_setinputcodebit(&imask, WIN_KEY_EXPOSE);
     win_setinputcodebit(&imask, WIN_KEY_OPEN);
     (void) win_setinputmask(window, &imask, 0, 0);
+	return 0;
 }
 
 Pkg_private int

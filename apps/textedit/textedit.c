@@ -998,7 +998,7 @@ Die:
 	if (was_SIGILL) {
 #ifndef lint
 	    char	dummy, *bad_ptr = 0;
-	    /* (void)signal(SIGSEGV, SIG_DFL);	/* Make sure 0 deref dumps. */
+	    /* Reset SIGSEGV so the null dereference below produces a core. */
 	    vec.sa_handler = SIG_DFL;
 	    sigemptyset(&vec.sa_mask);
 	    vec.sa_flags = 0;
@@ -1006,7 +1006,7 @@ Die:
 	    dummy = *bad_ptr;
 #endif
 	} else {
-	    /* (void)signal(SIGILL, SIG_DFL);	/* Make sure abort() dumps. */
+	    /* Reset SIGILL so abort() produces a core. */
 	    vec.sa_handler = SIG_DFL;
 	    sigemptyset(&vec.sa_mask);
 	    vec.sa_flags = 0;

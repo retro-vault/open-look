@@ -1396,6 +1396,7 @@ DestroyWindowMenuInfo(dpy, scrInfo)
     for (i = 0; i < (int) MENU_NONE; i++) {
 	menuInfoDestroy(scrInfo->menuCache->menuInfoList[i]);
     }
+	return 0;
 }
 
 /*
@@ -1423,6 +1424,7 @@ CreateUserMenuInfo(dpy, scrInfo)
 	}
 	scrInfo->menuCache->maxDepth = maxDepth;
     }
+	return 0;
 }
 
 /*
@@ -1439,6 +1441,7 @@ DestroyUserMenuInfo(dpy, scrInfo)
 	menuInfoDestroy(scrInfo->menuCache->menuInfoList[i]);
 	scrInfo->menuCache->menuInfoList[i] = 0;
     }
+	return 0;
 }
 
 /*
@@ -2034,9 +2037,9 @@ inMenuDent(mInfo, bindex, pevent)
     if (BUTTON_INDEX_OK(mInfo, bindex)) {
 	switch (pevent->type) {
 	  case MotionNotify:
-	    if (pevent->xmotion.same_screen) {
-		curX = pevent->xmotion.x_root;
-	    }
+	    if (!pevent->xmotion.same_screen)
+		return False;
+	    curX = pevent->xmotion.x_root;
 	    break;
 	    
 	  case ButtonPress:
@@ -2570,14 +2573,16 @@ checkMenuEvent(dpy, menuInfo, pevent, bindex)
 	yoff = HEAD_VSPACE;
 
     switch (pevent->type) {
-      case MotionNotify:
-	if (pevent->xmotion.same_screen) {
-	    hitwindow = pevent->xmotion.window;
-	    ex = pevent->xmotion.x;
-	    ey = pevent->xmotion.y;
-	    rx = pevent->xmotion.x_root;
-	    ry = pevent->xmotion.y_root;
+	  case MotionNotify:
+	if (!pevent->xmotion.same_screen) {
+	    *bindex = NOBUTTON;
+	    return ML_OFFMENU;
 	}
+	hitwindow = pevent->xmotion.window;
+	ex = pevent->xmotion.x;
+	ey = pevent->xmotion.y;
+	rx = pevent->xmotion.x_root;
+	ry = pevent->xmotion.y_root;
 	break;
       case ButtonPress:
       case ButtonRelease:
@@ -2595,6 +2600,9 @@ checkMenuEvent(dpy, menuInfo, pevent, bindex)
 	rx = pevent->xkey.x_root;
 	ry = pevent->xkey.y_root;
 	break;
+      default:
+	*bindex = NOBUTTON;
+	return ML_OFFMENU;
     }
 
     /* If the event window is not the menu window. */
@@ -2722,8 +2730,10 @@ menuHide(dpy, winInfo, fldoit)
 	}
     }
 
-    if (InterposerInstalled() == MenuTrack)
+    if (InterposerInstalled() == MenuTrack) {
 	UninstallInterposer();
+    }
+    return 0;
 }
 
 

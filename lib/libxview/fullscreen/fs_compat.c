@@ -38,6 +38,7 @@ fullscreen_set_cursor(fs, cursor)
     Xv_Cursor       cursor;
 {
     (void) xv_set((Xv_opaque)fs, WIN_CURSOR, cursor, NULL);
+	return XV_OK;
 }
 
 Xv_public int
@@ -46,6 +47,7 @@ fullscreen_set_inputmask(fs, im)
     Inputmask      *im;
 {
     (void) xv_set((Xv_opaque)fs, WIN_INPUT_MASK, im, NULL);
+	return XV_OK;
 }
 
 
@@ -54,4 +56,5 @@ fullscreen_destroy(fs)
     struct fullscreen *fs;
 {
     (void) xv_destroy((Xv_opaque)fs);
+	return XV_OK;
 }

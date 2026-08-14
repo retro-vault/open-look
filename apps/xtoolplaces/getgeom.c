@@ -85,6 +85,8 @@ Window window;
         status = XGetGeometry(display,window,&root,&x,&y,&width,&height,&dummy,
                               &dummy);
 
+        if(!status) return(command_line);
+
         if(status) {
           width_inc = 1;
           height_inc = 1;
@@ -394,4 +396,3 @@ char *command_line;
 
 	return(command_line);
 }
-

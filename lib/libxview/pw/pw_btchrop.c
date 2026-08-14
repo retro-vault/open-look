@@ -29,4 +29,5 @@ pw_batchrop(pw, x, y, op, sbp, n)
 	xv_rop((Xv_opaque)pw, dest_x, dest_y, temp->pr->pr_width,
 	       temp->pr->pr_height, op, temp->pr, 0, 0);
     }
+	return 0;
 }

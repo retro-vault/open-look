@@ -160,8 +160,8 @@ textsw_call_filter(view, filter_argv)
 {
     register Textsw_folio folio = FOLIO_FOR_VIEW(view);
     int             filter_input, filter_output, result = 0;
-    Es_index        save_length;
-    Ev_mark_object  save_lpo_id;
+    Es_index        save_length = 0;
+    Ev_mark_object  save_lpo_id = (Ev_mark_object) NULL;
     Ev_mark_object  save_insert = (Ev_mark_object)NULL;
     int             pid;
     Textsw_selection_object selection;
@@ -656,10 +656,10 @@ textsw_call_smart_filter(view, event, filter_argv)
     unsigned char   buffer[PIPSIZ];
 #endif    
     struct timeval  tv;
-    Es_index        insert, save_length;
+    Es_index        insert, save_length = 0;
     Es_index        insert_line_first, insert_line_last_plus_one;
     unsigned        state = FILTER_STARTED;
-    Ev_mark_object  save_lpo_id;
+    Ev_mark_object  save_lpo_id = (Ev_mark_object) NULL;
     int             pid;
     Textsw_selection_object selection;
     Notify_func     old_sigpipe = (Notify_func) 0;

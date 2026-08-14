@@ -62,6 +62,7 @@ l10n_config_read(locale, file_name, a_list)
 	int			lineno;
 	int			slotno;
 	char			fullpath[MAXPATHLEN];
+	const char		*openwinhome;
 #ifdef OW_I18N
 	wchar_t			line[MAX_LINE_LENGTH+1];
 #else
@@ -76,24 +77,31 @@ l10n_config_read(locale, file_name, a_list)
 	 */
 #if 1
 	/* martin-2.buck@student.uni-ulm.de */
-	if (getenv("OPENWINHOME")) {
-		sprintf(fullpath, "%s/share/locale/%s/props/%s",
-			getenv("OPENWINHOME"), locale, file_name);
-	} else {
+	openwinhome = getenv("OPENWINHOME");
+	if (openwinhome == NULL) {
 #ifdef OPENWINHOME_DEFAULT
-		sprintf(fullpath, "%s/share/locale/%s/props/%s",
-			OPENWINHOME_DEFAULT, locale, file_name);
+		openwinhome = OPENWINHOME_DEFAULT;
 #else
-		sprintf(fullpath, "%s/share/locale/%s/props/%s",
-			"/usr/openwin", locale, file_name);
+		openwinhome = "/usr/openwin";
 #endif
 	}
+	if (snprintf(fullpath, sizeof(fullpath), "%s/share/locale/%s/props/%s",
+		     openwinhome, locale, file_name) >= (int)sizeof(fullpath))
+		goto fileerr_ret;
 #else
 	sprintf(fullpath, "%s/share/locale/%s/props/%s",
 		getenv("OPENWINHOME"), locale, file_name);
 #endif
 
-	if ((config_file = fopen(fullpath, "r")) == NULL)
+	config_file = fopen(fullpath, "r");
+	if (config_file == NULL && strcmp(locale, "C") != 0) {
+		if (snprintf(fullpath, sizeof(fullpath),
+			     "%s/share/locale/C/props/%s", openwinhome,
+			     file_name) >= (int)sizeof(fullpath))
+			goto fileerr_ret;
+		config_file = fopen(fullpath, "r");
+	}
+	if (config_file == NULL)
 	{
 		perror(fullpath);
 		goto fileerr_ret;

@@ -91,6 +91,9 @@ textsw_make_temp_name(in_here)
 #ifndef XVIEW_USE_INSECURE_TMPFILES
     CHAR *login_dir;
 #endif
+
+    if (in_here == NULL)
+	return;
     /*
      * BUG ALERT!  Should be able to specify directory other than /tmp.
      * However, if that directory is not /tmp it should be a local (not NFS)
@@ -454,6 +457,7 @@ textsw_format_load_error(msg, status, filename, scratch_name)
 	free(full_pathname);
 	break;
     }
+	return 0;
 }
 
 Pkg_private void
@@ -765,7 +769,7 @@ textsw_save_internal(folio, error_buf, locx, locy)
     CHAR            original_name[MAXNAMLEN], *name;
     register char  *msg;
     Es_handle       backup, original = ES_NULL;
-    int             status;
+    int             status = ES_UNKNOWN_ERROR;
     Es_status       es_status;
     Frame	    frame;
     Xv_Notice	    text_notice;
@@ -898,7 +902,7 @@ textsw_save(abstract, locx, locy)
     int             locx, locy;
 {
     char            error_buf[MAXNAMLEN + 100];
-    Es_status       status;
+    Es_status       status = ES_CHECK_ERRNO;
     Textsw_view_handle view = VIEW_ABS_TO_REP(abstract);
 
     error_buf[0] = '\0';
@@ -1140,9 +1144,9 @@ InternalError:
                         NOTICE_LOCK_SCREEN, FALSE,
 			NOTICE_BLOCK_THREAD, TRUE,
                         NOTICE_MESSAGE_STRINGS,
-			   (strlen(sys_msg)) ? sys_msg : notice_msg1,
-			   (strlen(sys_msg)) ? notice_msg1 : notice_msg2,
-			   (strlen(sys_msg)) ? notice_msg2 : 0,
+                           (sys_msg && *sys_msg) ? sys_msg : notice_msg1,
+                           (sys_msg && *sys_msg) ? notice_msg1 : notice_msg2,
+                           (sys_msg && *sys_msg) ? notice_msg2 : 0,
                         NULL,
                         NOTICE_BUTTON_YES, XV_MSG("Continue"),
                         XV_SHOW, TRUE,
@@ -1157,9 +1161,9 @@ InternalError:
             NOTICE_LOCK_SCREEN, FALSE,
 	    NOTICE_BLOCK_THREAD, TRUE,
             NOTICE_MESSAGE_STRINGS,
-                (strlen(sys_msg)) ? sys_msg : notice_msg1,
-                (strlen(sys_msg)) ? notice_msg1 : notice_msg2,
-                (strlen(sys_msg)) ? notice_msg2 : 0,
+                (sys_msg && *sys_msg) ? sys_msg : notice_msg1,
+                (sys_msg && *sys_msg) ? notice_msg1 : notice_msg2,
+                (sys_msg && *sys_msg) ? notice_msg2 : 0,
             NULL,
             NOTICE_BUTTON_YES, XV_MSG("Continue"),
             XV_SHOW, TRUE, 
@@ -1178,7 +1182,7 @@ textsw_file_stuff_from_str(view, buf, locx, locy)
     char            msg[MAXNAMLEN + 100], *sys_msg;
     char            notice_msg1[MAXNAMLEN + 100];
     char           *notice_msg2;
-    Es_status       status;
+    Es_status       status = ES_CHECK_ERRNO;
     int             cannot_open = 0;
     int             result;
     Xv_Notice	    text_notice;
@@ -1686,8 +1690,9 @@ Return:
     if (folio->menu && folio->sub_menu_table)
         xv_set(folio->sub_menu_table[(int) TXTSW_FILE_SUB_MENU], MENU_DEFAULT, 1, NULL );
 
-    if (is_readonly)		/* jcb -- reset if readonly */
+    if (is_readonly) {		/* jcb -- reset if readonly */
 	SET_BOOL_FLAG(folio->state, TRUE, TXTSW_READ_ONLY_ESH);
+    }
 }
 
 Xv_public void
@@ -2183,16 +2188,16 @@ textsw_post_error(folio_or_view, locx, locy, msg1, msg2)
     char           *msg1, *msg2;
 {
     char            buf[MAXNAMLEN + 1000];
-    int             size_to_use = sizeof(buf);
+    size_t          size_to_use = sizeof(buf);
     Frame	    frame;
     Xv_Notice	    text_notice;
 
     buf[0] = '\0';
-    (void) strncat(buf, msg1, size_to_use);
+    (void) strncat(buf, msg1, size_to_use - 1);
     if (msg2) {
 	int             len = strlen(buf);
-	if (len < size_to_use) {
-	    (void) strncat(buf, msg2, size_to_use - len);
+	if ((size_t) len < size_to_use - 1) {
+	    (void) strncat(buf, msg2, size_to_use - (size_t) len - 1);
 	}
     }
 

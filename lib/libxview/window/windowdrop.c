@@ -157,7 +157,7 @@ win_update_dnd_property(win)
 
     *data++ = DND_VERSION;
     head[1] = 0;
-    *data++;    /* Site Count, will update later as head[1] */
+    data++;    /* Site Count, will update later as head[1] */
 
 		/* Store the site descriptions for the property. */
     winDropInterest = win->dropInterest;

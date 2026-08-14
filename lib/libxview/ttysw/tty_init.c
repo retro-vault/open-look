@@ -165,6 +165,7 @@ ttysw_print_bold_options()
     for (pbold = bold_style; pbold->name; pbold++) {
 	(void) fprintf(stderr, "%s\n", pbold->name);
     }
+	return 0;
 }
 
 /*

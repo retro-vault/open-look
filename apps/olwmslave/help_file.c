@@ -54,7 +54,8 @@ help_search_file(key, more_help)	/* returns XV_OK or XV_ERROR */
 						     * command */
 		if (more_help_cmd) {
 		    strncpy(more_help_cmd_buffer, more_help_cmd,
-			    MAX_MORE_HELP_CMD);
+			    MAX_MORE_HELP_CMD - 1);
+		    more_help_cmd_buffer[MAX_MORE_HELP_CMD - 1] = '\0';
 		    *more_help = &more_help_cmd_buffer[0];
 		} else
 		    *more_help = NULL;
@@ -74,33 +75,39 @@ Xv_private FILE *
 help_find_file(filename)
     char	   *filename;
 {
-    FILE	   *file_ptr;
+    FILE	   *file_ptr = NULL;
     char	   *helpdir = NULL;
     char	   *helppath;
     char	   *helppath_copy;
-    char	   *xv_lc_display_lang;
+    char	   *xv_lc_display_lang = "C";
     extern int	   _xv_use_locale;
 
     helppath = (char *) getenv("HELPPATH");
     if (!helppath)
 	helppath = DEFAULT_HELP_DIRECTORY;
     helppath_copy = (char *) xv_malloc(strlen(helppath) + 1);
+    if (helppath_copy == NULL)
+	return NULL;
     strcpy(helppath_copy, helppath);
 
    /*
     * Need to fix this to get the XV_LC_DISPLAY_LANG from server
     */
-    if (_xv_use_locale)
-    	xv_lc_display_lang = setlocale(LC_MESSAGES, NULL); 
+    if (_xv_use_locale) {
+	char *locale_name = setlocale(LC_MESSAGES, NULL);
+
+	if (locale_name != NULL)
+	    xv_lc_display_lang = locale_name;
+    }
     helpdir = strtok(helppath_copy, ":");
-    do {
+    while (helpdir != NULL) {
 	/*  
 	 * If XV_USE_LOCALE set to TRUE, look for locale specific
 	 * help file first.
 	 */
 	if (_xv_use_locale) {
-		sprintf(help_buffer, "%s/%s/help/%s", helpdir, 
-			xv_lc_display_lang, filename);
+		snprintf(help_buffer, sizeof(help_buffer), "%s/%s/help/%s",
+			helpdir, xv_lc_display_lang, filename);
 		if ((file_ptr = fopen(help_buffer, "r")) != NULL)
 	    		break;
 	}   
@@ -108,11 +115,13 @@ help_find_file(filename)
 	 * If locale specific help file not found or required, fallback
 	 * on helpdir/filename.
 	 */
-	sprintf(help_buffer, "%s/%s", helpdir, filename);
+	snprintf(help_buffer, sizeof(help_buffer), "%s/%s", helpdir,
+		 filename);
 	if ((file_ptr = fopen(help_buffer, "r")) != NULL) {
 	    break;
 	}
-    } while (helpdir=strtok(NULL, ":"));
+        helpdir = strtok(NULL, ":");
+    }
     free(helppath_copy);
     return file_ptr;
 }

@@ -1037,6 +1037,7 @@ timer_expired (me, which)
 	  return (analog_timer_expired (me, which));
 	  break;
 	}
+	return (NOTIFY_DONE);
 }
 
 static void
@@ -1347,6 +1348,7 @@ clock_reset (item, event)
 	xv_set (o-> faceChoice, PANEL_VALUE, (Attr_attribute)o-> faceBAK, NULL);
 	xv_set (o-> secondsToggle, PANEL_VALUE, (Attr_attribute)o->secondsBAK, NULL);
 	xv_set (o-> dateToggle, PANEL_VALUE, (Attr_attribute)o->dateBAK, NULL);
+	return (NOTIFY_DONE);
 }
 
 static int
@@ -1465,6 +1467,7 @@ clock_defaults(item, event)
 	writerc(c->options);
 	clock_repaint_proc(c->canvas, c->pw, NULL);
 	xv_set(o->frame, XV_SHOW, FALSE, NULL);
+	return (NOTIFY_DONE);
 }
 
 void
@@ -1781,9 +1784,19 @@ init_clck (argc, argv)
 	Menu_item       tmp_item;
 	char    **argscanner = argv;
 	int clock_usersetsize;
-	Clock clck	= (Clock) malloc (sizeof (ClockObject)); 	
-	clck-> display	= (ClockDisplay) malloc (sizeof (DisplayInfo));
-	clck-> options	= (Options) malloc (sizeof (ClockOptions));
+	Clock clck	= (Clock) calloc (1, sizeof (ClockObject));
+
+	if (clck == NULL) {
+		fprintf(stderr, "clock: out of memory\n");
+		exit(1);
+	}
+	clck-> display	= (ClockDisplay) calloc (1, sizeof (DisplayInfo));
+	clck-> options	= (Options) calloc (1, sizeof (ClockOptions));
+	if (clck->display == NULL || clck->options == NULL) {
+		cleanup(clck);
+		fprintf(stderr, "clock: out of memory\n");
+		exit(1);
+	}
 	key		= xv_unique_key();
 
 

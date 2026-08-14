@@ -364,7 +364,7 @@ generic_get(object, status, attr, args)
     va_list         args;
 {
     Attr_attribute  key;
-    register Xv_opaque result;
+    register Xv_opaque result = 0L;
     register Generic_node *node;
     Generic_node   *prev;
     Generic_info	*generic = GEN_PRIVATE(object);

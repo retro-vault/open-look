@@ -111,6 +111,7 @@ WinGeneric *winInfo;
 Bool selected;
 {
 	(WinFunc(winInfo,core.drawfunc))(dpy, winInfo);
+    return 0;
 }
 
 /*
@@ -155,6 +156,7 @@ Bool		focus;
 		}
 	    }
 	}
+    return 0;
 }
 
 /*
@@ -182,6 +184,7 @@ WinGenericFrame *win;
                 XConfigureWindow(dpy,win->core.self,win->core.dirtyconfig,&xwc);
 		win->core.dirtyconfig &= ~(CWX|CWY|CWWidth|CWHeight|CWSibling|CWStackMode);
         }
+    return 0;
 }
 
 /* GFrameSetStack -- set the frame's stacking position.   Does not initiate
@@ -436,6 +439,7 @@ WinGenericFrame *frameInfo;
             break;
 
         }  /*  End switch on button pressed */
+    return 0;
 }
 
 
@@ -463,6 +467,7 @@ WinGenericFrame *frameInfo;
 	ColorWindowCrossing(dpy, event, cli->scrInfo->rootwin);
 	break;
     }
+    return 0;
 }
 
 
@@ -485,4 +490,5 @@ GFrameEventFocus(dpy, event, frameInfo)
 	    WinCallFocus(frameInfo, (event->type == FocusIn));
 	break;
     }
+    return 0;
 }

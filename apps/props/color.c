@@ -49,9 +49,9 @@ hsv_to_rgb(hsv, rgb)
     int         h = hsv->h;
     int         s = hsv->s;
     int         v = hsv->v;
-    int         r,
-                g,
-                b;
+    int         r = v,
+                g = v,
+                b = v;
     int         i,
                 f;
     int         p,
@@ -108,7 +108,7 @@ rgb_to_hsv(rgb, hsv)
     int         b = rgb->b;
     register int maxv = max3(r, g, b);
     register int minv = min3(r, g, b);
-    int         h;
+    int         h = 0;
     int         s;
     int         v;
 
@@ -126,7 +126,7 @@ rgb_to_hsv(rgb, hsv)
 	int         rc;
 	int         gc;
 	int         bc;
-	int         hex;
+	int         hex = 0;
 
 	rc = (maxv - r) * MAXRGB / (maxv - minv);
 	gc = (maxv - g) * MAXRGB / (maxv - minv);

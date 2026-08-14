@@ -39,7 +39,7 @@ cursor_make_x(root_info, w, h, d, op, xhot, yhot, xfg, xbg, pr)
     GC              gc;
     Pixmap          src, mask, m;
     Cursor          result;
-    int             oldw, oldh;
+    int             oldw = w, oldh = h;
     Screen_visual  *visual;
     Xv_Drawable_info info;
 

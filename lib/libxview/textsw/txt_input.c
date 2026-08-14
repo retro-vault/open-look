@@ -132,6 +132,7 @@ textsw_flush_caches(view, flags)
 				   TXTSW_UPDATE_SCROLLBAR_IF_NEEDED);
 	}
     }
+	return 0;
 }
 
 Pkg_private void
@@ -389,10 +390,11 @@ textsw_process_event(view_public, ie, arg)
     } else if (textsw_erase_action(view_public, ie)) {
 	if (TXTSW_IS_READ_ONLY(textsw))
 	    goto Read_Only;
-	else
-    	    if ((textsw->state & TXTSW_EDITED) == 0)
+	else {
+	    if ((textsw->state & TXTSW_EDITED) == 0)
 		textsw_possibly_edited_now_notify(textsw);
 	    goto Done;
+	}
     } if ((action <= ISO_LAST) &&
 	  down_event) {
 
@@ -1026,7 +1028,7 @@ textsw_undo_notify(folio, start, delta)
     register Ev_chain chain = folio->views;
     register Es_index old_length =
     es_get_length(chain->esh) - delta;
-    Es_index        old_insert, temp;
+    Es_index        old_insert = 0, temp;
 
     if (folio->notify_level & TEXTSW_NOTIFY_EDIT)
 	old_insert = EV_GET_INSERT(chain);

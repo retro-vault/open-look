@@ -327,7 +327,8 @@ textsw_insert_pieces(view, pos, pieces)
 {
     register Textsw_folio folio = FOLIO_FOR_VIEW(view);
     register Ev_chain chain = folio->views;
-    Es_index        delta, old_insert_pos, old_length = es_get_length(chain->esh), new_insert_pos,
+    Es_index        delta, old_insert_pos = 0,
+                    old_length = es_get_length(chain->esh), new_insert_pos,
                     temp;
 
     if (pieces == ES_NULL)

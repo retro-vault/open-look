@@ -172,6 +172,7 @@ ei_plain_text_set_tab_width(eih, tab_width)
     }
     if (private->tab_pixel == 0)
 	private->tab_pixel = 1;
+    return 0;
 }
 
 static int
@@ -357,6 +358,7 @@ ei_plain_text_set_font(eih, font)
 #ifdef DEBUG
     (void) fprintf(stderr, "Font_flags: %lx\n", private->font_flags);
 #endif
+	return 0;
 }
 
 Pkg_private     Ei_handle
@@ -495,7 +497,7 @@ ei_plain_text_process(eih, op, esbuf, x, y, rop, pw, rect, tab_origin)
 #ifdef OW_I18N
     register CHAR   c;
 #else
-    register short  c;
+    register short  c = 0;
 #endif
     register short  temp;
     register Es_index esi;
@@ -926,8 +928,11 @@ ei_plain_text_set(eih, attributes)
 	  case EI_TAB_WIDTHS: {
 	    /*ei_plain_text_set_tab_widths(eih, &attributes[1], FALSE);*/
 	    int i, widths[ATTR_STANDARD_SIZE] = {0};
-    	for (i = 0; attributes[i] > 0; i++)
-    	    widths[i] = attributes[i];
+	    for (i = 0;
+		 i < ATTR_STANDARD_SIZE && attributes[i] > 0;
+		 i++) {
+		widths[i] = attributes[i];
+	    }
 	    ei_plain_text_set_tab_widths(eih, &widths[1], FALSE);
 	    break;
 	  }

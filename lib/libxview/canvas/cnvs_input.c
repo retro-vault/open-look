@@ -95,7 +95,7 @@ canvas_paint_event(window_public, event, arg, type)
     char           *help_data;
     Xv_Window	    next_view;
     Xv_Window	    nth_view;
-    Xv_Window	    previous_view;
+    Xv_Window	    previous_view = XV_NULL;
     Notify_value    result;
     Scrollbar	    sb;
     Xv_Window	    view;

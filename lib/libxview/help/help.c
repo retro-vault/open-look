@@ -487,6 +487,7 @@ xv_help_render(client_window, client_data, client_event)
     }
 
     /* Draw magnifying glass over help image */
+	mglass_panel = (Panel)xv_get(help_info->mglass_msg, XV_OWNER);
     if (!help_info->mglass_image) {
 	help_info->mglass_image = xv_create(screen, SERVER_IMAGE,
 			                    XV_WIDTH, 199,
@@ -636,7 +637,10 @@ xv_help_show(client_window, client_data, client_event)
 	if (!client_data) {
 	    err_msg = XV_MSG("\" not found in Help String File");
 	    msg = xv_malloc(strlen(seln_string) + strlen(err_msg) + 2);
-	    sprintf(msg, "\"%s%s", seln_string, err_msg);
+	    msg[0] = '"';
+	    memmove(msg + 1, seln_string, strlen(seln_string));
+	    memmove(msg + strlen(seln_string) + 1,
+		    err_msg, strlen(err_msg) + 1);
 	    help_request_failed(client_window, NULL, msg);
 	    free(msg);
 	    free(seln_string);

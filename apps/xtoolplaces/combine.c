@@ -29,15 +29,24 @@ char *combine(argc,argv)
 int argc;
 char *argv[];
 {
-        int numbytes,loop;
+        size_t numbytes;
+        int loop;
         char *pointer;
+
+        if(argc <= 0) {
+          if((pointer = strdup("")) == NULL) {
+            perror(program);
+            exit(1);
+          }
+          return(pointer);
+        }
 
         /*If argc equals 1, then all the arguments are already in a single
           string and there's no reason to do anything else but copy it*/
         if(argc != 1) {
           /*Set numbytes initially to count the spaces between arguments
             and the NULL (number of arguments - 1 + 1)*/
-          numbytes = argc;
+          numbytes = (size_t)argc;
 
           /*Count bytes in each argument, add double quotes if argument
             has whitespace*/
@@ -74,4 +83,3 @@ char *argv[];
 
         return(pointer);
 }
-

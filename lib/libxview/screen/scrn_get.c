@@ -419,6 +419,8 @@ screen_adjust_gc_color(window, gc_index)
 	new_fg = xv_bg(info);
 	new_bg = xv_fg(info);
 	break;
+      default:
+	return;
     }
 #ifdef X11R6
 	/* lumpi@dobag.in-berlin.de */

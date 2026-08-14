@@ -513,11 +513,12 @@ Sel_owner_info   *sel;
 
     for ( i=0; i< numIncr; i++ )   {
 	if ( sel->req->incrPropList[i] != 0 )    {
-	    if ( XFindContext( sel->dpy, sel->req->incrPropList[i], 
-			      reqCtx, (caddr_t *)&req )) 
+	    if (XFindContext(sel->dpy, sel->req->incrPropList[i],
+			     reqCtx, (caddr_t *)&req)) {
 	        continue;
+	    }
 
-		req->incrPropList = sel->req->incrPropList;
+	    req->incrPropList = sel->req->incrPropList;
 	    req->owner->req = req;
 	    xv_sel_handle_incr( req->owner );	
 	}
@@ -1249,9 +1250,9 @@ int              flag;
      */
     infoPtr = clientInfo;
     do {
-	if ( infoPtr->client == NULL ) {
-           if (flag != SEL_DELETE_CLIENT)
-	    infoPtr->client = owner;
+	if (infoPtr->client == NULL) {
+	    if (flag != SEL_DELETE_CLIENT)
+		infoPtr->client = owner;
 	    return;
 	}
 	if ( infoPtr->next == NULL )

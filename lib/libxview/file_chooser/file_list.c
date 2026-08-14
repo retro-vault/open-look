@@ -943,11 +943,12 @@ flist_load_dir( private, directory )
 	 * being not present.  OL has found that this fares better
 	 * in user testing.
 	 */
-	if ( status == FILE_LIST_IGNORE )
-	    if ( !private->f.abbrev_view )
+	if (status == FILE_LIST_IGNORE) {
+	    if (!private->f.abbrev_view)
 		current->vals.inactive = TRUE;
 	    else
 		continue;
+	}
 
 	++row_num;
     } /* while() */

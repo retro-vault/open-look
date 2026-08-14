@@ -1934,7 +1934,7 @@ ScreenInfo *
 GetFirstScrInfo()
 {
 	ScreenInfo	*si;
-	ScreenInfo	*lowestScrInfo;
+	ScreenInfo	*lowestScrInfo = NULL;
 	List		*l = ScreenInfoList;
 	int		lowestScreen = 99999;	/* REMIND */
 
@@ -2145,8 +2145,9 @@ CreateScreenWindowMenuInfo(dpy)
 	List		*l = ScreenInfoList;
 
 	for (si = ListEnum(&l); si; si = ListEnum(&l)) {
-		CreateWindowMenuInfo(dpy,si);
+	CreateWindowMenuInfo(dpy,si);
 	}
+	return 0;
 }
 
 int
@@ -2157,8 +2158,9 @@ DestroyScreenWindowMenuInfo(dpy)
 	List		*l = ScreenInfoList;
 
 	for (si = ListEnum(&l); si; si = ListEnum(&l)) {
-		DestroyWindowMenuInfo(dpy,si);
+	DestroyWindowMenuInfo(dpy,si);
 	}
+	return 0;
 }
 
 int
@@ -2169,8 +2171,9 @@ CreateScreenUserMenuInfo(dpy)
 	List		*l = ScreenInfoList;
 
 	for (si = ListEnum(&l); si; si = ListEnum(&l)) {
-		CreateUserMenuInfo(dpy,si);
+	CreateUserMenuInfo(dpy,si);
 	}
+	return 0;
 }
 
 int
@@ -2181,8 +2184,9 @@ DestroyScreenUserMenuInfo(dpy)
 	List		*l = ScreenInfoList;
 
 	for (si = ListEnum(&l); si; si = ListEnum(&l)) {
-		DestroyUserMenuInfo(dpy,si);
+	DestroyUserMenuInfo(dpy,si);
 	}
+	return 0;
 }
 
 

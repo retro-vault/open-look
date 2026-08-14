@@ -127,6 +127,7 @@ eventClientMessage(dpy, event, winInfo)
     	{
 		DestroyClient(winInfo->core.client);
     	}
+    return 0;
 }
 
 
@@ -138,6 +139,7 @@ WinPinMenu	*winInfo;
 {
     if (event->xany.type == EnterNotify)
         ColorWindowCrossing(dpy, event, winInfo);
+    return 0;
 }
 
 
@@ -160,6 +162,7 @@ focusMenuFunc(dpy, winInfo, focus)
 	}
 	SetButton(dpy, mInfo, mInfo->menu->buttonDefault, True, True);
     }
+    return 0;
 }
 
 
@@ -184,6 +187,7 @@ destroyMenu(dpy, winInfo)
 	/* free memory */
 	MemFree(menuInfo);
 	MemFree(winInfo);
+    return 0;
 }
 
 /*
@@ -220,6 +224,7 @@ menuSetParent(winInfo,cli,par)
     mInfo = ((WinPinMenu *) winInfo)->menuInfo;
     winInfo->core.helpstring = mInfo->menu->helpstring;
     par->core.helpstring = mInfo->menu->helpstring;
+    return 0;
 }
 
 /***************************************************************************
@@ -394,4 +399,5 @@ Display *dpy;
 	classPinMenu.core.heightfunc = NULL;
 	classPinMenu.core.widthfunc = NULL;
 	classPinMenu.pcore.setsizefunc = NULL;
+    return 0;
 }

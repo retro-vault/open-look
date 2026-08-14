@@ -72,7 +72,7 @@ static int
 my_sync(display)
     Display        *display;
 {
-    XSync(display, 0);
+    return XSync(display, 0);
 }
 
 Pkg_private     Xv_opaque

@@ -680,10 +680,6 @@ server_init(parent, server_public, avlist)
 		    struct stat		statbuf;
 		    char		*dot;
 
-		    if (!dp->d_name)  {
-			continue;
-		    }
-
 		    /*
 		     * Ignore ".", ".."
 		     */

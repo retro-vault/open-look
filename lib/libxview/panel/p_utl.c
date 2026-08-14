@@ -1386,11 +1386,12 @@ panel_round(x, y)
     z = x / y;
     rem = x % y;
     /* round up if needed */
-    if (2 * rem >= y)
+    if (2 * rem >= y) {
 	if (is_neg)
 	    z--;
 	else
 	    z++;
+    }
 
     return (is_neg ? -z : z);
 }

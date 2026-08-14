@@ -720,12 +720,14 @@ Pkg_private int
 window_set_parent_dying()
 {
     parent_dying = TRUE;
+	return parent_dying;
 }
 
 Pkg_private int
 window_unset_parent_dying()
 {
     parent_dying = FALSE;
+	return parent_dying;
 }
 
 Pkg_private int
@@ -774,18 +776,20 @@ window_destroy_win_struct(win_public, status)
 	/* Free up the drop site info we have been holding. */
 	if (win->dropSites) {
 	    Win_drop_site_list *dropSite = win->dropSites;
-	    Win_drop_site_list dropSite_save;
+	    Win_drop_site_list *next_drop_site;
 
-            dropSite_save.next = dropSite->next; 
-	    while(dropSite = (Win_drop_site_list *)
-					(XV_SL_SAFE_NEXT((&dropSite_save)))) {
+	    dropSite =
+		(Win_drop_site_list *)(XV_SL_SAFE_NEXT(dropSite));
+	    while (dropSite != NULL) {
 		/* The drop site linked list that the window maintains
 		 * is cleaned up each time a drop site that it owns
 		 * is destroyed.  In the end, all we have to do is
 		 * free the head of the list, which is never used.
 		 */
-                dropSite_save.next = dropSite->next;
+		next_drop_site =
+		    (Win_drop_site_list *)(XV_SL_SAFE_NEXT(dropSite));
 	        xv_destroy(dropSite->drop_item);
+		dropSite = next_drop_site;
 	    }
 	    xv_free(win->dropSites);
 	}

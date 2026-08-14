@@ -59,6 +59,7 @@ WinIconFrame *iconInfo;
 {
     if (iconInfo->core.client->wmDecors->menu_type != MENU_NONE)
 	ShowStandardMenu(iconInfo, event, False);
+    return 0;
 }
 
 static int
@@ -68,6 +69,7 @@ XEvent *event;
 WinIconFrame *iconInfo;
 {
 	StateNormal(iconInfo->core.client, event->xbutton.time);
+    return 0;
 }
 
 static int
@@ -77,6 +79,7 @@ XEvent *event;
 WinIconFrame *iconInfo;
 {
         ToggleSelection(iconInfo->core.client, event->xbutton.time);
+    return 0;
 }
 
 /***************************************************************************
@@ -143,6 +146,7 @@ XButtonEvent *lastpress;
 	SlotFree(iframe);
 	iframe->fManuallyPositioned = True;
 	ClientMove(iframe->core.client, (XEvent *)lastpress);
+    return 0;
 }
 
 
@@ -373,6 +377,7 @@ WinIconFrame *winInfo;
 
 	/* draw border */
 	drawIconBorder(dpy, winInfo, winInfo->core.client->isSelected);
+    return 0;
 }
 
 
@@ -394,6 +399,7 @@ WinIconFrame *winInfo;
 	ScreenDestroyWindow(winInfo->core.client->scrInfo, winInfo->core.self);
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 /*
@@ -501,6 +507,7 @@ Time	timestamp;
 	    StateNormal(client,timestamp);
 
 	iconInfo->fcore.fullsize = !iconInfo->fcore.fullsize;
+    return 0;
 }
 
 
@@ -537,6 +544,7 @@ eventConfigureRequest(dpy, req, iconInfo)
 #ifdef DEBUG
     ErrorWarning("ignoring ConfigureRequest event on icon.");
 #endif /* DEBUG */
+    return 0;
 }
 
 

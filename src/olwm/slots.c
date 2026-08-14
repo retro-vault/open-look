@@ -265,8 +265,12 @@ IconSlot *slot;
 	}
 	else
 	{
-	    y = iconGrid->pixvert - slot->mi*ICON_GRID_HEIGHT - win->core.height;
+	y = iconGrid->pixvert - slot->mi*ICON_GRID_HEIGHT - win->core.height;
 	}
+    }
+    else
+    {
+	return;
     }
 
     (WinFunc(win,core.newposfunc))(win,x,y);

@@ -351,33 +351,37 @@ server_get_attr_tier2(server_public, status, attr, valist)
            return((Xv_opaque)data);
       }  
 
-       case SERVER_EXTERNAL_XEVENT_PROC: {
+      case SERVER_EXTERNAL_XEVENT_PROC: {
           Server_proc_list *node;
-          if (node = server_procnode_from_id(server, va_arg(valist,Xv_opaque)))
+	  node = server_procnode_from_id(server, va_arg(valist, Xv_opaque));
+	  if (node)
               result = (Xv_opaque)(node->extXeventProc);
-              return result;
+	  return result;
       }
       case SERVER_PRIVATE_XEVENT_PROC: {
           Server_proc_list *node;
-          if (node = server_procnode_from_id(server, va_arg(valist,Xv_opaque)))
+	  node = server_procnode_from_id(server, va_arg(valist, Xv_opaque));
+	  if (node)
               result = (Xv_opaque)(node->pvtXeventProc);
-              return result;
+	  return result;
       }
       case SERVER_EXTERNAL_XEVENT_MASK: {
           Server_mask_list *node;
-          if (node = server_masknode_from_xidid (server, 
-                                                 va_arg(valist,Xv_opaque),
-                                                 va_arg(valist,Xv_opaque)))
+	  node = server_masknode_from_xidid(server,
+					    va_arg(valist, Xv_opaque),
+					    va_arg(valist, Xv_opaque));
+	  if (node)
               result = (Xv_opaque)(node->extmask);
-              return result;
+	  return result;
       }
       case SERVER_PRIVATE_XEVENT_MASK: {
           Server_mask_list *node;
-          if (node = server_masknode_from_xidid (server,
-                                                 va_arg(valist,Xv_opaque),
-                                                 va_arg(valist,Xv_opaque)))
+	  node = server_masknode_from_xidid(server,
+					    va_arg(valist, Xv_opaque),
+					    va_arg(valist, Xv_opaque));
+	  if (node)
               result = (Xv_opaque)(node->pvtmask);
-              return result;
+	  return result;
       }
     }
 Error:

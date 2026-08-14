@@ -185,6 +185,7 @@ WinResize *winInfo;
 	olgx_draw_resize_corner(gisNormal, winInfo->core.self, 0, 0,
 		whicholgx[winInfo->which],
 		(winInfo->depressed)?(OLGX_INVOKED):(OLGX_NORMAL));
+    return 0;
 }
 
 
@@ -201,6 +202,7 @@ WinGeneric *winInfo;
 	ScreenDestroyWindow(winInfo->core.client->scrInfo, winInfo->core.self);
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 /* 
@@ -213,6 +215,7 @@ WinResize *winInfo;
 Bool selected;
 {
 	(WinFunc(winInfo,core.drawfunc))(dpy, winInfo);
+    return 0;
 }
 
 /*

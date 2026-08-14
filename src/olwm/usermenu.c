@@ -1061,7 +1061,7 @@ int *lineno;
 			currentMenu = (menudata *)currentButton->submenu;
 			currentMenu->menulabel = MemNewString(label);
 
-			if (args != NULL)
+			if (args[0] != '\0')
 			{
 				rval = menuFromFile(args, currentMenu, False);
 				switch (rval)
@@ -1946,6 +1946,7 @@ ScreenInfo *scrInfo;
 	(void)MenuInfoCreate(scrInfo->menuCache, scrInfo->rootwin, MenuTable[MENU_LIMITED], 1);
 
 	scrInfo->menuCache->nextSlot = origNextSlot;
+	return 0;
 }
 
 /*****************************************************************************/

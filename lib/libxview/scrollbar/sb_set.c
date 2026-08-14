@@ -200,4 +200,5 @@ scrollbar_parse_attr(sb, argv)
 		 ERROR_PKG, SCROLLBAR,
 		 0);
     }
+	return XV_OK;
 }

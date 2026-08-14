@@ -163,15 +163,15 @@ frame_confirm_destroy(frame)
     if (frame_is_iconic(frame))
 	window = (Xv_object) frame->icon;
 
-        if (!frame_notice_key)  {
-	    frame_notice_key = xv_unique_key();
-        }
+    if (!frame_notice_key) {
+	frame_notice_key = xv_unique_key();
+    }
 
-        frame_notice = (Xv_Notice)xv_get((Frame)window, 
+    frame_notice = (Xv_Notice)xv_get((Frame)window,
                                 XV_KEY_DATA, (Attr_attribute)frame_notice_key, 
 				NULL);
-        if (!frame_notice)  {
-            frame_notice = xv_create((Frame)window, NOTICE,
+    if (!frame_notice) {
+	frame_notice = xv_create((Frame)window, NOTICE,
                         NOTICE_LOCK_SCREEN, FALSE,
                         NOTICE_BLOCK_THREAD, TRUE,
                         NOTICE_MESSAGE_STRINGS,

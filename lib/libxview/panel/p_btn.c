@@ -676,7 +676,7 @@ panel_paint_button_image(ip, image, inactive_button, menu, height)
     Panel_info     *panel = ip->panel;
     Pixlabel	    pixlabel;
     Xv_Window       pw;
-    int		    save_black;
+    int		    save_black = 0;
     int		    state;
 
     default_button = ITEM_PUBLIC(ip) == panel->default_item;

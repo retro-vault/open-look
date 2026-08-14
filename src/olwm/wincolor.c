@@ -111,6 +111,7 @@ WinColormap *winInfo;
     ListDestroy(winInfo->core.colormapClients);
     winInfo->core.colormapClients = NULL_LIST;
     (WinFunc(winInfo,core.destroyfunc))(dpy, winInfo);
+    return 0;
 }
 
 
@@ -125,6 +126,7 @@ WinColormap *winInfo;
 {
     if (event->xany.type == EnterNotify)
 	ColorWindowCrossing(dpy, event, winInfo);
+    return 0;
 }
 
 
@@ -148,6 +150,7 @@ WinColormap *winInfo;
 	!ColorFocusLocked(winInfo) ) {
 	InstallPointerColormap(dpy, None, 0, 0, False);
     }
+    return 0;
 }
 
 
@@ -164,6 +167,7 @@ eventColormapNotify(dpy, event, winInfo)
     WinColormap *winInfo;
 {
     ColormapChange(dpy, event, (WinGeneric *)winInfo);
+    return 0;
 }
 	    
 
@@ -188,6 +192,7 @@ WinGeneric *winInfo;
 	if (WIGetInfo(winInfo->core.self) == winInfo)
 	    WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 

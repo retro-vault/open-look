@@ -30,6 +30,7 @@ pw_getcmsname(pw, name)
 	DRAWABLE_INFO_MACRO(pw, info);
 	strcpy(name, (char *)xv_get(xv_cms(info), CMS_NAME));
     }
+	return 0;
 }
 
 Xv_public int
@@ -49,6 +50,7 @@ pw_putcolormap(pw, index, count, red, green, blue)
     cms_data.blue = blue;
 
     window_set_cms_data(pw, &cms_data);
+	return 0;
 }
 
 Xv_public int
@@ -66,6 +68,7 @@ pw_getcolormap(pw, index, count, red, green, blue)
       green[i] = cms_data->green[index + i];
       blue[i] = cms_data->blue[index + i];
     }
+	return 0;
 }
 
 Xv_public int
@@ -77,6 +80,7 @@ pw_putattributes(pw, planes)
     DRAWABLE_INFO_MACRO(pw, info);
 
     xv_plane_mask(info) = *planes;
+	return 0;
 }
 
 Xv_public int
@@ -88,4 +92,5 @@ pw_getattributes(pw, planes)
     DRAWABLE_INFO_MACRO(pw, info);
 
     *planes = xv_plane_mask(info);
+	return 0;
 }

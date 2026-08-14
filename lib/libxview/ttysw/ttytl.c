@@ -34,6 +34,9 @@
 #include <xview_private/term_impl.h>
 #include <xview_private/charscreen.h>
 
+static void ttytl_text_dimensions(Tty_view ttysw_view_public,
+    int *columns, int *rows);
+
 
 /* BUG ALERT: This entire procedure should be rewritten! */
 /* BUG ALERT: No XView prefix */
@@ -166,8 +169,8 @@ ttytlsw_escape(ttysw_view_public, c, ac, av)
 	{
 		int rows, columns;
 		if (ttysw_getopt(ttysw, TTYOPT_TEXT)) {
-			rows = textsw_screen_line_count(TTY_PUBLIC(ttysw));
-			columns = textsw_screen_column_count(TTY_PUBLIC(ttysw));
+			ttytl_text_dimensions(ttysw_view_public, &columns,
+			    &rows);
 		}
 		else {
 			rows = y_to_row(winheightp);
@@ -334,4 +337,19 @@ ttytlsw_string(ttysw_public, type, c)
 	return (ttysw_ansi_string((caddr_t)ttysw_public, type, c));
     }
     return (TTY_DONE);
+}
+static void
+ttytl_text_dimensions(ttysw_view_public, columns, rows)
+    Tty_view ttysw_view_public;
+    int     *columns;
+    int     *rows;
+{
+    Xv_termsw_view *view = (Xv_termsw_view *) ttysw_view_public;
+    Xv_opaque       saved_private = view->parent_data.private_data;
+    Textsw          text_view = (Textsw) view;
+
+    view->parent_data.private_data = view->private_text;
+    *columns = textsw_screen_column_count(text_view);
+    *rows = textsw_screen_line_count(text_view);
+    view->parent_data.private_data = saved_private;
 }

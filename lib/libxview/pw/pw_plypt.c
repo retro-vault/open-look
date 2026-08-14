@@ -38,4 +38,5 @@ pw_polypoint(pw, dx, dy, npts, ptlist, op)
     XDrawPoints(display, xv_xid(info), pt_gc, points, npts, CoordModeOrigin);
 
     (void) free((char *) points);
+	return 0;
 }				/* pw_polypoint */

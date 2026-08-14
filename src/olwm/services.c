@@ -134,6 +134,7 @@ ExitFunc(dpy, winInfo, menuInfo, idx)
 	FreeText(buttons[0]);
 	FreeText(buttons[1]);
 	FreeText(msg);
+	return 0;
 }
 
 /*
@@ -148,6 +149,7 @@ ExitNoConfirmFunc(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	Exit(dpy);
+	return 0;
 }
 
 /***************************************************************************
@@ -224,26 +226,45 @@ PshFunc(dpy, winInfo, menuInfo, idx)
 	}
 	else if ( pid == 0 )
 	{
-		/* child reads from pipe and writes to stdout/err */
-		close( 0 );		/* close stdin */
-		dup( pshPipe[0] );	/* make stdin the read end */
-		close( pshPipe[0] ); 	/* don't need orig pipe fds */
-		close( pshPipe[1] );
-		close( 1 );		/* close stdout */
-		dup( 2 );		/* make olwm stderr = psh stdout */
-		setpgrp();
-		execve( commArgv[0], commArgv, env );
-		fprintf( stderr, GetString("olwm: psh error: %d\n"), errno );
+	/* child reads from pipe and writes to stdout/err */
+	close( 0 );		/* close stdin */
+	if (dup(pshPipe[0]) == -1) { /* make stdin the read end */
+		perror("olwm: dup");
+		_exit(1);
 	}
-	else
-	{
-		/* parent writes user menu postscript code down pipe */
-		close( pshPipe[0] );	/* don't need to read pipe */
-		write( pshPipe[1], 
-		       (menuInfo->menu->buttons[idx]->action.command),
-		       strlen((menuInfo->menu->buttons[idx]->action.command)));
-		close( pshPipe[1] );
+	close( pshPipe[0] ); 	/* don't need orig pipe fds */
+	close( pshPipe[1] );
+	close( 1 );		/* close stdout */
+	if (dup(2) == -1) { /* make olwm stderr = psh stdout */
+		perror("olwm: dup");
+		_exit(1);
 	}
+	setpgrp();
+	execve( commArgv[0], commArgv, env );
+	fprintf( stderr, GetString("olwm: psh error: %d\n"), errno );
+	_exit(1);
+    }
+    else
+    {
+	const char *command = menuInfo->menu->buttons[idx]->action.command;
+	size_t remaining = strlen(command);
+
+	/* parent writes user menu postscript code down pipe */
+	close( pshPipe[0] );	/* don't need to read pipe */
+	while (remaining > 0) {
+		ssize_t count = write(pshPipe[1], command, remaining);
+
+		if (count < 0) {
+			if (errno == EINTR)
+				continue;
+			perror("olwm: write");
+			break;
+		}
+		command += count;
+		remaining -= (size_t)count;
+	}
+	close( pshPipe[1] );
+    }
 	return 1;
 }
 
@@ -300,6 +321,7 @@ NopFunc(dpy, winInfo, menuInfo, idx)
 	MenuInfo    	*menuInfo;
 	int     	idx;
 {
+	return 0;
 }
 
 /***************************************************************************
@@ -333,6 +355,7 @@ ClipboardFunc(dpy, winInfo, menuInfo, idx)
 
 	FreeText(buttons[0]);
 	FreeText(msg);
+	return 0;
 }
 
 /***************************************************************************
@@ -366,6 +389,7 @@ PrintScreenFunc(dpy, winInfo, menuInfo, idx)
 
 	FreeText(buttons[0]);
 	FreeText(msg);
+	return 0;
 }
 
 
@@ -435,6 +459,7 @@ RefreshFunc(dpy, winInfo, menuInfo, idx)
 		XMapRaised(dpy, w);
 		ScreenDestroyWindow(winInfo->core.client->scrInfo, w);
 	}
+	return 0;
 }
 
 /***************************************************************************
@@ -569,6 +594,7 @@ ReReadUserMenuFunc(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ReInitUserMenu(dpy,True);
+	return 0;
 }
 
 /***************************************************************************
@@ -588,6 +614,7 @@ WindowOpenCloseAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientOpenCloseToggle(winInfo->core.client,LastEventTime);
+	return 0;
 }
 
 /* 
@@ -603,6 +630,7 @@ WindowFullRestoreSizeAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientFullRestoreSizeToggle(winInfo->core.client,LastEventTime);
+	return 0;
 }
 
 /*
@@ -618,6 +646,7 @@ WindowMoveAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientMove(winInfo->core.client,(XEvent *)NULL);
+	return 0;
 }
 
 /*
@@ -633,6 +662,7 @@ WindowResizeAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientResize(winInfo->core.client, NULL, keyevent, NULL, NULL);
+	return 0;
 }
 
 /* 
@@ -665,6 +695,7 @@ WindowBackAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientBack(winInfo->core.client);
+	return 0;
 }
 
 /* 
@@ -680,6 +711,7 @@ WindowRefreshAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientRefresh(winInfo->core.client);
+	return 0;
 }
 
 /* 
@@ -695,6 +727,7 @@ WindowQuitAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientKill(winInfo->core.client,True);
+	return 0;
 }
 
 /* 
@@ -710,6 +743,7 @@ WindowFlashOwnerAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientFlashOwner(winInfo->core.client);
+	return 0;
 }
 
 /* 
@@ -725,6 +759,7 @@ WindowDismissThisAction(dpy, winInfo, menuInfo, idx)
 	int     	idx;
 {
 	ClientKill(winInfo->core.client, False);
+	return 0;
 }
 
 /*
@@ -769,6 +804,7 @@ WindowDismissAllAction(dpy, winInfo, menuInfo, idx)
 	    if (cli->groupmask != GROUP_DEPENDENT)
 		ClientKill(winInfo->core.client, False);
 	}
+	return 0;
 }
 
 /***************************************************************************
@@ -798,6 +834,7 @@ OpenCloseSelnFunc(dpy, winInfo, menuInfo, idx)
 	while (cli = EnumSelections(cli)) {
 		ClientOpenCloseToggle(cli,LastEventTime);
 	}
+	return 0;
 }
 
 /*
@@ -817,6 +854,7 @@ FullRestoreSizeSelnFunc(dpy, winInfo, menuInfo, idx)
 	while (cli = EnumSelections(cli)) {
 		ClientFullRestoreSizeToggle(cli,LastEventTime);
 	}
+	return 0;
 }
 
 /*
@@ -837,6 +875,7 @@ BackSelnFunc(dpy, winInfo, menuInfo, idx)
 	while (cli = EnumSelections(cli)) {
 		ClientBack(cli);
 	}
+	return 0;
 }
 
 /*
@@ -856,6 +895,7 @@ QuitSelnFunc(dpy, winInfo, menuInfo, idx)
 	while (cli = EnumSelections(cli)) {
 		ClientKill(cli,True);
 	}
+	return 0;
 }
 
 

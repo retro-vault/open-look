@@ -30,15 +30,17 @@ xv_read(pr, x, y, width, height, op, window, sx, sy)
 	Xv_Drawable_info *info;
 
 	DRAWABLE_INFO_MACRO(window, info);
-	xv_read_internal(pr, x, y, width, height, op, xv_display(info),
-			 xv_xid(info), sx, sy);
+	return xv_read_internal(pr, x, y, width, height, op, xv_display(info),
+				xv_xid(info), sx, sy);
     } else if (PR_IS_SERVER_IMAGE(pr)) {
-	xv_rop((Xv_opaque)pr, x, y, width, height, op, (Pixrect *)window, sx, sy);
+	return xv_rop((Xv_opaque)pr, x, y, width, height, op,
+		      (Pixrect *)window, sx, sy);
     } else {
 	xv_error((Xv_object)NULL,
 		 ERROR_STRING,
 		     XV_MSG("xv_read: attempting to read into an invalid object"),
 		 NULL);
+	return PIX_ERR;
     }
 }
 
@@ -53,6 +55,7 @@ xv_read_internal(pr, x, y, width, height, op, display, d, sx, sy)
     register XImage *image;
     struct mpr_data image_mpr_data;
     struct pixrect  image_mpr;
+	int result;
 
     image = XGetImage(display, d, sx, sy, width, height,
 		      AllPlanes, pr->pr_depth == 1 ? XYPixmap : ZPixmap);
@@ -76,6 +79,7 @@ xv_read_internal(pr, x, y, width, height, op, display, d, sx, sy)
     image_mpr_data.md_primary = 0;
     image_mpr_data.md_flags = 0;
     /* Move the image from the memory pixrect into the destination pr */
-    pr_rop(pr, x, y, width, height, op, &image_mpr, 0, 0);
+	result = pr_rop(pr, x, y, width, height, op, &image_mpr, 0, 0);
     image->f.destroy_image(image);
+	return result;
 }

@@ -473,11 +473,12 @@ ttysel_adjust(ttysw, event, multi, ok_to_extend)
 		    *te = *tb;
 	          }
 		ttysel->sel_anchor = 1;
-	    } else if (ttysel->sel_anchor == 0)
+	    } else if (ttysel->sel_anchor == 0) {
 		if (newanchor == 0)
 		    newanchor = 1;
 		else
 		    newanchor = 0;
+	    }
 	    /* extend left end */
 	    tt = *te;
 	    *te = *tb;

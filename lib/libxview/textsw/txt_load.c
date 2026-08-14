@@ -57,10 +57,10 @@ do_load_proc(folio, ie)
 {
     Textsw          textsw = FOLIO_REP_TO_ABS(folio);
     CHAR           *dir_str, *file_str;
-    int             result;
+    int             result = NOTICE_FAILED;
     register int    locx, locy;
     Frame           popup_frame;
-    Frame           frame;
+    Frame           frame = FRAME_FROM_FOLIO_OR_VIEW(folio);
     Xv_Notice	    text_notice;
     char            curr_dir[MAX_STR_LENGTH], *dir;
 #ifdef OW_I18N
@@ -265,9 +265,9 @@ open_cmd_proc(fc, path,file,client_data)
     /*int                error;*/
     Textsw          textsw = FOLIO_REP_TO_ABS(folio);
     CHAR           *dir_str;
-    int             result;
+    int             result = NOTICE_FAILED;
     register int    locx, locy;
-    Frame           frame;
+    Frame           frame = FRAME_FROM_FOLIO_OR_VIEW(folio);
     Xv_Notice       text_notice;
     char            curr_dir[MAX_STR_LENGTH], *dir;
 #ifdef OW_I18N

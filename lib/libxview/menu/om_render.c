@@ -667,7 +667,7 @@ process_event(m, event)
     unsigned char   match_char;
 #endif /* OW_I18N */
     int             mi_top;	/* menu item top */
-    int             newitem;
+    int             newitem = 0;
     int             newitem_tracks_pointer;
     /*
      * TRUE: newitem is derived from pointer position; FALSE: newitem is
@@ -1276,7 +1276,7 @@ compute_item_size(menu, std_image, status, call_gen_proc)
     int             font_size;
     int             gen_items = FALSE;
     struct image   *im;
-    int             margin;
+    int             margin = 0;
     struct pr_size  max_button_size;
     int		    pushpin_height;
 
@@ -1317,6 +1317,7 @@ compute_item_size(menu, std_image, status, call_gen_proc)
 	char	*tmp;
 
 	mi = *mip;
+	im = &mi->image;
 	mi->parent = menu;
 
         /* ACC_XVIEW */
@@ -1913,7 +1914,7 @@ paint_menu_item(m, n, feedback_state)
     int		    olgx_state = 0;
     Pixlabel	    pixlabel;
     Rect            rect;
-    int		    save_black;
+    int		    save_black = 0;
     /* ACC_XVIEW */
     int		    label_pos, qual_pos, mark_pos, key_pos;
     int		    width;
@@ -2304,7 +2305,7 @@ menu_window_paint(m, window)
     Xv_Window       window;
 {
     register int	    i;
-    int			    default_item;
+    int			    default_item = FALSE;
     Xv_Drawable_info	   *info;
     Menu_feedback	    feedback_state;
     Font		    font;
@@ -2319,7 +2320,7 @@ menu_window_paint(m, window)
     Xv_menu_item_info	   *mi;
     Rect		    mi_rect;
     int			    mi_top;
-    int			    on;
+    int			    on = FALSE;
     int			    state;
     int			    text_ascent = 0;
     int			    text_descent = 0;

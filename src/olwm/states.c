@@ -654,6 +654,7 @@ promoteDependentFollowers(window, groupid)
 	}
     }
     unmarkAllFrames();
+	return NULL;
 }
 
 

@@ -26,7 +26,8 @@ pw_char(pw, xw, yw, op, pixfont, c)
 
     str[0] = c;
     str[1] = '\0';
-    (void) xv_text(pw, xw, yw, op, (Xv_opaque)pixfont, str);
+	(void) xv_text(pw, xw, yw, op, (Xv_opaque)pixfont, str);
+	return 0;
 }
 
 Xv_public void
@@ -161,6 +162,7 @@ xv_glyph_char(window, x, y, width, height, pixfont, c, color_index)
 
     XFillRectangle(display, d, gc1, x, y, width, height);
     XDrawString(display, d, gc, x, y, s, 1);
+	return 0;
 }
 
 /*
@@ -183,4 +185,5 @@ pw_pfsysopen()
 Xv_public int
 pw_pfsysclose()
 {
+	return 0;
 }

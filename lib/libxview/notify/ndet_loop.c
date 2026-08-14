@@ -724,8 +724,9 @@ ndet_fig_sig_change()
 				    ndet_sig_change, NTFY_ENUM_DATA_NULL);
     /* Update signal catching */
     for (sig = 1; sig < NSIG; sig++) {
-	if ((( tmp1 = sigismember( &ndet_sigs_managing, sig ))
-            || ( tmp2 = sigismember( &sigs_tmp, sig ))) && !( tmp1 && tmp2 )) {
+	tmp1 = sigismember(&ndet_sigs_managing, sig);
+	tmp2 = sigismember(&sigs_tmp, sig);
+	if ((tmp1 || tmp2) && !(tmp1 && tmp2)) {
 	    if ( sigismember( &ndet_sigs_managing, sig )) {
 		ndet_enable_sig(sig);
 	    } else if ( sigismember( &sigs_tmp, sig )) {

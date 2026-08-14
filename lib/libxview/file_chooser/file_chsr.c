@@ -66,7 +66,7 @@ file_chooser_init( owner, public, avlist)
 {
     Fc_private *	private = xv_alloc( Fc_private );
     Attr_avlist 	attrs;
-    char *		label_str;
+    char *		label_str = XV_MSG("Open");
 
 
 
@@ -860,6 +860,7 @@ file_chooser_get ( public, status, attr, args )
 	return (Xv_opaque)XV_OK;
     } /* switch */
 
+	return (Xv_opaque)XV_NULL;
 } /* file_chooser_get() */
 
 
@@ -2333,7 +2334,8 @@ fc_filter_func( path, row )
 	 * directories may match, but are not set inactive by default.  Hence,
 	 * FILE_CHOOSER_ABBREV_VIEW works as expected.
 	 */
-	status = (row->vals.inactive) ? FILE_LIST_IGNORE : FILE_LIST_ACCEPT;
+	status = row->vals.inactive ?
+	    FILE_CHOOSER_IGNORE : FILE_CHOOSER_ACCEPT;
     }
 
 
@@ -2353,7 +2355,7 @@ fc_filter_func( path, row )
 	) {
 	row->vals.inactive = TRUE;
 	if ( !(notify_client && private->filter_func) )
-	    status = FILE_LIST_IGNORE;
+	    status = FILE_CHOOSER_IGNORE;
     }
 #endif
 

@@ -289,7 +289,7 @@ ev_add_glyph(chain, line_start, pos, pr, op, offset_x, offset_y, flags)
 {
 
     Ev_chain_pd_handle private = EV_CHAIN_PRIVATE(chain);
-    register Op_bdry_handle bdry;
+    register Op_bdry_handle bdry = (Op_bdry_handle) 0;
     register Ev_overlay_handle glyph_info;
     Ev_mark_object  result;
 
@@ -380,7 +380,7 @@ ev_find_glyph(chain, line_start)
     Es_index        line_start;
 {
     register Ev_chain_pd_handle private = EV_CHAIN_PRIVATE(chain);
-    register Op_bdry_handle bdry;
+    register Op_bdry_handle bdry = (Op_bdry_handle) 0;
     register Op_bdry_handle seq = (Op_bdry_handle)
     private->op_bdry.seq;
     register int    i, last_plus_one;
@@ -397,6 +397,8 @@ ev_find_glyph(chain, line_start)
 	}
 	i++;
     }
+    if (bdry == (Op_bdry_handle) 0)
+	goto Return;
     for (i++; i < last_plus_one; i++) {
 	if (((seq[i].flags & (EV_BDRY_OVERLAY | EV_BDRY_END)) ==
 	     (EV_BDRY_OVERLAY | EV_BDRY_END)) &&

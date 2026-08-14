@@ -104,7 +104,7 @@ sel_line_cmd_proc(item, event)
 {
     Textsw_view_handle view = text_view_frm_p_itm(item);
     Textsw_folio    folio = FOLIO_FOR_VIEW(view);
-    int             error;
+    int             error = FALSE;
 
     if (item == sel_line_panel_items[(int) SEL_LINE_ITEM] ||
 	item == sel_line_panel_items[(int) SEL_LINE_NUMBER_ITEM])

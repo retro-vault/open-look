@@ -471,8 +471,8 @@ void
 defaults_store_db(filename)
     char           *filename;
 {
-    unsigned char  *buffer;
-    FILE           *file;
+    unsigned char  *buffer = NULL;
+    FILE           *file = NULL;
     struct stat     file_status;
 
     /* Write the database to the specified file. */

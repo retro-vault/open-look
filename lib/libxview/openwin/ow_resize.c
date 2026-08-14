@@ -56,6 +56,7 @@ openwin_adjust_views(owin, owin_rect)
 	      openwin_adjust_view(owin, view, &r);
 	}
     }
+	return XV_OK;
 }
 
 /* 

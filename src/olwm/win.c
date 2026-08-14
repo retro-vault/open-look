@@ -339,6 +339,7 @@ WinGeneric *win;
 {
 	if ((WinFunc(win,core.drawfunc) != NULL) && (win->core.client != NULL))
 		(WinFunc(win,core.drawfunc))(win->core.client->dpy,win);
+	return 0;
 }
 
 int
@@ -349,6 +350,7 @@ WinGeneric *win;
 {
 	if (event->xexpose.count == 0)
 	    (WinFunc(win,core.drawfunc))(dpy, win);
+	return 0;
 }
 
 
@@ -412,6 +414,7 @@ WinGeneric *win;
 	    XConfigureWindow(dpy,win->core.self,win->core.dirtyconfig,&xwc);
 	}
 	win->core.dirtyconfig &= ~(CWX|CWY|CWWidth|CWHeight);
+	return 0;
 }
 
 

@@ -61,6 +61,7 @@ WinGeneric *winInfo;
 	XDestroyWindow(dpy, winInfo->core.self);
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 
@@ -80,8 +81,10 @@ eventClientMessage(dpy, event, winInfo)
 	event->xclient.data.l[0] == AtomTakeFocus &&
 	event->xclient.format == 32)
     {
-	NoFocusTakeFocus(dpy, event->xclient.data.l[1]);
+	NoFocusTakeFocus(dpy, event->xclient.data.l[1],
+			 winInfo->core.client->scrInfo);
     }
+    return 0;
 }
 
 
@@ -97,6 +100,7 @@ eventSelection(dpy, pEvent, winInfo)
 	WinNoFocus	*winInfo;
 {
 	SelectionResponse(pEvent);
+    return 0;
 }
 
 

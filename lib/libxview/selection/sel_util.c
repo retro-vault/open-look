@@ -491,8 +491,10 @@ Atom   target;
 	  break;
       }
 
-    if ( (sel != NULL) && (sel->reply_proc != NULL) )
+    if ((sel != NULL) && (sel->reply_proc != NULL)) {
         (*sel->reply_proc)( sel_req, target, NULL, &errCode, SEL_ERROR, 0 );
+	}
+    return XV_ERROR;
 }
 
 

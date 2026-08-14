@@ -36,7 +36,7 @@ int state;
 	register int i;
 	int num_add;
 	int inside_width; /* width minus endcaps */
-	int top_color, bottom_color, fill_color;
+	int top_color, bottom_color, fill_color = OLGX_BG1;
 
 	inside_width = width - (2 * info->endcap_width);
 
@@ -486,7 +486,7 @@ Window win;
 int x, y;
 int state, fill_in;
 {
-	char string[3];
+	char string[3] = { HORIZ_MENU_MARK_UL, 0, 0 };
 	GC gc;
 
 	if (state & OLGX_VERT_MENU_MARK)
@@ -859,7 +859,7 @@ Pixmap pix;
 int x, y, width, height, state;
 {
 
-	unsigned long savebg1;
+	unsigned long savebg1 = 0;
 	unsigned long savebg2;
 	Window root;
 	int x_dummy, y_dummy;
@@ -923,7 +923,7 @@ XImage *xim;
 int x, y, width, height, state;
 {
 
-	unsigned long savebg1;
+	unsigned long savebg1 = 0;
 	unsigned long savebg2;
 	/*
 		Window              root;
@@ -1518,7 +1518,7 @@ int centerflag;			 /* TRUE = center pixmap or ximage,
 				else
 				{
 					XTextExtents(TextFont_Struct(info), (char *)string_label,
-								 hlabel->position, &direction, &ascent, &descent,
+								 ulabel->position, &direction, &ascent, &descent,
 								 &overall);
 					label_pixel_pos = m_pos +
 									  ((ulabel->position) ? XTextWidth(TextFont_Struct(info),
@@ -1533,7 +1533,7 @@ int centerflag;			 /* TRUE = center pixmap or ximage,
 				}
 #else
 				XTextExtents(TextFont_Struct(info), (char *)string_label,
-							 hlabel->position, &direction, &ascent, &descent,
+							 ulabel->position, &direction, &ascent, &descent,
 							 &overall);
 				label_pixel_pos = m_pos +
 								  ((ulabel->position) ? XTextWidth(TextFont_Struct(info),

@@ -298,6 +298,8 @@ textsw_create_popup_frame(view, popup_type)
 	panel = (Panel) textsw_create_sel_line_panel(popup_frame, view);
 	label = XV_MSG("Text:Line Number");
 	break;
+      default:
+	return;
     }
 
 

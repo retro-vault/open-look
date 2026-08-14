@@ -530,6 +530,7 @@ ConstrainMousePos(nscreen,mousex,mousey,imagex,imagey)
 	}
 	*imagex = srcx;
 	*imagey = srcy;
+	return 0;
 }
 
 /* ----------------------------------------------------------------------
@@ -546,8 +547,9 @@ MoreHelp(item,event)
 	hw  = (HelpWindow *)xv_get(item,XV_KEY_DATA,(Attr_attribute)HELPWIN_KEY);
 
 	if (hw->hwMoreHelpCmd) {
-		putenv(DpyEnvString(hw->hwScreenNo));
-		system(hw->hwMoreHelpCmd);
+	putenv(DpyEnvString(hw->hwScreenNo));
+	if (system(hw->hwMoreHelpCmd) == -1)
+		perror("olwmslave: system");
 	}
 
 }

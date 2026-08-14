@@ -267,6 +267,7 @@ XEvent *event;
 	    /* do nothing */
 	    break;
 	}
+	return disposition;
 }
 
 static void
@@ -503,6 +504,7 @@ XEvent *event;
 WinGeneric *win;
 {
 	dispatchEvent(dpy,event,win->core.parent);
+	return 0;
 }
 
 

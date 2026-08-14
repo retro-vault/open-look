@@ -316,7 +316,7 @@ cms_get_attr(cms_public, status, attr, args)
     va_list         	args;
 {
     Cms_info		*cms = CMS_PRIVATE(cms_public);
-    Xv_opaque		value;
+    Xv_opaque		value = XV_NULL;
 /* Alpha compatibility, mbuck@debian.org */
 #if 0
     Attr_avlist     	avlist = (Attr_avlist) args;
@@ -333,11 +333,8 @@ cms_get_attr(cms_public, status, attr, args)
 #else
 	  index = (unsigned int)avlist[0];
 #endif
-	  if (index >= cms->size) {
+	  if (index >= cms->size)
 	      index = cms->size - 1;
-	  } else if (index < 0) {
-	      index = 0;
-	  }
 	  value = (Xv_opaque)cms->index_table[index];
 	  break;
       }

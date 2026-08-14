@@ -447,8 +447,8 @@ Icon            icon_public;
     xid = (XID)xv_xid(info);
     cmap = xv_get( xv_cms(info), XV_XID );
 
-    if ( strlen( color_name ) )
-      if ( !XParseColor( display, cmap, color_name, &color ) ) {
+    if (strlen(color_name)) {
+	if (!XParseColor(display, cmap, color_name, &color)) {
 	  char msg[100];
 	  
 	  sprintf( msg,
@@ -466,7 +466,8 @@ Icon            icon_public;
 		   NULL );	
       } else {
 	  valid_color = TRUE;
-      }
+	}
+    }
     
     if ( valid_color )
       icon->workspace_pixel = color.pixel;

@@ -553,7 +553,7 @@ paint_gauge(ip)
     int		    olgx_state;
     int		    pixel_value;
     Xv_Window       pw;
-    int		    save_black;
+    int		    save_black = 0;
     int		    tick;
     int		    tick_gap;
     int		    width;

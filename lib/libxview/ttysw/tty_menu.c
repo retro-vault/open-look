@@ -888,6 +888,7 @@ ttysw_mode_action(cmd_menu, cmd_item)
 	textsw_remove_mark(textsw, termsw->read_only_mark);
 	termsw->append_only_log = FALSE;
     }
+	return 0;
 }
 
 /*ARGSUSED*/

@@ -28,7 +28,7 @@ nint_push_callout(client, cond)
     NTFY_CONDITION *cond;
 {
     Notify_func     func;
-    Notify_func    *functions;
+    Notify_func    *functions = NTFY_FUNC_PTR_NULL;
     register NTFY_CONDITION *stack_cond;
 
     /* Make sure that stack is large enough */

@@ -62,6 +62,7 @@ WinPane	*winInfo;
 {
     if (event->xany.type == EnterNotify)
         ColorWindowCrossing(dpy, event, winInfo);
+    return 0;
 }
 
 /* 
@@ -76,6 +77,7 @@ eventColormapNotify(dpy, event, winInfo)
     WinPane	*winInfo;
 {
     ColormapChange(dpy, event, (WinGeneric *)winInfo);
+    return 0;
 }
 
 /* 
@@ -96,6 +98,7 @@ WinPane	*winInfo;
             /* Mark current state */
 	    StateWithdrawn(winInfo->core.client,TimeFresh());
 	}
+    return 0;
 }
 
 
@@ -111,6 +114,7 @@ XEvent	*event;
 WinPane	*winInfo;
 {
 	StateWithdrawn(winInfo->core.client,TimeFresh());
+    return 0;
 }
 
 
@@ -124,6 +128,7 @@ XEvent	*event;
 WinPane	*winInfo;
 {
 	ClientDistributeProperty(winInfo->core.client, (XPropertyEvent *)event);
+    return 0;
 }
 
 /* 
@@ -142,6 +147,7 @@ WinPane	*winInfo;
                 if (event->xclient.data.l[0] == IconicState)
                         StateIconic(cli,TimeFresh());
         }
+    return 0;
 }
 
 
@@ -182,6 +188,7 @@ drawPane(dpy, winInfo)
 Display	*dpy;
 WinGeneric *winInfo;
 {
+    return 0;
 }
 
 
@@ -194,6 +201,7 @@ Display	*dpy;
 WinGeneric *winInfo;
 Bool focus;
 {
+    return 0;
 }
 
 /*
@@ -208,6 +216,7 @@ WinGeneric *winInfo;
 	/* free our data and throw away window */
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 /*
@@ -249,6 +258,7 @@ WinPane *winInfo;
 
 	XSendEvent(dpy, winInfo->core.self, False, 
 			StructureNotifyMask, (XEvent *)&ce);
+    return 0;
 }
 
 
@@ -396,6 +406,7 @@ int w, h;
 		win->core.height = h;
 		win->core.dirtyconfig |= CWHeight;
 	}
+    return 0;
 }
 
 /***************************************************************************

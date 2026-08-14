@@ -1,0 +1,12 @@
+#
+# @(#)basic_setting 1.5 91/09/14;SMI
+#
+#  Workspace Properties Localization Panel configuration file - Basic Setting
+#
+#  Basic Setting for the C locale
+#
+#	LC_MESSAGES="C"		-> display language is English
+#
+#  Category_name=default_value,value:label[[,value:label]...]
+#
+basic_setting=C;C|U.S.A.

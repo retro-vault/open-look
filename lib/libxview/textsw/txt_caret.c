@@ -83,7 +83,10 @@ textsw_move_backward_a_word(view, pos)
     while ((pos != 0) && (pos != ES_CANNOT_SET) &&
 	   (span_result & EI_SPAN_NOT_IN_CLASS)) {
 	span_result = ev_span(chain, pos, &first, &last_plus_one, span_flag);
-	pos = ((pos == first) ? pos-- : first);
+	if (pos == first)
+	    --pos;
+	else
+	    pos = first;
     }
 
     return (pos);
@@ -162,8 +165,12 @@ textsw_move_forward_a_word(view, pos, file_length)
 	span_result = ev_span(chain, pos, &first, &last_plus_one,
 			      span_flag);
 
-	if (pos == last_plus_one)
-	    pos = ((pos == file_length) ? ES_CANNOT_SET : pos++);
+	if (pos == last_plus_one) {
+	    if (pos == file_length)
+		pos = ES_CANNOT_SET;
+	    else
+		++pos;
+	}
 	else
 	    pos = last_plus_one;
     }
@@ -192,8 +199,12 @@ textsw_move_to_word_end(view, pos, file_length)
 	span_result = ev_span(chain, pos, &first, &last_plus_one,
 			      span_flag);
 
-	if (pos == last_plus_one)
-	    pos = ((pos == file_length) ? ES_CANNOT_SET : pos++);
+	if (pos == last_plus_one) {
+	    if (pos == file_length)
+		pos = ES_CANNOT_SET;
+	    else
+		++pos;
+	}
 	else
 	    pos = last_plus_one;
     }

@@ -224,14 +224,27 @@ va_dcl
 #endif
 {
     va_list         args;
-    char *          sfree;
-    int             result;
+    va_list         sizing_args;
+    char           *sfree;
+    int             result, required;
+
+    if (ptr_to_string == NULL || fmt == NULL)
+	return (-1);
 
     VA_START(args, fmt);
+    va_copy(sizing_args, args);
+    required = vsnprintf(NULL, 0, fmt, sizing_args);
+    va_end(sizing_args);
+    if (required < 0 ||
+	textsw_string_min_free(ptr_to_string, required) != TRUE) {
+	va_end(args);
+	return (-1);
+    }
     sfree = (char *)TXTSW_STRING_FREE(ptr_to_string);
-    result = vsprintf(sfree, fmt, args);
+    result = vsnprintf(sfree, (size_t) required + 1, fmt, args);
     va_end(args);
-    TXTSW_STRING_FREE(ptr_to_string) += strlen(sfree);
+    if (result >= 0)
+	TXTSW_STRING_FREE(ptr_to_string) += result;
     return (result);
 }
 #else /* __linux__ */

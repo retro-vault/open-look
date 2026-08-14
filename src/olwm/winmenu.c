@@ -50,6 +50,7 @@ eventButtonPress(dpy, event, winInfo)
 	WinMenu		*winInfo;
 {
 	/* REMIND - placeholder for future */
+    return 0;
 }
 
 /* 
@@ -62,6 +63,7 @@ eventButtonRelease(dpy, event, winInfo)
 	WinMenu		*winInfo;
 {
 	/* REMIND - placeholder for future */
+    return 0;
 }
 
 /* 
@@ -74,6 +76,7 @@ eventKeyPress(dpy, event, winInfo)
 	WinMenu		*winInfo;
 {
 	/* REMIND - mouseless operation */
+    return 0;
 }
 
 /* 
@@ -86,6 +89,7 @@ eventKeyRelease(dpy, event, winInfo)
 	WinMenu		*winInfo;
 {
 	/* REMIND - mouseless operation */
+    return 0;
 }
 
 /* 
@@ -98,6 +102,7 @@ eventMotionNotify(dpy, event, winInfo)
 	WinMenu		*winInfo;
 {
 	/* REMIND - placeholder for future */
+    return 0;
 }
 
 /*
@@ -115,6 +120,7 @@ destroyMenu(dpy, winInfo)
 	XDestroyWindow(dpy, winInfo->menu.shadow);
 #endif /* SHADOW */
 	MemFree(winInfo);
+    return 0;
 }
 
 
@@ -270,6 +276,7 @@ MenuEventExpose(dpy, event, winInfo)
 	if (event->xexpose.count == 0)
 	    DrawMenuWithHints(dpy, mInfo);
     }
+    return 0;
 }
 
 /*
@@ -289,6 +296,7 @@ MenuEventDrawMenu(dpy, winInfo)
 
     if (mInfo)
 	DrawMenu(dpy, mInfo);
+    return 0;
 }
 
 

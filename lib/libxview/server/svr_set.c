@@ -388,7 +388,8 @@ server_add_xevent_mask (server, xid, mask, pkg_id, external)
     Server_xid_list *xid_node = 0;
     Server_mask_list *mask_node = 0, *link;
 
-    if (xid_node = server_xidnode_from_xid(server, xid))
+    xid_node = server_xidnode_from_xid(server, xid);
+    if (xid_node)
 	mask_node = server_masknode_from_xidid (server, xid, pkg_id);
 
     if (!mask) {  /* mask is null.  remove node is necessary */
@@ -396,10 +397,10 @@ server_add_xevent_mask (server, xid, mask, pkg_id, external)
 	if (!mask_node)
 	    return error;
 
-	    if (external)
-		mask_node->extmask = mask;
-	    else
-		mask_node->pvtmask = mask;
+	if (external)
+	    mask_node->extmask = mask;
+	else
+	    mask_node->pvtmask = mask;
 
 	if (!(mask_node->pvtmask|mask_node->extmask)) {
 	    /* both masks are null, remove the node */

@@ -808,7 +808,7 @@ get_mask_bit(mask, code, win_public)
 	     * enable all key press events.
 	     */
 	    win_xmask_to_im(xmask, &im);
-	    win_getinputcodebit(&im, KEY_LEFT(1));
+	    v = win_getinputcodebit(&im, KEY_LEFT(1));
 	}
 	break;
 
