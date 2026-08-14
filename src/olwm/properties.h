@@ -57,7 +57,36 @@ typedef struct {
 
 #define ENTIRE_CONTENTS		(10000000L)
 
-/* PropGetOLWindowState: Return ol window state. */
-Bool PropGetOLWindowState(Display *dpy, Window win, OLWindowState *winState);
+long PropListAvailable(Display *dpy, Window win);
+void PropSetAvailable(Display *dpy, Window win);
+void PropClearAvailable(void);
+
+Bool PropGetWMName(Display *dpy, Window win, Text **winName);
+Bool PropGetWMIconName(Display *dpy, Window win, Text **iconName);
+Bool PropGetWMClass(Display *dpy, Window win, char **class,
+                    char **instance);
+Bool PropGetWMHints(Display *dpy, Window win, XWMHints *wmHints);
+Bool PropGetWMNormalHints(Display *dpy, Window win, XSizeHints *sizeHints,
+                          Bool *preICCCM);
+Bool PropGetWMProtocols(Display *dpy, Window win, int *protocols);
+Bool PropGetWMTransientFor(Display *dpy, Window win, Window root,
+                           Window *transientFor);
+Bool PropGetWMColormapWindows(Display *dpy, Window win, Window **wins,
+                              int *count);
+Bool PropGetWMState(Display *dpy, Window win, int *state, Window *iconwin);
+void PropSetWMState(Display *dpy, Window win, int state, Window iconwin);
+
+Bool PropGetOLWindowState(Display *dpy, Window win,
+                          OLWindowState *winState);
+Bool PropGetOLWinAttr(Display *dpy, Window win, OLWinAttr *winAttr,
+                      Bool *oldVersion);
+Bool PropGetOLDecorAdd(Display *dpy, Window win, int *decorFlags);
+Bool PropGetOLDecorDel(Display *dpy, Window win, int *decorFlags);
+Bool PropGetOLLeftFooter(Display *dpy, Window win, Text **footer);
+Bool PropGetOLRightFooter(Display *dpy, Window win, Text **footer);
+#ifdef OW_I18N_L4
+Bool PropGetOLLeftIMStatus(Display *dpy, Window win, Text **status);
+Bool PropGetOLRightIMStatus(Display *dpy, Window win, Text **status);
+#endif
 
 #endif /* _OLWM_PROPERTIES_H */

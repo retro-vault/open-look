@@ -33,6 +33,8 @@
 #include "win.h"
 #include "olcursor.h"
 #include "events.h"
+#include "evbind.h"
+#include "menu.h"
 #include "error.h"
 
 #ifndef LC_MESSAGES

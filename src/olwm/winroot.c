@@ -26,9 +26,11 @@
 #include "globals.h"
 #include "group.h"
 #include "events.h"
+#include "evbind.h"
 #include "error.h"
 #include "client.h"
 #include "kbdfuncs.h"
+#include "resources.h"
 
 
 /***************************************************************************
@@ -189,13 +191,14 @@ eventEnterNotify(dpy, pEvent, winInfo)
 	WinRoot		*winInfo;
 {
 	if (pEvent->xcrossing.detail == NotifyNonlinearVirtual)
-	    return;
+	    return 0;
 
 	ColorWindowCrossing(dpy, pEvent, winInfo);
 
 	if (GRV.FocusFollowsMouse)
 	    NoFocusTakeFocus(dpy, pEvent->xcrossing.time,
 			     winInfo->core.client->scrInfo);
+	return 0;
 }
 
 /* 
@@ -221,6 +224,7 @@ eventConfigureRequest(dpy, pEvent, winInfo)
 		ClientConfigure(clientInfo->core.client, clientInfo, (XConfigureRequestEvent *)pEvent);
 	}
 	/* REMIND doesn't handle stacking or border width yet */
+	return 0;
 }
 
 /* 
@@ -239,6 +243,7 @@ eventMapRequest(dpy, pEvent, winInfo)
 #ifdef GPROF_HOOKS
 	moncontrol(0);
 #endif /* GPROF_HOOKS */
+	return 0;
 }
 
 
@@ -283,7 +288,7 @@ eventMotionNotify(dpy, pEvent, winInfo)
 	int			(*selectFunc)();
 
 	if (!pEvent->xmotion.same_screen)
-	    return;
+	    return 0;
 
 	/* If the user hasn't moved more than the threshold
 	 * amount, break out of here.  REMIND  Also, if we get a 
@@ -296,9 +301,9 @@ eventMotionNotify(dpy, pEvent, winInfo)
 	     GRV.MoveThreshold) &&
 	    (ABS(pEvent->xmotion.y - winInfo->buttonPressEvent.xbutton.y) < 
 	     GRV.MoveThreshold))
-	    return;
+	    return 0;
 	if (pEvent->xmotion.state == 0)
-	   return;
+	   return 0;
 	
 	/*
 	 * On Select: Clear existing selected clients and add new ones
@@ -320,6 +325,7 @@ eventMotionNotify(dpy, pEvent, winInfo)
 	if (selectFunc)
 	    TraceRootBox(dpy, winInfo, &(winInfo->buttonPressEvent),
 			     selectInBox, selectFunc);
+	return 0;
 }
 
 /* 
@@ -335,7 +341,7 @@ eventButtonRelease(dpy, pEvent, winInfo)
 	WinRoot		*winInfo;
 {
 	if (!AllButtonsUp(pEvent))
-	    return;
+	    return 0;
 
 	/*
 	 * This only happens if we did NOT get a motion notify
@@ -353,6 +359,7 @@ eventButtonRelease(dpy, pEvent, winInfo)
 	    SelectionTime = pEvent->xbutton.time;
 	}
 	winInfo->currentAction = ACTION_NONE;
+	return 0;
 }
 		
 /* 
@@ -374,7 +381,7 @@ eventButtonPress(dpy, pEvent, winInfo)
 
 	if (pEvent->xbutton.state & ModMaskMap[MOD_WMGRAB]) {
 	    /* redistribute to child */
-	    if (pEvent->xbutton.subwindow != NULL &&
+	    if (pEvent->xbutton.subwindow != None &&
 		(child = WIGetInfo(pEvent->xbutton.subwindow)) != NULL &&
 		(child->core.kind == WIN_FRAME ||
 		 child->core.kind == WIN_ICON) &&
@@ -383,8 +390,8 @@ eventButtonPress(dpy, pEvent, winInfo)
 		    GrabModeAsync, GrabModeAsync, None, None,
 		    pEvent->xbutton.time)))
 	    {
-		PropagatePressEventToChild(dpy, pEvent, child);
-		return;
+		PropagatePressEventToChild(dpy, &pEvent->xbutton, child);
+		return 0;
 	    }
 
 	    /*
@@ -401,13 +408,14 @@ eventButtonPress(dpy, pEvent, winInfo)
 
 	switch (a) {
 	case ACTION_MENU:
-	    	RootMenuShow(dpy, winInfo, pEvent);
+		RootMenuShow(dpy, (WinGeneric *)winInfo, pEvent);
 	    	/* FALL THRU */
 	case ACTION_SELECT:
 	case ACTION_ADJUST:
 	    	winInfo->currentAction = a;
 	    	break;
 	}
+	return 0;
 }
 
 
@@ -433,6 +441,7 @@ eventKeyPressRelease(dpy, pEvent, winInfo)
 
 	if (!isbound && pEvent->type == KeyPress)
 	    KeyBeep(dpy, (XKeyEvent *)pEvent);
+	return 0;
 }
 
 /* 
@@ -453,10 +462,11 @@ eventPropertyNotify(dpy, pEvent, winInfo)
 	if ((pEvent->xproperty.atom != XA_RESOURCE_MANAGER)
 	     || (pEvent->xproperty.state != PropertyNewValue))
 	{
-	    return;
+	    return 0;
 	}
 
 	UpdateGlobals(dpy);
+	return 0;
 }
 
 /* 
@@ -471,6 +481,7 @@ eventClientMessage(dpy, pEvent, winInfo)
 	if (pEvent->xclient.message_type == AtomSunReReadMenuFile) {
 		ReInitUserMenu(dpy, True);
 	}
+	return 0;
 }
 
 /* 

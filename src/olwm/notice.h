@@ -27,5 +27,7 @@ typedef struct _noticeBox {
 /* function declarations */
 /* UseNoticeBox: Process use notice box. */
 extern int UseNoticeBox();
+void UseNoticeBoxSync(Display *dpy, int screen, NoticeBox *noticeBox,
+                      void (*callback)());
 
 #endif /* _OLWM_NOTICE_H */

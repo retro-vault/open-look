@@ -41,6 +41,7 @@ FILE *fp;                               /*File pointer to write to*/
            program - name of currently executing program
            stdout  - standard output
 */
+int
 main(argc,argv)
 int argc;
 char *argv[];
@@ -83,7 +84,8 @@ char *argv[];
   Globals: fp   - file pointer to write window information to
            NULL - 0
 */
-write_header()
+void
+write_header(void)
 {
         char *date;
         struct timeval tp;

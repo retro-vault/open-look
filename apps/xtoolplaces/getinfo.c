@@ -27,6 +27,8 @@ extern int console_checking, ignoredt;
 extern char *program,*addon;
 extern FILE *fp;
 
+static void search(Display *display, Window window, Window parent_window);
+
 /*This function will initialize the interface to X, lock the pointer and
   change it to a watch, start the recursive procedure of going through
   the window tree list, and then release the pointer and change the cursor
@@ -59,7 +61,8 @@ extern FILE *fp;
            NULL              - 0
            XC_watch          - indicates the watch bitmap
 */
-getinfo()
+void
+getinfo(void)
 {
         int *screens,loop;
         unsigned int num_child;
@@ -185,6 +188,7 @@ getinfo()
            PropertyNotify     - event that indicates a property has changed
            WindowGroupHint    - mask for group hint bit in hint flags
 */
+static void
 search(display,window,parent_window)
 Display *display;
 Window window,parent_window;

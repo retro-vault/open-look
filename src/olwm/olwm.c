@@ -9,11 +9,13 @@
  */
 
 #include <errno.h>
+#include <fcntl.h>
 #include <memory.h>
 #include <signal.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>		/* exit() */
+#include <unistd.h>
 
 #include <sys/time.h>
 #include <sys/types.h>
@@ -32,6 +34,7 @@
 #include "i18n.h"
 #include "ollocale.h"
 #include "events.h"
+#include "evbind.h"
 #include "mem.h"
 #include "olwm.h"
 #include "win.h"
@@ -49,9 +52,6 @@
 #ifndef MAXPID
 #define MAXPID 32767
 #endif
-
-typedef	void	(*VoidFunc)();
-
 
 /*
  * Globals
@@ -89,6 +89,8 @@ static Display *openDisplay();
 static void	parseCommandline();
 static void	sendSyncSignal();
 static void	initWinClasses();
+static void	initSignalHandlers(void);
+static void	handleExitSignal(int signal_number);
 
 
 /*
@@ -146,9 +148,18 @@ static	XrmOptionDescRec	optionTable[] = {
 
 /* Child Process Handling */
 
-static Bool deadChildren = False;
-static void handleChildSignal();
+static volatile sig_atomic_t deadChildren = False;
+static void handleChildSignal(int signal_number);
 static int slavePid;
+
+/*
+ * Termination signals cannot safely call cleanup(), since cleanup re-enters
+ * Xlib and the signal may have interrupted Xlib while one of its locks was
+ * held.  The handler only sets a flag and wakes the event loop through this
+ * non-blocking pipe.  Cleanup then runs in normal process context.
+ */
+static volatile sig_atomic_t exitRequested = False;
+static int exitSignalPipe[2] = { -1, -1 };
 
 void ReapChildren();		/* public -- called from events.c */
 
@@ -171,11 +182,11 @@ static char	**argVec;
 /*
  * main	-- parse arguments, perform initialization, call event-loop
  */
+int
 main(argc, argv)
 	int argc;
 	char **argv;
 {
-	int			ExitOLWM();
 	XrmDatabase		commandlineDB = NULL;
 	char			*dpystr;
 
@@ -240,13 +251,11 @@ olwm: Warning: '%s' is invalid locale for the LC_CTYPE category,\n\
 	argVec = argv;
 
 	/*
-	 * Set up signal handlers.  Clean up and exit on SIGHUP, SIGINT, and 
-	 * SIGTERM; note child process changes on SIGCHLD.
+	 * Set up signal handlers.  SIGHUP, SIGINT, and SIGTERM wake the event
+	 * loop, which performs cleanup outside signal-handler context.  SIGCHLD
+	 * records child process changes for the event loop to reap.
 	 */
-	signal(SIGHUP, (VoidFunc)ExitOLWM);
-	signal(SIGINT, (VoidFunc)ExitOLWM);
-	signal(SIGTERM, (VoidFunc)ExitOLWM);
-	signal(SIGCHLD, handleChildSignal);
+	initSignalHandlers();
 
 	XrmInitialize();
 
@@ -336,8 +345,98 @@ olwm: Warning: '%s' is invalid locale for the LC_CTYPE category,\n\
 	sendSyncSignal();
 
 	EventLoop(DefDpy);
+	return ExitOLWM();
+}
 
-	/*NOTREACHED*/
+
+/*
+ * Install signal handlers and create the self-pipe used to wake select().
+ */
+static void
+initSignalHandlers(void)
+{
+	struct sigaction action;
+	int i, flags;
+
+	if (pipe(exitSignalPipe) == -1) {
+		perror("olwm: cannot create signal pipe");
+		exit(1);
+	}
+
+	for (i = 0; i < 2; ++i) {
+		flags = fcntl(exitSignalPipe[i], F_GETFL, 0);
+		if (flags == -1 ||
+		    fcntl(exitSignalPipe[i], F_SETFL, flags | O_NONBLOCK) == -1) {
+			perror("olwm: cannot make signal pipe non-blocking");
+			exit(1);
+		}
+
+		flags = fcntl(exitSignalPipe[i], F_GETFD, 0);
+		if (flags == -1 ||
+		    fcntl(exitSignalPipe[i], F_SETFD, flags | FD_CLOEXEC) == -1) {
+			perror("olwm: cannot close signal pipe on exec");
+			exit(1);
+		}
+	}
+
+	memset(&action, 0, sizeof(action));
+	sigemptyset(&action.sa_mask);
+	action.sa_handler = handleExitSignal;
+	if (sigaction(SIGHUP, &action, NULL) == -1 ||
+	    sigaction(SIGINT, &action, NULL) == -1 ||
+	    sigaction(SIGTERM, &action, NULL) == -1) {
+		perror("olwm: cannot install termination signal handler");
+		exit(1);
+	}
+
+	action.sa_handler = handleChildSignal;
+	if (sigaction(SIGCHLD, &action, NULL) == -1) {
+		perror("olwm: cannot install child signal handler");
+		exit(1);
+	}
+}
+
+
+/*
+ * Async-signal-safe termination handler.  Ignore a full pipe: the flag is
+ * authoritative, and one pending byte is enough to wake the event loop.
+ */
+static void
+handleExitSignal(int signal_number)
+{
+	int savedErrno = errno;
+	unsigned char signalByte = (unsigned char)signal_number;
+
+	exitRequested = True;
+	if (exitSignalPipe[1] != -1)
+		(void)write(exitSignalPipe[1], &signalByte, sizeof(signalByte));
+	errno = savedErrno;
+}
+
+
+Bool
+ExitRequested(void)
+{
+	return exitRequested != False;
+}
+
+
+int
+ExitSignalFD(void)
+{
+	return exitSignalPipe[0];
+}
+
+
+void
+DrainExitSignal(void)
+{
+	unsigned char buffer[32];
+	int savedErrno = errno;
+
+	while (read(exitSignalPipe[0], buffer, sizeof(buffer)) > 0)
+		;
+	errno = savedErrno;
 }
 
 
@@ -612,10 +711,9 @@ ExitOLWM()
  * handleChildSignal - keep track of children that have died
  */
 static void
-handleChildSignal()
+handleChildSignal(int signal_number)
 {
-/* Reinitialize signal catcher */
-	signal(SIGCHLD, handleChildSignal);
+	(void)signal_number;
 	deadChildren = True;
 }
 
@@ -625,14 +723,17 @@ handleChildSignal()
  * children until there aren't any more that have died, then unblock SIGCHLD.
  */
 void
-ReapChildren()
+ReapChildren(void)
 {
 	pid_t pid;
 	int status;
+	sigset_t blockMask, oldMask;
 
 	if (!deadChildren)
 		return;
-	sighold(SIGCHLD);
+	sigemptyset(&blockMask);
+	sigaddset(&blockMask, SIGCHLD);
+	sigprocmask(SIG_BLOCK, &blockMask, &oldMask);
 
 	/* clean up children until there are no more to be cleaned up */
 
@@ -661,7 +762,7 @@ ReapChildren()
 
 	deadChildren = False;
 
-	sigrelse(SIGCHLD);
+	sigprocmask(SIG_SETMASK, &oldMask, NULL);
 }
 
 

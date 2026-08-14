@@ -201,7 +201,7 @@ ScreenInfo *scrInfo;
 	ClientSetCurrent(NoFocusWinInfo->core.client);
 	ClientDefaultWindowState(dpy);
 	if (scrInfo != NULL && GRV.ColorTracksInputFocus)
-	    InstallDefaultColormap(dpy, scrInfo->rootwin, True);
+	    InstallDefaultColormap(dpy, (WinGeneric *)scrInfo->rootwin, True);
 }
 
 
@@ -218,7 +218,7 @@ WinGeneric *winInfo;
         XEvent dummy;
 
 	if (FindModifierMask(event->xkey.keycode) != 0)
-		return;
+		return 0;
 
         XSync(dpy,0);
         /*
@@ -242,6 +242,7 @@ WinGeneric *winInfo;
 	    /*EMPTY*/
             ;
 	KeyBeep(dpy, (XKeyEvent *)event);
+	return 0;
 }
 
 

@@ -35,6 +35,8 @@ extern XrmDatabase OlwmDB;
 
 /* BoolString: Process bool string. */
 Bool BoolString(char *s, Bool dflt);
+void InitGlobals(Display *dpy, XrmDatabase commandlineDB);
+void UpdateGlobals(Display *dpy);
 
 #ifdef OW_I18N_L3
 /* EffectOLLC: Process effect ollc. */

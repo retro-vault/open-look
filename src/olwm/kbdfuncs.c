@@ -22,6 +22,7 @@
 #include "globals.h"
 #include "group.h"
 #include "resources.h"
+#include "evbind.h"
 #include "client.h"
 #include "kbdfuncs.h"
 
@@ -823,7 +824,7 @@ KeyWorkspaceMenu(dpy, ke)
     XKeyEvent *ke;
 {
     if (ke->type == KeyPress)
-	RootMenuShow(dpy, WIGetInfo(ke->root), ke);
+	RootMenuShow(dpy, WIGetInfo(ke->root), (XEvent *)ke);
 }
 
 

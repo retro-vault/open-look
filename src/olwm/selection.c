@@ -32,7 +32,7 @@ Time SelectionTime;
 
 typedef struct _selection_registry {
     Atom selection;
-    Bool (*handler)();
+    void (*handler)(XEvent *event);
 } SelectionRegistry;
 
 /*
@@ -316,13 +316,13 @@ AddSelection(cli, timestamp)
 		XSetSelectionOwner(cli->dpy, XA_PRIMARY,
 				   NoFocusWin, timestamp);
 		if (NoFocusWin != XGetSelectionOwner(cli->dpy, XA_PRIMARY))
-		    return;
+		    return False;
 	} else {
 		/* First look to see if window is already listed. */
 		for(tc = ListEnum(&l); tc != NULL; tc = ListEnum(&l))
 		{
 			if (tc == cli)
-				return;
+				return False;
 		}
 	}
 
@@ -333,6 +333,7 @@ AddSelection(cli, timestamp)
 	/* Tell the window it is selected. */
 	WinCallSelect(cli, True);
 	SelectionTime = timestamp;
+	return True;
 }
 
 
@@ -445,7 +446,7 @@ EnumSelections(foo)
  * Register a selection and its handler function.  The handler function should 
  * be declared as:
  * 
- *	Bool handler(selreqevent);
+ *	void handler(XEvent *event);
  *
  * Note that there is no way to unregister a selection.  That function isn't 
  * necessary at this time.
@@ -453,7 +454,7 @@ EnumSelections(foo)
 void
 SelectionRegister(selection, handler)
     Atom selection;
-    Bool (*handler)();
+    void (*handler)(XEvent *event);
 {
     SelectionRegistry *reg;
 

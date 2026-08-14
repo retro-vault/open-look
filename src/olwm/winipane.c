@@ -69,7 +69,7 @@ WinIconPane *winInfo;
     XGCValues gcv;
 
     if (winInfo->iconClientWindow)
-	return;
+	return 0;
 
     XFillRectangle(dpy, pane, WinGC(winInfo,WORKSPACE_GC),
 		0, 0, winInfo->core.width, winInfo->core.height);
@@ -93,6 +93,7 @@ WinIconPane *winInfo;
     if (winInfo->iconMask != None) {
 	XSetClipMask(dpy, gc, None);
     }
+	return 0;
 }
 
 
@@ -496,5 +497,4 @@ IconPaneSetMask(dpy,winInfo,mask)
 
 	winInfo->iconMask = mask;
 }
-
 

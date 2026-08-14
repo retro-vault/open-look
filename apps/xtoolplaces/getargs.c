@@ -66,6 +66,7 @@ char *getenv();
   Locals:  none
   Globals: none
 */
+void
 getargs(argc,argv)
 int argc;
 char *argv[];
@@ -106,6 +107,7 @@ char *argv[];
            USAGE          - usage line
            VERSION        - current program version
 */
+void
 parse_cmmd_args(argc,argv)
 int *argc;
 char *argv[];
@@ -191,7 +193,8 @@ char *argv[];
            APPSFILENAME - class name of this application
            NULL         - 0
 */
-merge_databases()
+void
+merge_databases(void)
 {
         char *env_var,*home;
         char db_file[1024];
@@ -269,7 +272,8 @@ merge_databases()
            NULL             - 0
            True             - 'true' value
 */
-extract_options()
+void
+extract_options(void)
 {
         char *resource,*filename,*tw_program;
         char *str_type[20];
@@ -430,6 +434,7 @@ char *gethomedir()
            DEFAULT_FILENAME - default filename to save to
            NULL             - 0
 */
+void
 open_file(filename)
 char *filename;
 {

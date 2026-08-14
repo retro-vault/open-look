@@ -35,6 +35,7 @@ extern FILE *fp;
   Locals:  none
   Globals: fp             - file pointer to write window information to
 */
+void
 adddisplay(command_line,screennum)
 int screennum;
 char *command_line;
@@ -42,4 +43,3 @@ char *command_line;
         if(!index(command_line,':'))
           fprintf(fp,"-display :0.%d ",screennum);
 }
-

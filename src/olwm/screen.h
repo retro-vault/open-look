@@ -164,5 +164,9 @@ extern	void		ScreenDestroyWindow(ScreenInfo*, Window);
 extern	void		ScreenUpdateWinCacheSize(Display *dpy);
 /* ReparentScreens: Reparent screens. */
 extern	void		ReparentScreens(Display *dpy);
+int CreateScreenWindowMenuInfo(Display *dpy);
+int DestroyScreenWindowMenuInfo(Display *dpy);
+int CreateScreenUserMenuInfo(Display *dpy);
+int DestroyScreenUserMenuInfo(Display *dpy);
 
 #endif	/* _OLWM_SCREEN_H */

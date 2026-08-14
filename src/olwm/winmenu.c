@@ -265,7 +265,7 @@ MenuEventExpose(dpy, event, winInfo)
     if (mInfo == NULL) /*not yet reparented*/
 	WinEventExpose(dpy, event, winInfo);
     else {
-	SetMenuRedrawHints(dpy, event, mInfo);
+	SetMenuRedrawHints(dpy, &event->xexpose, mInfo);
 
 	if (event->xexpose.count == 0)
 	    DrawMenuWithHints(dpy, mInfo);

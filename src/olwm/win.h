@@ -556,5 +556,32 @@ void FrameUnparentPane(Client *cli, WinPaneFrame *winFrame, WinPane *winPane);
 void HandleHelpKey(Display *dpy, XEvent *pEvent);
 /* PushPinSetPinState: Set push pin pin state. */
 void PushPinSetPinState(Display *dpy, WinPushPin *winInfo, int newState, Bool sendDelete);
+void PushPinTogglePinState(Display *dpy, WinPushPin *winInfo,
+                           Bool sendDelete);
+void PreenColormapInhibit(Client *cli);
+void FrameFlashTitleBar(WinPaneFrame *winInfo);
+void FrameMinSize(WinPaneFrame *frame, int *width, int *height);
+void FrameUpdateShape(Client *cli, WinPaneFrame *winInfo);
+void FrameSetupGrabs(Client *cli, Window win, Bool activate);
+void InstallDefaultColormap(Display *dpy, WinGeneric *winInfo, Bool lock);
+void ColorFocusInit(Display *dpy, WinGeneric *root);
+
+void ResizeInit(Display *dpy);
+void ColormapInit(Display *dpy);
+void ButtonInit(Display *dpy);
+void BusyInit(Display *dpy);
+void MenuInit(Display *dpy);
+int PinMenuInit(Display *dpy);
+void RootInit(Display *dpy);
+void PushPinInit(Display *dpy);
+void PaneInit(Display *dpy);
+void IconPaneInit(Display *dpy);
+
+Client *StateNew(Display *dpy, Window rootWin, Window window,
+                 Bool existing, WinPane *ourWinInfo);
+void StateIconic(Client *cli, Time timestamp);
+void StateNormal(Client *cli, Time timestamp);
+void StateWithdrawn(Client *cli, Time timestamp);
+void StateInvisible(Client *cli, Time timestamp);
 
 #endif /* _OLWM_WIN_H */

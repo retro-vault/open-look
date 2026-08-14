@@ -90,8 +90,8 @@ DebugWindow(win)
 	if (win == NULL) {
 		(void)fprintf(stderr, "other window - ");
 	} else {
-		(void)fprintf(stderr, "win %x (self %lu) %s - ",
-		        win, win->core.self, typeNames[win->core.kind]);
+		(void)fprintf(stderr, "win %p (self %lu) %s - ",
+		        (void *)win, win->core.self, typeNames[win->core.kind]);
 	}
 	
 	(void)fflush(stderr);
