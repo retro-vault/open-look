@@ -48,6 +48,7 @@ Requirements:
 - `libtirpc` development library (used by XView selection/RPC code).
   Modern glibc no longer ships `<rpc/rpc.h>` at the top level; headers
   live under `/usr/include/tirpc` and CMake adds that include path.
+- Boost
 - Standard C math library (`libm`, usually provided by libc toolchain)
 
 Recommended package install commands:
@@ -56,20 +57,21 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev libboost-dev
 ```
 
 Fedora/RHEL:
 
 ```bash
-sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils boost-devel
 ```
 
 Arch Linux:
 
 ```bash
-sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir
+sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir boost-libs
 ```
+
 
 Build commands:
 
