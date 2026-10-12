@@ -196,6 +196,14 @@ main(argc, argv)
 	extern char		*getenv();
 #endif /* OW_I18N_L3 */
 
+#ifdef OPENWINHOME_DEFAULT
+    /* Display managers need not supply OPENWINHOME. Export the fallback so
+     * menu commands and their children use the same tree as the manager.
+     */
+    if (getenv("OPENWINHOME") == NULL || !*getenv("OPENWINHOME"))
+        setenv("OPENWINHOME", OPENWINHOME_DEFAULT, 1);
+#endif
+
 #ifdef MALLOCDEBUG
 	malloc_debug(MALLOCDEBUG);
 #endif /* MALLOCDEBUG */

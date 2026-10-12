@@ -105,11 +105,17 @@ This sets:
 ### 2) System install with CMake
 
 ```bash
-cmake --install build --prefix /usr/local
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr/local
+cmake --build build -j"$(nproc)"
+sudo cmake --install build
 sudo ldconfig
 ```
 
-If you use a different prefix, set `OPENWINHOME` to that prefix when running.
+Set `CMAKE_INSTALL_PREFIX` when configuring to choose another prefix. Programs
+use this prefix when `OPENWINHOME` is unset. `olwm` also exports that default
+to menu-launched applications, including in display-manager sessions.
+If you override the prefix only with `cmake --install --prefix`, set
+`OPENWINHOME` to that prefix when running.
 The window manager and all accessories are installed in `<prefix>/bin`.
 
 `cmdtool` uses `TERM=sun-cmd`. The build compiles its terminal description
@@ -163,7 +169,32 @@ The runtime package expects these assets to exist under `OPENWINHOME`:
 For staged local runs (`OPENWINHOME=<repo>/bin`), these are already in place
 after build.
 
+The default workspace menu search checks `$HOME/.openwin-menu`, then
+`/etc/X11/olwm/openwin-menu`, then `$OPENWINHOME/lib/openwin-menu`
+(with additional locale-specific paths in internationalized builds).
+Installed programs do not require the source tree. Source paths may still
+appear in debugging information; these are separate from runtime lookups.
+On compilers supporting `-fmacro-prefix-map`, assertion messages use relative
+source filenames even in Debug builds. Full paths remain in debug information
+for IDE source debugging. `cmake --install build --strip` removes debug
+information from installed binaries while keeping the local build debuggable.
+Absolute paths in `build/CMakeCache.txt` are normal build metadata and are
+not installed runtime configuration.
+
 ## Running from the staged tree
+
+In VS Code, select **Debug workspace (OpenLook)** and press F5 to build
+the package and debug `olwm` in a nested Xephyr session on `:2`.
+The Programs menu launches Command Tool, Clock, Text Editor, Properties,
+and Hello. The Workspace menu also offers Refresh, Restart WM, Reread Menu
+File, Save Window Layout (`xtoolplaces`, writing to `~/.xtoolplaces`), Exit WM,
+and Exit, with separators between groups. `olwmslave` is a window-manager
+helper and has no standalone menu entry.
+**Debug textedit (OpenLook)** starts the editor automatically.
+
+Compiled window-manager font defaults match `config/Xdefaults`: medium
+Helvetica for menu items and bold Helvetica for titles. User X resources
+can override these, and the fonts must be available in the X server font path.
 
 Use the generated helper so runtime lookup paths point to `bin/`:
 

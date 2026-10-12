@@ -88,7 +88,8 @@ putEnv(env,name,value)
 
 	/* search through, checking for variable in question */
 	for (count=0 ; count<env->used; count++) {
-		if (!strncmp(env->environ[count],name,nameLen))
+		if (!strncmp(env->environ[count],name,nameLen) &&
+		    env->environ[count][nameLen] == '=')
 			break;
 	}
 	
@@ -125,7 +126,7 @@ putDisplayEnv(env,dpy,screen)
 	if ((dot = strchr(colon,'.')) != (char *)NULL) {
 		len = dot - display;
 	} else {
-		len = colon - display;
+		len = strlen(display);
 	}
 
 	(void)sprintf(value,"%.*s.%d",len,display,screen);

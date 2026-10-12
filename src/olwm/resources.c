@@ -178,7 +178,7 @@ ResourceItem LocaleItemTable[] = {
 ResourceItem MainItemTable[] = {
 
 {   "titleFont",		"TitleFont",
-    "-b&h-lucida-bold-r-normal-sans-*-120-*-*-*-*-*-*",
+    "-adobe-helvetica-bold-r-normal--14-*-*-*-*-*-iso8859-1",
 #ifdef OW_I18N_L4
     &(GRV.TitleFontSetInfo),	cvtFontSet,		updTitleFont,
 #else
@@ -186,7 +186,7 @@ ResourceItem MainItemTable[] = {
 #endif
     RI_LOCALE_DEP },
 {   "textFont",			"TextFont",
-    "-b&h-lucida-medium-r-normal-sans-*-120-*-*-*-*-*-*",
+    "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1",
 #ifdef OW_I18N_L4
     &(GRV.TextFontSetInfo),	cvtFontSet,		updTextFont,
 #else
@@ -194,7 +194,7 @@ ResourceItem MainItemTable[] = {
 #endif
     RI_LOCALE_DEP },
 {   "buttonFont",		"ButtonFont",
-    "-b&h-lucida-medium-r-normal-sans-*-120-*-*-*-*-*-*",
+    "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1",
 #ifdef OW_I18N_L4
     &(GRV.ButtonFontSetInfo),	cvtFontSet,		updButtonFont,
 #else
@@ -202,7 +202,7 @@ ResourceItem MainItemTable[] = {
 #endif
     RI_LOCALE_DEP },
 {   "iconFont",			"IconFont",
-    "-b&h-lucida-medium-r-normal-sans-*-120-*-*-*-*-*-*",
+    "-adobe-helvetica-medium-r-normal--10-*-*-*-*-*-iso8859-1",
 #ifdef OW_I18N_L4
     &(GRV.IconFontSetInfo),	cvtFontSet,		updIconFont,
 #else
