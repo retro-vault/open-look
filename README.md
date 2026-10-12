@@ -16,6 +16,8 @@ This repository is the initial release preview of the full package:
 Source tree:
 
 - `src/olwm`: Open Look window manager sources (`olwm`)
+- `apps`: accessories (`cmdtool`, `textedit`, `clock`, `props`,
+  `xtoolplaces`, `hello`, and `olwmslave`)
 - `lib/olgx`: OPEN LOOK graphics library (`libolgx`)
 - `lib/libxview`: XView toolkit library (`libxview`)
 - `include/olgx`, `include/pixrect`, `include/xview`,
@@ -30,7 +32,7 @@ Build/staging layout:
 All build intermediates stay in `build/`.
 Final staged output is assembled under `bin/` as an `OPENWINHOME` tree.
 
-- `bin/bin`: executables (currently `olwm`)
+- `bin/bin`: window manager and accessory executables
 - `bin/lib`: shared/static libs and runtime menu/config files
 - `bin/include`: headers plus runtime `images` and `bitmaps`
 - `bin/share/man`: man pages
@@ -107,6 +109,7 @@ sudo ldconfig
 ```
 
 If you use a different prefix, set `OPENWINHOME` to that prefix when running.
+The window manager and all accessories are installed in `<prefix>/bin`.
 
 ## Font installation (important)
 
