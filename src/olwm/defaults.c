@@ -46,29 +46,14 @@ Display *dpy;
     XrmDatabase serverDB = NULL;
     XrmDatabase fileDB = NULL;
     char filename[1024];
-    unsigned long nitems, remain;
-    char *rsrcstr;
     char *homedir = getenv("HOME");
     char *envfile = getenv("XENVIRONMENT");
     char hostname[100];
 
-    rsrcstr = GetWindowProperty(dpy, RootWindow(dpy, 0), XA_RESOURCE_MANAGER,
-                                0L, 100000000L, /* REMIND: use ENTIRE_CONTENTS */
-                                XA_STRING, 0L, &nitems, &remain);
-
-    if (rsrcstr == NULL)
-    {
-        if (homedir != NULL)
-        {
-            (void)strcpy(filename, homedir);
-            (void)strcat(filename, "/.Xdefaults");
-            serverDB = XrmGetFileDatabase(filename);
-        }
-    }
-    else
-    {
-        serverDB = XrmGetStringDatabase(rsrcstr);
-        XFree(rsrcstr);
+    if (homedir != NULL) {
+        (void)strcpy(filename, homedir);
+        (void)strcat(filename, "/.Xdefaults");
+        serverDB = XrmGetFileDatabase(filename);
     }
 
     /* Now try XENVIRONMENT or $HOME/.Xdefaults-hostname. */
