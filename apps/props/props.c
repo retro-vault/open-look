@@ -859,8 +859,6 @@ main(argc, argv)
     }
 
     frame = xv_create(NULL, FRAME_CMD,
-		      XV_VISUAL_CLASS, PseudoColor,
-		      XV_DEPTH, 8,
 		      WIN_INHERIT_COLORS, TRUE,
 		      XV_X, 0,
 		      XV_Y, 0,
@@ -881,7 +879,9 @@ main(argc, argv)
      *       do this for V3.  Therefore we are treating a 4 bit visual
      *	     like monochrome, and thus shut off the color palette.
      */
-    color = ((depth >= 8) && (visual_class % 2));
+    color = depth >= 8 && (visual_class == PseudoColor ||
+                          visual_class == DirectColor ||
+                          visual_class == TrueColor);
 
     sprintf(user_defaults, "%s/.Xdefaults", getenv("HOME"));
 

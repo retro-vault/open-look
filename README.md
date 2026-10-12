@@ -218,6 +218,16 @@ DISPLAY=:2 olwm
 
 ## Notes
 
+`props` supports its colour palette on 8-bit PseudoColor and 16/24-bit
+TrueColor displays. Grayscale displays omit the Colours category.
+For automated palette, preview, Apply/Reset, and grayscale checks (requires
+Xvfb):
+
+```bash
+cmake --build build --target props_color_test
+python3 tests/run-props-colors.py
+```
+
 - Linux is the target platform in this port.
 - Legacy non-Linux path branches have been reduced where possible.
 - More validation and compatibility testing is still required before final

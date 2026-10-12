@@ -278,11 +278,17 @@ cms_alloc_static_colors(display, cms, cmap, xcolors, cms_index, cms_count)
     for (i = 0; i <= cms_count - 1; i++) {
 	pixel = &cms->index_table[cms_index + i];
 
-	/* static cms pixels are write-once only */
-	if (*pixel == XV_INVALID_PIXEL) {
+        /* Static CMS pixels are write-once. A dynamic TrueColor CMS uses
+         * replaceable read-only pixels; clients must repaint after updates.
+         */
+	if (*pixel == XV_INVALID_PIXEL ||
+            (cms->type == XV_DYNAMIC_CMS &&
+             cms->visual->vinfo->class == TrueColor)) {
 	    if (!XAllocColor(display, cmap->id, xcolors + i)) {
 		return(XV_ERROR);
 	    }
+            if (*pixel != XV_INVALID_PIXEL)
+                XFreeColors(display, cmap->id, pixel, 1, 0);
 	    *pixel = (xcolors + i)->pixel;
 	}
     }
@@ -299,6 +305,12 @@ cms_set_dynamic_colors(display, cms, xcolors, cms_index, cms_count)
 {
     Xv_Colormap		*cmap_list, *cmap = NULL;
     register int	i;
+
+    /* TrueColor has no writable color cells. Keep logical CMS indices,
+     * mapping them to newly allocated RGB pixels on each update instead.
+     */
+    if (cms->visual->vinfo->class == TrueColor)
+        return cms_set_static_colors(display, cms, xcolors, cms_index, cms_count);
 
     /* Search for an appropriate colormap to allocate colors from */
     if (cms->cmap == NULL) { 
