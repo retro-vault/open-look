@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>		/* getenv() */
+#include <string.h>
 #include <unistd.h>		/* close() */
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -385,6 +386,31 @@ termsw_folio_init_internal(parent, termsw_folio, avlist)
      * XXX: Use terminfo here?
      */
     putenv(cmd_term);
+    /* Make our packaged terminfo visible to child applications, retaining
+     * the caller's search paths and ncurses' default database directories.
+     */
+    {
+        const char *home = getenv("OPENWINHOME");
+        const char *dirs = getenv("TERMINFO_DIRS");
+        char *search_path;
+        size_t size;
+
+#ifdef OPENWINHOME_DEFAULT
+        if (!home || !*home)
+            home = OPENWINHOME_DEFAULT;
+#endif
+        if (home && *home) {
+            if (!dirs)
+                dirs = "";
+            size = strlen(home) + strlen(dirs) + sizeof("/share/terminfo::");
+            search_path = malloc(size);
+            if (search_path) {
+                snprintf(search_path, size, "%s/share/terminfo:%s:", home, dirs);
+                setenv("TERMINFO_DIRS", search_path, 1);
+                free(search_path);
+            }
+        }
+    }
     termcap = getenv("TERMCAP");
     if (!termcap || *termcap != '/')
 	putenv(cmd_termcap);

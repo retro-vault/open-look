@@ -51,6 +51,7 @@ Requirements:
   Modern glibc no longer ships `<rpc/rpc.h>` at the top level; headers
   live under `/usr/include/tirpc` and CMake adds that include path.
 - Standard C math library (`libm`, usually provided by libc toolchain)
+- Terminfo compiler (`tic`, provided by ncurses)
 
 Recommended package install commands:
 
@@ -58,19 +59,19 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev ncurses-bin
 ```
 
 Fedora/RHEL:
 
 ```bash
-sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils ncurses
 ```
 
 Arch Linux:
 
 ```bash
-sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir
+sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir ncurses
 ```
 
 Build commands:
@@ -110,6 +111,13 @@ sudo ldconfig
 
 If you use a different prefix, set `OPENWINHOME` to that prefix when running.
 The window manager and all accessories are installed in `<prefix>/bin`.
+
+`cmdtool` uses `TERM=sun-cmd`. The build compiles its terminal description
+into `share/terminfo` in both the staged tree and the installed prefix.
+`cmdtool` adds `$OPENWINHOME/share/terminfo` to `TERMINFO_DIRS` for its child
+processes, preserving existing search paths and the system defaults. This
+allows Vim, `clear`, and other terminfo applications to recognize `sun-cmd`
+even when the host's terminal database omits it.
 
 ## Font installation (important)
 

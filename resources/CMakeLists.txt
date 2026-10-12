@@ -7,6 +7,22 @@ set(OPENWINHOME_RESOURCE_LIB_DIR "${OPENWINHOME_STAGE_LIB_DIR}")
 set(OPENWINHOME_RESOURCE_SHARE_DIR "${OPENWINHOME_STAGE_SHARE_DIR}")
 set(OPENWINHOME_MAN1_DIR "${OPENWINHOME_STAGE_SHARE_DIR}/man/man1")
 set(OPENWINHOME_FONT_DIR "${OPENWINHOME_STAGE_SHARE_DIR}/fonts/openlook")
+
+# Compile a self-contained entry: minimal host databases often omit sun-cmd.
+find_program(OPENLOOK_TIC_EXECUTABLE NAMES tic)
+if(NOT OPENLOOK_TIC_EXECUTABLE)
+    message(FATAL_ERROR "The terminfo compiler tic is required (install ncurses-bin or ncurses).")
+endif()
+set(OPENLOOK_TERMINFO_DIR "${OPENWINHOME_RESOURCE_SHARE_DIR}/terminfo")
+add_custom_target(openlook_terminfo ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${OPENLOOK_TERMINFO_DIR}"
+    COMMAND "${OPENLOOK_TIC_EXECUTABLE}" -o "${OPENLOOK_TERMINFO_DIR}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/terminfo/sun-cmd.ti"
+    COMMENT "Compiling the sun-cmd terminal description"
+    VERBATIM
+)
+install(DIRECTORY "${OPENLOOK_TERMINFO_DIR}/" DESTINATION share/terminfo)
+
 set(OPENLOOK_MAN_PAGES
     clock
     olwm
