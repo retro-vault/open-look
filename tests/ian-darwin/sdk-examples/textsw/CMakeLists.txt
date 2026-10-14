@@ -1,0 +1,44 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_textsw_sample_tty
+    EXECUTABLE
+    SOURCES
+        "sample_tty.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_textsw_textsw
+    EXECUTABLE
+    SOURCES
+        "textsw.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_textsw_textsw_font
+    EXECUTABLE
+    SOURCES
+        "textsw.font.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_textsw_textsw_to_ttysw
+    EXECUTABLE
+    SOURCES
+        "textsw_to_ttysw.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_textsw_ttycurses
+    EXECUTABLE
+    SOURCES
+        "ttycurses.c"
+    DEFINITIONS
+        "STANDALONE"
+    LIBRARIES ncurses
+)
+ian_program(ian_example_textsw_xv_termsw
+    EXECUTABLE
+    SOURCES
+        "xv_termsw.c"
+    DEFINITIONS
+        "STANDALONE"
+)

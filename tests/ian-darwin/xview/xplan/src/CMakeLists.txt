@@ -1,0 +1,41 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_xplan
+    EXECUTABLE
+    SOURCES
+        "PERT_Xstubs.c"
+        "PERT_Xui.c"
+        "calc.c"
+        "date-calc.c"
+        "db.c"
+        "dependencies_stubs.c"
+        "dependencies_ui.c"
+        "export_stubs.c"
+        "export_ui.c"
+        "file_stubs.c"
+        "file_ui.c"
+        "gantt.c"
+        "gantt_Xstubs.c"
+        "gantt_Xui.c"
+        "guiutils.c"
+        "julian.c"
+        "latex_task_list.c"
+        "latpert.c"
+        "main_stubs.c"
+        "main_ui.c"
+        "pagelist.c"
+        "parser.c"
+        "path.c"
+        "pert-calc.c"
+        "readfile.c"
+        "resources_stubs.c"
+        "resources_ui.c"
+        "scanner.c"
+        "string_table.c"
+        "taskinfo_stubs.c"
+        "taskinfo_ui.c"
+        "writefile.c"
+        "xplan.c"
+    DEFINITIONS
+        "MAIN"
+    LIBRARIES ian_guidexv
+)

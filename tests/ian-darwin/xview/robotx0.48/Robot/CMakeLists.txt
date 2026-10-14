@@ -1,0 +1,32 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_robotx0_48
+    EXECUTABLE
+    SOURCES
+        "about.c"
+        "axes.c"
+        "browser.c"
+        "canvas_menu.c"
+        "classify.c"
+        "colors.c"
+        "dnd.c"
+        "fits3d.f"
+        "fitter.c"
+        "history.c"
+        "main.c"
+        "math.c"
+        "nr.f"
+        "rfitsc.c"
+        "rfitsf.f"
+        "robot.f"
+        "specials.c"
+        "split.c"
+        "subroutines.f"
+        "subroutines2.f"
+        "subroutines3.f"
+        "text_editor.c"
+        "user.f"
+        "york.f"
+        "zoom.c"
+    DEFINITIONS
+        "USA"
+)

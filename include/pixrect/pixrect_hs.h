@@ -22,6 +22,7 @@
 
 #include <pixrect/traprop.h>
 
+#if defined(__sun) || defined(sun)
 #include <pixrect/bw2var.h>
 #include <pixrect/cg2var.h>
 #include <pixrect/gp1var.h>
@@ -29,6 +30,7 @@
 #include <pixrect/cg8var.h>
 #include <pixrect/cg9var.h>
 #include <pixrect/cg12_var.h>
+#endif /* SunOS framebuffer interfaces */
 
 #include <pixrect/memvar.h>
 

@@ -1,0 +1,36 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_fonts_disp_fonts
+    EXECUTABLE
+    SOURCES
+        "disp_fonts.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_fonts_fonts
+    EXECUTABLE
+    SOURCES
+        "fonts.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_fonts_simple_font
+    EXECUTABLE
+    SOURCES
+        "simple_font.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_fonts_type_font
+    EXECUTABLE
+    SOURCES
+        "type_font.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_fonts_disp_fonts2
+    EXECUTABLE
+    SOURCES
+        "disp_fonts2.c"
+    DEFINITIONS
+        "STANDALONE"
+)

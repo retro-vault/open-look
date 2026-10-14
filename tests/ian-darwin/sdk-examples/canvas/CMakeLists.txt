@@ -1,0 +1,36 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_canvas_canvas_event
+    EXECUTABLE
+    SOURCES
+        "canvas_event.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_canvas_canvas_input
+    EXECUTABLE
+    SOURCES
+        "canvas_input.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_canvas_line
+    EXECUTABLE
+    SOURCES
+        "line.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_canvas_scroll_view
+    EXECUTABLE
+    SOURCES
+        "scroll_view.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_canvas_split_views
+    EXECUTABLE
+    SOURCES
+        "split_views.c"
+    DEFINITIONS
+        "STANDALONE"
+)

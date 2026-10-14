@@ -23,7 +23,11 @@
 #include <pixrect/pixrect.h>
 #include <pixrect/pixfont.h>
 #ifdef OW_I18N
+#if defined(__sun) || defined(sun)
 #include <widec.h>
+#else
+#include <wchar.h>
+#endif
 #endif
 
 

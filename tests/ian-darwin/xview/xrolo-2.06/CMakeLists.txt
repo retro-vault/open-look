@@ -1,0 +1,21 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_xrolo_2_06
+    EXECUTABLE
+    SOURCES
+        "main.c"
+        "panel.c"
+        "cards.c"
+        "popup.c"
+        "send_mail.c"
+        "soundex.c"
+        "phone.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_rolo_test
+    EXECUTABLE
+    SOURCES
+        "tst.c"
+    DEFINITIONS
+        "STANDALONE"
+)

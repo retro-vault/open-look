@@ -1,0 +1,31 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_xvnews_2_3
+    EXECUTABLE
+    SOURCES
+        "main.c"
+        "server.c"
+        "textsw_regexp.c"
+        "xv_articles.c"
+        "xv_err.c"
+        "xv_getauthor.c"
+        "xv_init.c"
+        "xv_init_newsrc.c"
+        "xv_newsrc.c"
+        "xv_parse_newsrc.c"
+        "xv_post.c"
+        "xv_props.c"
+        "xv_regex.c"
+        "xv_search.c"
+        "xv_sort.c"
+        "xv_stuff.c"
+        "xvnews_stubs.c"
+        "xvnews_ui.c"
+        "xv_drag.c"
+        "xv_kill.c"
+        "getdate.c"
+    DEFINITIONS
+        "MAIN"
+        "STANDALONE"
+        "POSIX_REGEX"
+    LIBRARIES ian_guidexv
+)

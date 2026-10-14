@@ -1186,6 +1186,15 @@ int   *format;
 }
 
 
+/* The public spelling has historically been declared in sel_pkg.h, while
+ * the implementation was exported only as sel_post_req. Keep both names.
+ */
+void
+sel_post_request(Selection_requestor sel)
+{
+    (void)sel_post_req(sel);
+}
+
 int 
 sel_post_req( sel )
 Selection_requestor  sel;

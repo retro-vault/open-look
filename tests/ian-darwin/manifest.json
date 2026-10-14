@@ -1,0 +1,3504 @@
+{
+  "upstream": "https://github.com/IanDarwin/OpenLookCDROM",
+  "revision": "2aa032ddc0a737bb420463c0a508a0f4867c1667",
+  "programs": [
+    {
+      "path": "xview/Ftptool4.6b4",
+      "target": "ian_Ftptool4_6b4",
+      "sources": [
+        "batch.c",
+        "button_funcs.c",
+        "change_dir.c",
+        "create_main.c",
+        "create_other.c",
+        "dircache.c",
+        "dirlist.c",
+        "dofuncs.c",
+        "dnd.c",
+        "event.c",
+        "ftp.c",
+        "host_list.c",
+        "main.c",
+        "menu_funcs.c",
+        "misc.c",
+        "readdir.c",
+        "schedule.c",
+        "tar_view.c",
+        "transfer.c",
+        "view_file.c",
+        "lex.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/NADagent",
+      "target": "ian_NADagent",
+      "sources": [
+        "main.c",
+        "panel.c",
+        "cards.c",
+        "phone.c",
+        "soundex.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/apex-1.1/src/apex",
+      "target": "ian_apex_1_1",
+      "sources": [
+        "alloc.c",
+        "apex.c",
+        "apex_help.c",
+        "apex_options.c",
+        "apex_shell.c",
+        "editor.c",
+        "file_browser.c",
+        "file_io.c",
+        "misc.c",
+        "navigator.c",
+        "object.c",
+        "object_list.c",
+        "s_pad.c",
+        "state_server.c",
+        "symbol.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/catcher",
+      "target": "ian_catcher",
+      "sources": [],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/clock",
+      "target": "ian_clock",
+      "sources": [
+        "clock.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": [],
+      "sdk_sources": [
+        "apps/clock/ds_popup.c"
+      ]
+    },
+    {
+      "path": "xview/cmdtool",
+      "target": "ian_cmdtool",
+      "sources": [
+        "cmdtool.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/coffee",
+      "target": "ian_coffee",
+      "sources": [
+        "coffee.c",
+        "xview.c",
+        "util.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/contool-3.3a",
+      "target": "ian_contool_3_3a",
+      "sources": [],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/disktool-2.0",
+      "target": "ian_disktool_2_0",
+      "sources": [
+        "disktool.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE",
+        "Linux"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/dstool/Version_2/install/src",
+      "target": "ian_dstool",
+      "sources": [
+        "complib/ALGORITHMS/ab4.c",
+        "complib/ALGORITHMS/bs.c",
+        "complib/ALGORITHMS/euler.c",
+        "complib/ALGORITHMS/rk4.c",
+        "complib/ALGORITHMS/rkqc.c",
+        "complib/INTEGRATION/integrate.c",
+        "complib/INTEGRATION/last_step.c",
+        "complib/INTEGRATION/ode_nsteps.c",
+        "complib/INTEGRATION/ode_poincare.c",
+        "complib/INTEGRATION/ode_stop.c",
+        "complib/INTEGRATION/ode_time.c",
+        "complib/ITERATION/iter_back.c",
+        "complib/ITERATION/iter_forw.c",
+        "complib/ITERATION/iterate.c",
+        "complib/ITERATION/map.c",
+        "complib/compute_orb.c",
+        "complib/flow.c",
+        "complib/flow_install.c",
+        "complib/load_int.c",
+        "complib/prop_def.c",
+        "complib/symbol_code.c",
+        "complib/symbols_def.c",
+        "complib/traj_mem_orb.c",
+        "eigenlib/balanc.c",
+        "eigenlib/balbak.c",
+        "eigenlib/cdiv.c",
+        "eigenlib/elmhes.c",
+        "eigenlib/eltran.c",
+        "eigenlib/hqr.c",
+        "eigenlib/hqr2.c",
+        "eigenlib/lubksb.c",
+        "eigenlib/ludcmp.c",
+        "eigenlib/rg.c",
+        "fixptlib/fixed_install.c",
+        "fixptlib/fp_1dman.c",
+        "fixptlib/fp_compute.c",
+        "fixptlib/fp_eval.c",
+        "fixptlib/fp_get_atts.c",
+        "fixptlib/fp_get_type.c",
+        "fixptlib/fp_init.c",
+        "fixptlib/fp_jac.c",
+        "fixptlib/mnewt.c",
+        "fixptlib/msecant.c",
+        "fixptlib/trkman_map.c",
+        "fixptlib/trkman_ode.c",
+        "include/ds_define.c",
+        "main/color.c",
+        "main/config.c",
+        "main/control.c",
+        "main/defaults.c",
+        "main/load.c",
+        "main/main.c",
+        "main/manifold.c",
+        "main/memory.c",
+        "main/model.c",
+        "main/print.c",
+        "main/pvmtcl_stubs.c",
+        "main/selected.c",
+        "main/stubs.c",
+        "main/sys_install.c",
+        "main/user_install.c",
+        "math_utilities/blas.c",
+        "math_utilities/dmatrix.c",
+        "math_utilities/dvector.c",
+        "math_utilities/history.c",
+        "math_utilities/imatrix.c",
+        "math_utilities/ivector.c",
+        "math_utilities/jacobian.c",
+        "math_utilities/manifold.c",
+        "math_utilities/random.c",
+        "math_utilities/vector.c",
+        "memory/mem_prims.c",
+        "memory/memory.c",
+        "models/GENERIC.c",
+        "models/cubic_def.c",
+        "models/d3_symm_def.c",
+        "models/d4_def.c",
+        "models/double_toroid_def.c",
+        "models/duffing_def.c",
+        "models/field_worfolk_def.c",
+        "models/four_param_def.c",
+        "models/henon_def.c",
+        "models/hh_def.c",
+        "models/kotorusmap_def.c",
+        "models/logistic_def.c",
+        "models/lorenz_def.c",
+        "models/lp4_def.c",
+        "models/mathieu_def.c",
+        "models/modellib_def.c",
+        "models/models.c",
+        "models/mult_proj.c",
+        "models/pendulum1d_def.c",
+        "models/perturbed_dtoroid_def.c",
+        "models/rla_def.c",
+        "models/simple_torus_def.c",
+        "models/standard_def.c",
+        "models/symm_red_def.c",
+        "models/vdpol_def.c",
+        "mult/mult_go.c",
+        "mult/mult_install.c",
+        "postmaster/pm.c",
+        "postmaster/pm_access.c",
+        "postmaster/pm_build.c",
+        "postmaster/pm_hash.c",
+        "postmaster/pm_utils.c",
+        "saveload/load_procs.c",
+        "saveload/save.c",
+        "saveload/save_procs.c",
+        "saveload/unform.c",
+        "saveload/write_mem.c",
+        "twoD/color_filter.c",
+        "twoD/complete.c",
+        "twoD/complete_name.c",
+        "twoD/env_expand.c",
+        "twoD/error_util.c",
+        "twoD/expand.c",
+        "twoD/gcm.c",
+        "twoD/gdd.c",
+        "twoD/mouse.c",
+        "twoD/plot_orbit.c",
+        "twoD/print.c",
+        "twoD/print_cui.c",
+        "twoD/print_hnd.c",
+        "twoD/print_procs.c",
+        "twoD/traj_plot.c",
+        "twoD/twoD.c",
+        "twoD/twoD_cui.c",
+        "twoD/twoD_hnd.c",
+        "twoD/twoD_opt.c",
+        "twoD/twoD_opt_cui.c",
+        "twoD/twoD_opt_hnd.c",
+        "twoD/twoD_pm.c",
+        "userlib/example.c",
+        "userlib/mult_proj.c",
+        "userlib/user_panels.c",
+        "utilities/dir_util.c",
+        "utilities/file_util.c",
+        "utilities/interrupt.c",
+        "utilities/macros.c",
+        "utilities/str_util.c",
+        "utilities/system_mess.c",
+        "utilities/time_util.c",
+        "utilities/user_util.c",
+        "windows/cmd/cmd.c",
+        "windows/cmd/cmd_cui.c",
+        "windows/cmd/cmd_hnd.c",
+        "windows/defaults/def_hnd.c",
+        "windows/defaults/defaults.c",
+        "windows/defaults/defaults_cui.c",
+        "windows/function/function.c",
+        "windows/function/function_cui.c",
+        "windows/load/load.c",
+        "windows/load/load_cui.c",
+        "windows/load/load_hnd.c",
+        "windows/mult/mult.c",
+        "windows/mult/mult_cui.c",
+        "windows/mult/mult_hnd.c",
+        "windows/orbit/orbit.c",
+        "windows/orbit/orbit_cui.c",
+        "windows/orbit/orbit_hnd.c",
+        "windows/periodic/per_hnd.c",
+        "windows/periodic/periodic.c",
+        "windows/periodic/periodic_ui.c",
+        "windows/prop/prop.c",
+        "windows/prop/prop_cui.c",
+        "windows/prop/prop_hnd.c",
+        "windows/save/save.c",
+        "windows/save/save_cui.c",
+        "windows/save/save_hnd.c",
+        "windows/save/unmask.c",
+        "windows/selected/selected.c",
+        "windows/selected/selected_cui.c",
+        "windows/selected/selected_hnd.c",
+        "windows/start_xv_loop.c",
+        "windows/stubs.c",
+        "windows/sys_panels.c",
+        "windows/trial/trial.c",
+        "windows/trial/trial_cui.c",
+        "windows/trial/trial_go.c",
+        "windows/trial/trial_hnd.c",
+        "windows/ui_init.c",
+        "windows/windows.c"
+      ],
+      "definitions": [
+        "NO_PVM"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/facman",
+      "target": "ian_facman",
+      "sources": [
+        "actions.c",
+        "facman_stubs.c",
+        "facman_ui.c"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/faxtool1.2",
+      "target": "ian_faxtool1_2",
+      "sources": [
+        "faxtool.c",
+        "faxtool_ui.c",
+        "faxtool_stubs.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/fsptool-1.6.1",
+      "target": "ian_fsptool_1_6_1",
+      "sources": [
+        "xview/batch.c",
+        "xview/create.c",
+        "xview/file.c",
+        "xview/frame.c",
+        "xview/fsptool.c",
+        "xview/icon.c",
+        "xview/menu.c",
+        "xview/resource.c",
+        "xview/system.c",
+        "lib/cache.c",
+        "lib/file.c",
+        "lib/fsp.c",
+        "lib/logging.c",
+        "lib/unix.c"
+      ],
+      "definitions": [
+        "STANDALONE",
+        "LOGFILE=\"fsptool.log\"",
+        "FSPTOOL_HELP=\"fsptool.info\""
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/genix_ui",
+      "target": "ian_genix_ui",
+      "sources": [
+        "genix_vars.c",
+        "objects.c",
+        "genix_ui.c",
+        "genix_stubs.c",
+        "objects.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": [],
+      "language": "CXX"
+    },
+    {
+      "path": "xview/gil2bil",
+      "target": "ian_gil2bil",
+      "sources": [
+        "lex.yy.c",
+        "y.tab.c",
+        "writeBil.c",
+        "misc.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/graphed/xv_graphed.distribution/graphed",
+      "target": "ian_graphed",
+      "sources": [
+        "about.c",
+        "adjust.c",
+        "buffer.c",
+        "canvas.c",
+        "config.c",
+        "create_mode.c",
+        "dispatch.c",
+        "drag.c",
+        "draw.c",
+        "edge_defaults_sf.c",
+        "edge_sf.c",
+        "eedge.c",
+        "error.c",
+        "extensions_config.c",
+        "file_sf.c",
+        "find.c",
+        "font.c",
+        "font_sf.c",
+        "ggraph.c",
+        "gragra.c",
+        "gragra_sf.c",
+        "graph_sf.c",
+        "graphed_mpr.c",
+        "graphed_sgragra_interface.c",
+        "graphed_sgraph_interface.c",
+        "graphed_svi.c",
+        "gridder.c",
+        "group.c",
+        "group_sf.c",
+        "la_paint.c",
+        "load.c",
+        "main.c",
+        "menu.c",
+        "misc.c",
+        "nnode.c",
+        "node_defaults_sf.c",
+        "node_sf.c",
+        "p7+_colourprint.c",
+        "paint.c",
+        "panel.c",
+        "postscri.c",
+        "print.c",
+        "print_sf.c",
+        "repaint.c",
+        "select_mode.c",
+        "state.c",
+        "store.c",
+        "template.c",
+        "textsw.c",
+        "type.c",
+        "type_sf.c",
+        "user.c",
+        "user_commands.c",
+        "user_event_functions.c",
+        "util.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/guide",
+      "target": "ian_guide",
+      "sources": [
+        "src/libguide/gio.c",
+        "src/libguide/gio_path.c",
+        "src/libguide/guide.c",
+        "src/libguide/guide_actions.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "library",
+      "missing": []
+    },
+    {
+      "path": "xview/mahjongg2.1",
+      "target": "ian_mahjongg2_1",
+      "sources": [
+        "event.c",
+        "icons.c",
+        "mahjongg.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/moxftp-2.2",
+      "target": "ian_moxftp_2_2",
+      "sources": [
+        "LabelQUICK.c",
+        "List.c",
+        "ListSW.c",
+        "archie.c",
+        "bsdstrstr.c",
+        "callback.c",
+        "callftp.c",
+        "cd.c",
+        "connect.c",
+        "dialog.c",
+        "dir_subs.c",
+        "disconnect.c",
+        "do.c",
+        "fb_rs.c",
+        "ftp.c",
+        "get.c",
+        "global.c",
+        "help.c",
+        "icons.c",
+        "initialize.c",
+        "lcd.c",
+        "local_dir.c",
+        "login.c",
+        "main.c",
+        "mkdir.c",
+        "myfgets.c",
+        "noop.c",
+        "olt.c",
+        "peek.c",
+        "popen.c",
+        "put.c",
+        "pwd.c",
+        "reconnect.c",
+        "regerror.c",
+        "regexp.c",
+        "regsub.c",
+        "remote_dir.c",
+        "sort.c",
+        "syst.c",
+        "time.c",
+        "tm_to_time.c",
+        "tran_table.c",
+        "translate.c",
+        "type.c",
+        "version.c",
+        "view.c",
+        "wc_hooks.c"
+      ],
+      "definitions": [],
+      "libraries": [
+        "Xt",
+        "Xol"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/ol-wais",
+      "target": "ian_ol_wais",
+      "sources": [
+        "olwais_ui.cc",
+        "olwais_stubs.cc",
+        "olutils.cc",
+        "directory.cc"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv",
+        "Xpm"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/olxvman/src",
+      "target": "ian_olxvman",
+      "sources": [
+        "globals.c",
+        "man.c",
+        "misc.c",
+        "olxvman.c",
+        "search.c",
+        "olxvman_ui.c"
+      ],
+      "definitions": [],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/owrolo",
+      "target": "ian_owrolo",
+      "sources": [
+        "main.c",
+        "cards.c",
+        "popup.c",
+        "panel.c",
+        "openlook.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/painter",
+      "target": "ian_painter",
+      "sources": [
+        "painter.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/pan3.0",
+      "target": "ian_pan3_0",
+      "sources": [
+        "pan.c",
+        "control.c",
+        "event.c",
+        "folder.c",
+        "hidexp.c",
+        "llm.c",
+        "menu.c",
+        "misc.c",
+        "move.c",
+        "note.c",
+        "parser.c",
+        "rmfolder.c",
+        "noteaction.c",
+        "search.c",
+        "update.c",
+        "win.c",
+        "work.c",
+        "dnd.c"
+      ],
+      "definitions": [
+        "STANDALONE",
+        "XVIEW3",
+        "PAN_DND",
+        "HAS_STDLIB"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/phonetool",
+      "target": "ian_phonetool",
+      "sources": [
+        "phonetool_data.c",
+        "phonetool_build.c",
+        "phonetool.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/privtool-0.83",
+      "target": "ian_privtool_0_83",
+      "sources": [
+        "buffers.c",
+        "gui.c",
+        "mail_reader.c",
+        "main.c",
+        "messages.c",
+        "pgplib.c",
+        "x.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/props",
+      "target": "ian_props",
+      "sources": [
+        "props.c",
+        "color_props.c",
+        "color.c",
+        "l10n_props.c",
+        "l10n_read.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/props_ui",
+      "target": "ian_props_ui",
+      "sources": [
+        "props_ui.c",
+        "props_stubs.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/psdraw",
+      "target": "ian_psdraw",
+      "sources": [
+        "psdraw.c",
+        "psdraw_ui.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/rasview",
+      "target": "ian_rasview",
+      "sources": [
+        "rasview.c",
+        "rasview_ui.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/robotx0.48/Robot",
+      "target": "ian_robotx0_48",
+      "sources": [
+        "about.c",
+        "axes.c",
+        "browser.c",
+        "canvas_menu.c",
+        "classify.c",
+        "colors.c",
+        "dnd.c",
+        "fits3d.f",
+        "fitter.c",
+        "history.c",
+        "main.c",
+        "math.c",
+        "nr.f",
+        "rfitsc.c",
+        "rfitsf.f",
+        "robot.f",
+        "specials.c",
+        "split.c",
+        "subroutines.f",
+        "subroutines2.f",
+        "subroutines3.f",
+        "text_editor.c",
+        "user.f",
+        "york.f",
+        "zoom.c"
+      ],
+      "definitions": [
+        "USA"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/scantool",
+      "target": "ian_scantool",
+      "sources": [
+        "scantool.c",
+        "graphics.c",
+        "misc.c",
+        "xview.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/sidtool",
+      "target": "ian_sidtool",
+      "sources": [
+        "action.c",
+        "main.c",
+        "setup.c",
+        "sidtool_ui.c",
+        "xview.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/sweeper-1.1",
+      "target": "ian_sweeper_1_1",
+      "sources": [
+        "sweep.c",
+        "window.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/textedit",
+      "target": "ian_textedit",
+      "sources": [
+        "textedit.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/timekeeper",
+      "target": "ian_timekeeper",
+      "sources": [
+        "topics.c",
+        "logfile.c",
+        "timer_ui.c",
+        "timer_stubs.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/tree",
+      "target": "ian_tree",
+      "sources": [
+        "tree.c",
+        "tree_ui.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/videoteXt-0.5",
+      "target": "ian_videoteXt_0_5",
+      "sources": [
+        "cct.c",
+        "vtxdecode.c",
+        "vtxtools.c",
+        "toptext.c",
+        "safe_malloc.c",
+        "postscript.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/workman",
+      "target": "ian_workman",
+      "sources": [
+        "cdinfo.c",
+        "database.c",
+        "display.c",
+        "setup.c",
+        "ui_cdinfo.c",
+        "cdrom.c",
+        "plat_linux.c",
+        "index.c",
+        "workman_stubs.c",
+        "scsi.c",
+        "drv_toshiba.c",
+        "drv_sony.c"
+      ],
+      "definitions": [
+        "linux"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xcalentool",
+      "target": "ian_xcalentool",
+      "sources": [
+        "calentool.c",
+        "common.c",
+        "datelib.c",
+        "devent.c",
+        "dpaint.c",
+        "event.c",
+        "expire.c",
+        "holidays.c",
+        "init.c",
+        "moon.c",
+        "mpaint.c",
+        "notify.c",
+        "pcal.c",
+        "pcaldw.c",
+        "printer.c",
+        "riseset.c",
+        "tool.c",
+        "utils.c",
+        "version.c",
+        "wevent.c",
+        "wpaint.c",
+        "ypaint.c"
+      ],
+      "definitions": [
+        "NO_SUN_MOON"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xplan/src",
+      "target": "ian_xplan",
+      "sources": [
+        "PERT_Xstubs.c",
+        "PERT_Xui.c",
+        "calc.c",
+        "date-calc.c",
+        "db.c",
+        "dependencies_stubs.c",
+        "dependencies_ui.c",
+        "export_stubs.c",
+        "export_ui.c",
+        "file_stubs.c",
+        "file_ui.c",
+        "gantt.c",
+        "gantt_Xstubs.c",
+        "gantt_Xui.c",
+        "guiutils.c",
+        "julian.c",
+        "latex_task_list.c",
+        "latpert.c",
+        "main_stubs.c",
+        "main_ui.c",
+        "pagelist.c",
+        "parser.c",
+        "path.c",
+        "pert-calc.c",
+        "readfile.c",
+        "resources_stubs.c",
+        "resources_ui.c",
+        "scanner.c",
+        "string_table.c",
+        "taskinfo_stubs.c",
+        "taskinfo_ui.c",
+        "writefile.c",
+        "xplan.c"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xrolo-2.06",
+      "target": "ian_xrolo_2_06",
+      "sources": [
+        "main.c",
+        "panel.c",
+        "cards.c",
+        "popup.c",
+        "send_mail.c",
+        "soundex.c",
+        "phone.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvgr-2.09",
+      "target": "ian_xvgr_2_09",
+      "sources": [
+        "main.c",
+        "xvgr.c",
+        "events.c",
+        "alerts.c",
+        "fileswin.c",
+        "blockwin.c",
+        "eblockwin.c",
+        "printwin.c",
+        "drawwin.c",
+        "propswin.c",
+        "pagewin.c",
+        "miscwin.c",
+        "parmsiowin.c",
+        "comwin.c",
+        "compwin.c",
+        "nonlwin.c",
+        "setwin.c",
+        "ptswin.c",
+        "editpwin.c",
+        "regionwin.c",
+        "statuswin.c",
+        "symwin.c",
+        "tickwin.c",
+        "graphwin.c",
+        "worldwin.c",
+        "strwin.c",
+        "labelwin.c",
+        "locatewin.c",
+        "framewin.c",
+        "monwin.c",
+        "stubs.c",
+        "plotone.c",
+        "files.c",
+        "utils.c",
+        "drawticks.c",
+        "fit.c",
+        "fourier.c",
+        "io.c",
+        "graphutils.c",
+        "graphutils2.c",
+        "setutils.c",
+        "setprops.c",
+        "regionutils.c",
+        "objutils.c",
+        "computils.c",
+        "lmdif1.c",
+        "defaults.c",
+        "checkon.c",
+        "params.c",
+        "getparms.c",
+        "compute.c",
+        "xvlib.c",
+        "draw.c",
+        "ps.c",
+        "mif.c",
+        "leaf.c",
+        "hp.c",
+        "chersh.c",
+        "pars.c"
+      ],
+      "definitions": [
+        "STANDALONE",
+        "XVIEW",
+        "LOCAL",
+        "MAXARR=20480",
+        "HDEV=GR_PS_L"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvirtual",
+      "target": "ian_xvirtual",
+      "sources": [
+        "animate.cc",
+        "clipping.cc",
+        "figuren.cc",
+        "flaeche.cc",
+        "koerper.cc",
+        "load.cc",
+        "main.cc",
+        "nvekt.cc",
+        "shape.cc",
+        "szene.cc",
+        "view.cc",
+        "x.cc",
+        "zbuffer.cc",
+        "shadow.cc"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvmines-1.0",
+      "target": "ian_xvmines_1_0",
+      "sources": [
+        "xvmines.c",
+        "play.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvnews-2.3",
+      "target": "ian_xvnews_2_3",
+      "sources": [
+        "main.c",
+        "server.c",
+        "textsw_regexp.c",
+        "xv_articles.c",
+        "xv_err.c",
+        "xv_getauthor.c",
+        "xv_init.c",
+        "xv_init_newsrc.c",
+        "xv_newsrc.c",
+        "xv_parse_newsrc.c",
+        "xv_post.c",
+        "xv_props.c",
+        "xv_regex.c",
+        "xv_search.c",
+        "xv_sort.c",
+        "xv_stuff.c",
+        "xvnews_stubs.c",
+        "xvnews_ui.c",
+        "xv_drag.c",
+        "xv_kill.c",
+        "getdate.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE",
+        "POSIX_REGEX"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": [
+        "getdate.c"
+      ]
+    },
+    {
+      "path": "xview/xvnotice",
+      "target": "ian_xvnotice",
+      "sources": [
+        "xvnotice.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvokscript",
+      "target": "ian_xvokscript",
+      "sources": [
+        "xvokscript.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvset_0.80",
+      "target": "ian_xvset_0_80",
+      "sources": [
+        "xvset.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvtdl-5.0",
+      "target": "ian_xvtdl_5_0",
+      "sources": [
+        "calendar.c",
+        "category.c",
+        "category_ui.c",
+        "colors.c",
+        "control.c",
+        "create_windows.c",
+        "deadline.c",
+        "deadline_ui.c",
+        "display.c",
+        "entry_ui.c",
+        "file.c",
+        "gcc.c",
+        "gcc_ui.c",
+        "gcm.c",
+        "gfm.c",
+        "gfm_load_dir.c",
+        "gfm_ui.c",
+        "group.c",
+        "group_data.c",
+        "lex.yy.c",
+        "list.c",
+        "logedit_ui.c",
+        "logger.c",
+        "main.c",
+        "print.c",
+        "print_ui.c",
+        "properties.c",
+        "props_ui.c",
+        "recur.c",
+        "xdefaults.c",
+        "y.tab.c"
+      ],
+      "definitions": [
+        "STANDALONE",
+        "XVIEW3",
+        "MAILPGM=\"mail\"",
+        "HELPDIR=\".\"",
+        "PRINT_PROLOG1=\"prolog1.ps\"",
+        "PRINT_PROLOG2=\"prolog2.ps\""
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xwb",
+      "target": "ian_xwb",
+      "sources": [
+        "xwb.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/yamailt_ui",
+      "target": "ian_yamailt_ui",
+      "sources": [
+        "yamailt_ui.c",
+        "yamailt_stubs.c"
+      ],
+      "definitions": [
+        "MAIN",
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/canvas",
+      "target": "ian_example_canvas_canvas_event",
+      "sources": [
+        "canvas_event.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/canvas",
+      "target": "ian_example_canvas_canvas_input",
+      "sources": [
+        "canvas_input.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/canvas",
+      "target": "ian_example_canvas_line",
+      "sources": [
+        "line.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/canvas",
+      "target": "ian_example_canvas_scroll_view",
+      "sources": [
+        "scroll_view.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/canvas",
+      "target": "ian_example_canvas_split_views",
+      "sources": [
+        "split_views.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_animate",
+      "sources": [
+        "animate.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_color",
+      "sources": [
+        "color.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_color_animate",
+      "sources": [
+        "color_animate.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_color_logo",
+      "sources": [
+        "color_logo.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_color_objs",
+      "sources": [
+        "color_objs.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_color_panel",
+      "sources": [
+        "color_panel.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_example1",
+      "sources": [
+        "example1.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_example2",
+      "sources": [
+        "example2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_example3",
+      "sources": [
+        "example3.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_example4",
+      "sources": [
+        "example4.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_x_draw",
+      "sources": [
+        "x_draw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/color",
+      "target": "ian_example_color_animate2",
+      "sources": [
+        "animate2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/cursor",
+      "target": "ian_example_cursor_hot_spot",
+      "sources": [
+        "hot_spot.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/cursor",
+      "target": "ian_example_cursor_simple_cursor",
+      "sources": [
+        "simple_cursor.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/cursor",
+      "target": "ian_example_cursor_stop_cursor",
+      "sources": [
+        "stop_cursor.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/defaults",
+      "target": "ian_example_defaults_default_size",
+      "sources": [
+        "default_size.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/defaults",
+      "target": "ian_example_defaults_default_text",
+      "sources": [
+        "default_text.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/dnd",
+      "target": "ian_example_dnd_dest",
+      "sources": [
+        "dest.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/dnd",
+      "target": "ian_example_dnd_source1",
+      "sources": [
+        "source1.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/dnd",
+      "target": "ian_example_dnd_source2",
+      "sources": [
+        "source2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/extensions",
+      "target": "ian_example_extensions_logo",
+      "sources": [
+        "logo.c",
+        "Logo.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/extensions",
+      "target": "ian_example_extensions_bitmap",
+      "sources": [
+        "bitmap.c",
+        "Bitmap.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/extensions",
+      "target": "ian_example_extensions_image",
+      "sources": [
+        "image.c",
+        "Image.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/fonts",
+      "target": "ian_example_fonts_disp_fonts",
+      "sources": [
+        "disp_fonts.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/fonts",
+      "target": "ian_example_fonts_fonts",
+      "sources": [
+        "fonts.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/fonts",
+      "target": "ian_example_fonts_simple_font",
+      "sources": [
+        "simple_font.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/fonts",
+      "target": "ian_example_fonts_type_font",
+      "sources": [
+        "type_font.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/fonts",
+      "target": "ian_example_fonts_disp_fonts2",
+      "sources": [
+        "disp_fonts2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_command_frame",
+      "sources": [
+        "command_frame.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_done_proc",
+      "sources": [
+        "done_proc.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_frame_color",
+      "sources": [
+        "frame_color.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_hdrs_n_footers",
+      "sources": [
+        "hdrs_n_footers.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_popup",
+      "sources": [
+        "popup.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_simple_frame",
+      "sources": [
+        "simple_frame.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/frames",
+      "target": "ian_example_frames_subframe",
+      "sources": [
+        "subframe.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/icons",
+      "target": "ian_example_icons_icon_demo",
+      "sources": [
+        "icon_demo.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/icons",
+      "target": "ian_example_icons_icon_demo2",
+      "sources": [
+        "icon_demo2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/menus",
+      "target": "ian_example_menus_menu",
+      "sources": [
+        "menu.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/menus",
+      "target": "ian_example_menus_menu_dir",
+      "sources": [
+        "menu_dir.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/menus",
+      "target": "ian_example_menus_menu_dir2",
+      "sources": [
+        "menu_dir2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/menus",
+      "target": "ian_example_menus_pin_menu",
+      "sources": [
+        "pin_menu.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/menus",
+      "target": "ian_example_menus_simple_menu",
+      "sources": [
+        "simple_menu.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/menus",
+      "target": "ian_example_menus_xv_menu",
+      "sources": [
+        "xv_menu.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_fullscreen",
+      "sources": [
+        "fullscreen.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_multi_display",
+      "sources": [
+        "multi_display.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_multiscreen",
+      "sources": [
+        "multiscreen.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_screen",
+      "sources": [
+        "screen.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_svrimage",
+      "sources": [
+        "svrimage.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_vkbd_fonts",
+      "sources": [
+        "vkbd_fonts.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_vkbd_colors",
+      "sources": [
+        "vkbd_colors.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/misc",
+      "target": "ian_example_misc_visual",
+      "sources": [
+        "visual.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notice",
+      "target": "ian_example_notice_notice",
+      "sources": [
+        "notice.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notice",
+      "target": "ian_example_notice_simple_notice",
+      "sources": [
+        "simple_notice.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notice",
+      "target": "ian_example_notice_trigger_notice",
+      "sources": [
+        "trigger_notice.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_animate",
+      "sources": [
+        "animate.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_interpose",
+      "sources": [
+        "interpose.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_notify",
+      "sources": [
+        "notify.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_notify_input",
+      "sources": [
+        "notify_input.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_ntfy_do_dis",
+      "sources": [
+        "ntfy_do_dis.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_ntfy_pipe",
+      "sources": [
+        "ntfy_pipe.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/notifier",
+      "target": "ian_example_notifier_ntfy_sig",
+      "sources": [
+        "ntfy_sig.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_btn_menu",
+      "sources": [
+        "btn_menu.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_choices",
+      "sources": [
+        "choices.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_client_data",
+      "sources": [
+        "client_data.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_item_move",
+      "sources": [
+        "item_move.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_list_glyphs",
+      "sources": [
+        "list_glyphs.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_list_6_glyphs",
+      "sources": [
+        "list_6_glyphs.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_panel_repaint",
+      "sources": [
+        "panel_repaint.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_quit",
+      "sources": [
+        "quit.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_repaint",
+      "sources": [
+        "repaint.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_simple_panel",
+      "sources": [
+        "simple_panel.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_slider",
+      "sources": [
+        "slider.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_stop_frame",
+      "sources": [
+        "stop_frame.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/panels",
+      "target": "ian_example_panels_panel_dnd",
+      "sources": [
+        "panel_dnd.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/scrollbar",
+      "target": "ian_example_scrollbar_scroll_cells",
+      "sources": [
+        "scroll_cells.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/scrollbar",
+      "target": "ian_example_scrollbar_scroll_cells2",
+      "sources": [
+        "scroll_cells2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/scrollbar",
+      "target": "ian_example_scrollbar_scrollto",
+      "sources": [
+        "scrollto.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/selection",
+      "target": "ian_example_selection_sel_hold",
+      "sources": [
+        "sel_hold.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/selection",
+      "target": "ian_example_selection_sel_req",
+      "sources": [
+        "sel_req.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/seln_svc",
+      "target": "ian_example_seln_svc_long_seln",
+      "sources": [
+        "long_seln.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/seln_svc",
+      "target": "ian_example_seln_svc_seln",
+      "sources": [
+        "seln.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/seln_svc",
+      "target": "ian_example_seln_svc_seln_line",
+      "sources": [
+        "seln_line.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/seln_svc",
+      "target": "ian_example_seln_svc_simple_seln",
+      "sources": [
+        "simple_seln.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/seln_svc",
+      "target": "ian_example_seln_svc_text_seln",
+      "sources": [
+        "text_seln.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/sv_compat",
+      "target": "ian_example_sv_compat_pw_draw",
+      "sources": [
+        "pw_draw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/textsw",
+      "target": "ian_example_textsw_sample_tty",
+      "sources": [
+        "sample_tty.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/textsw",
+      "target": "ian_example_textsw_textsw",
+      "sources": [
+        "textsw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/textsw",
+      "target": "ian_example_textsw_textsw_font",
+      "sources": [
+        "textsw.font.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/textsw",
+      "target": "ian_example_textsw_textsw_to_ttysw",
+      "sources": [
+        "textsw_to_ttysw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/textsw",
+      "target": "ian_example_textsw_ttycurses",
+      "sources": [
+        "ttycurses.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ncurses"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/textsw",
+      "target": "ian_example_textsw_xv_termsw",
+      "sources": [
+        "xv_termsw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/ttysw",
+      "target": "ian_example_ttysw_sample_tty",
+      "sources": [
+        "sample_tty.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/ttysw",
+      "target": "ian_example_ttysw_textsw_to_ttysw",
+      "sources": [
+        "textsw_to_ttysw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/ttysw",
+      "target": "ian_example_ttysw_ttycurses",
+      "sources": [
+        "ttycurses.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ncurses"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "sdk-examples/ttysw",
+      "target": "ian_example_ttysw_xv_termsw",
+      "sources": [
+        "xv_termsw.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "oldemo",
+      "target": "ian_oldemo",
+      "sources": [
+        "oldemo_ui.c",
+        "oldemo_stubs.c"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "moontool",
+      "target": "ian_moontool",
+      "sources": [
+        "moontool.c"
+      ],
+      "definitions": [],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/xpm-image-demo",
+      "target": "ian_xpm_image_demo",
+      "sources": [
+        "pixmap.c"
+      ],
+      "definitions": [],
+      "libraries": [
+        "Xpm"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "olvwm",
+      "target": "ian_olvwm",
+      "sources": [
+        "atom.c",
+        "client.c",
+        "cmdstream.c",
+        "cursors.c",
+        "debug.c",
+        "defaults.c",
+        "dsdm.c",
+        "environ.c",
+        "error.c",
+        "evbind.c",
+        "events.c",
+        "fontset.c",
+        "gettext.c",
+        "gif.c",
+        "group.c",
+        "helpsend.c",
+        "i18n.c",
+        "images.c",
+        "info.c",
+        "kbdfuncs.c",
+        "list.c",
+        "mem.c",
+        "menu.c",
+        "moveresize.c",
+        "notice.c",
+        "ol_button.413.c",
+        "ol_button.svr4.c",
+        "olvwmrc.c",
+        "olwm.c",
+        "parse.c",
+        "pixmap.c",
+        "properties.c",
+        "reduce.c",
+        "resources.c",
+        "screen.c",
+        "selection.c",
+        "services.c",
+        "slave.c",
+        "slots.c",
+        "st.c",
+        "states.c",
+        "usermenu.c",
+        "usleep.c",
+        "virtual.c",
+        "win.c",
+        "winbusy.c",
+        "winbutton.c",
+        "wincolor.c",
+        "winframe.c",
+        "wingframe.c",
+        "winicon.c",
+        "winipane.c",
+        "winmenu.c",
+        "winnofoc.c",
+        "winpane.c",
+        "winpinmenu.c",
+        "winpush.c",
+        "winresize.c",
+        "winroot.c"
+      ],
+      "definitions": [
+        "SYSV",
+        "SVR4"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/guide/src/libguidexv",
+      "target": "ian_guidexv",
+      "sources": [
+        "gcc.c",
+        "gcc_stubs.c",
+        "gcc_ui.c",
+        "gcm.c",
+        "gdd.c",
+        "gfm.c",
+        "gfm_load_dir.c",
+        "gfm_stubs.c",
+        "gfm_ui.c",
+        "group.c",
+        "group_data.c",
+        "gutil.c"
+      ],
+      "definitions": [],
+      "libraries": [
+        "ian_guide"
+      ],
+      "kind": "library",
+      "missing": []
+    },
+    {
+      "path": "slingshot/src",
+      "target": "ian_sspkg",
+      "sources": [
+        "array.c",
+        "array_data.c",
+        "bag.c",
+        "bkg_event.c",
+        "box.c",
+        "box_data.c",
+        "canshell.c",
+        "cbox.c",
+        "clock.c",
+        "display_list.c",
+        "dnd.c",
+        "drawarea.c",
+        "drawicon.c",
+        "drawimage.c",
+        "drawline.c",
+        "drawobj_data.c",
+        "drawrect.c",
+        "drawtext.c",
+        "event.c",
+        "grip.c",
+        "list.c",
+        "rectobj.c",
+        "rectobj_data.c",
+        "selection.c",
+        "tacho.c",
+        "tree.c",
+        "tree_data.c"
+      ],
+      "definitions": [
+        "NO_SINCOS",
+        "_OTHER_RECT_FUNCTIONS"
+      ],
+      "libraries": [],
+      "kind": "library",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/array_tile",
+      "target": "ian_slingshot_array_ex",
+      "sources": [
+        "array_ex.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/clockobj",
+      "target": "ian_slingshot_clockobj",
+      "sources": [
+        "clockobj.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/dnd",
+      "target": "ian_slingshot_drop_ex",
+      "sources": [
+        "drop_ex.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/dnd",
+      "target": "ian_slingshot_drag_ex",
+      "sources": [
+        "drag_ex.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/dnd2",
+      "target": "ian_slingshot_cei",
+      "sources": [
+        "cei.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/dnd2",
+      "target": "ian_slingshot_icon_dnd",
+      "sources": [
+        "icon_dnd.c",
+        "cei.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawarea",
+      "target": "ian_slingshot_hist",
+      "sources": [
+        "hist.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawarea",
+      "target": "ian_slingshot_custom",
+      "sources": [
+        "custom.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawarea",
+      "target": "ian_slingshot_hist_stdin",
+      "sources": [
+        "hist_stdin.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawarea",
+      "target": "ian_slingshot_darea2",
+      "sources": [
+        "darea2.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawarea",
+      "target": "ian_slingshot_darea1",
+      "sources": [
+        "darea1.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawimage",
+      "target": "ian_slingshot_drawimage",
+      "sources": [
+        "drawimage.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawline",
+      "target": "ian_slingshot_drawline",
+      "sources": [
+        "drawline.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/drawtext",
+      "target": "ian_slingshot_drawtext",
+      "sources": [
+        "drawtext.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/grip",
+      "target": "ian_slingshot_puzzdemo",
+      "sources": [
+        "puzzdemo.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/grip",
+      "target": "ian_slingshot_nonlin",
+      "sources": [
+        "nonlin.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/grip",
+      "target": "ian_slingshot_temp_grip",
+      "sources": [
+        "temp_grip.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/grip",
+      "target": "ian_slingshot_gripdemo",
+      "sources": [
+        "gripdemo.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/misc",
+      "target": "ian_slingshot_drawrect",
+      "sources": [
+        "drawrect.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/misc",
+      "target": "ian_slingshot_example1",
+      "sources": [
+        "example1.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/selection",
+      "target": "ian_slingshot_select",
+      "sources": [
+        "select.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/tacho",
+      "target": "ian_slingshot_tacho",
+      "sources": [
+        "tacho.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "slingshot/examples/tree",
+      "target": "ian_slingshot_tlstool",
+      "sources": [
+        "tlstool.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [
+        "ian_sspkg"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/apex-1.1/src/animate",
+      "target": "ian_apex_animate",
+      "sources": [
+        "animate.c"
+      ],
+      "definitions": [],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/multi_frame",
+      "target": "ian_article_multi_frame",
+      "sources": [
+        "multi_frame.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/send_action",
+      "target": "ian_article_send_action",
+      "sources": [
+        "send_action.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/timers",
+      "target": "ian_article_timers",
+      "sources": [
+        "timers.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/notify_pipe",
+      "target": "ian_article_notify_pipe",
+      "sources": [
+        "notify_pipe.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "library",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/file-chooser",
+      "target": "ian_file_chooser_cmdrunner",
+      "sources": [
+        "cmdrunner.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/file-chooser",
+      "target": "ian_file_chooser_filelist",
+      "sources": [
+        "filelist.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/file-chooser",
+      "target": "ian_file_chooser_new_load",
+      "sources": [
+        "new_load.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/file-chooser",
+      "target": "ian_file_chooser_pathfield",
+      "sources": [
+        "pathfield.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/file-chooser",
+      "target": "ian_file_chooser_text_editor",
+      "sources": [
+        "text_editor.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/examples/file-chooser",
+      "target": "ian_file_chooser_text_exten",
+      "sources": [
+        "text_exten.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/guide/demo/xview/tree",
+      "target": "ian_guide_tree",
+      "sources": [
+        "tree.c",
+        "tree_ui.c"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xcalentool",
+      "target": "ian_calendar_calencheck",
+      "sources": [
+        "calencheck.c",
+        "common.c",
+        "datelib.c",
+        "utils.c"
+      ],
+      "definitions": [
+        "NO_SUN_MOON",
+        "CALENCHECK"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xcalentool",
+      "target": "ian_calendar_cal2ct",
+      "sources": [
+        "cal2ct.c",
+        "put_aentry.c"
+      ],
+      "definitions": [
+        "NO_SUN_MOON"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xcalentool",
+      "target": "ian_calendar_month2ct",
+      "sources": [
+        "month2ct.c",
+        "put_aentry.c",
+        "read_sched.c"
+      ],
+      "definitions": [
+        "NO_SUN_MOON"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xcalentool",
+      "target": "ian_calendar_mt2ct",
+      "sources": [
+        "mt2ct.c",
+        "put_aentry.c"
+      ],
+      "definitions": [
+        "NO_SUN_MOON"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/timekeeper",
+      "target": "ian_tkrefmt",
+      "sources": [
+        "tkrefmt.c"
+      ],
+      "definitions": [],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/tree",
+      "target": "ian_tree_generated",
+      "sources": [
+        "tree_stubs.c",
+        "tree_ui.c"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/timekeeper",
+      "target": "ian_timekeeper_alternate",
+      "sources": [
+        "timer.c",
+        "timer_ui.c",
+        "topics.c",
+        "logfile.c"
+      ],
+      "definitions": [
+        "MAIN"
+      ],
+      "libraries": [
+        "ian_guidexv"
+      ],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xrolo-2.06",
+      "target": "ian_rolo_test",
+      "sources": [
+        "tst.c"
+      ],
+      "definitions": [
+        "STANDALONE"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    },
+    {
+      "path": "xview/xvtdl-5.0",
+      "target": "ian_tdl",
+      "sources": [
+        "tdl.c",
+        "tdl_utils.c",
+        "calendar.c",
+        "deadline.c",
+        "list.c",
+        "print.c",
+        "recur.c",
+        "file.c",
+        "display.c",
+        "category.c",
+        "xdefaults.c",
+        "y.tab.c"
+      ],
+      "definitions": [
+        "STANDALONE",
+        "XVIEW3",
+        "MAILPGM=\"mail\"",
+        "HELPDIR=\".\"",
+        "PRINT_PROLOG1=\"prolog1.ps\"",
+        "PRINT_PROLOG2=\"prolog2.ps\"",
+        "TDL"
+      ],
+      "libraries": [],
+      "kind": "executable",
+      "missing": []
+    }
+  ]
+}

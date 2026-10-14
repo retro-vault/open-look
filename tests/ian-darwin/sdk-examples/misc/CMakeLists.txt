@@ -1,0 +1,57 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_misc_fullscreen
+    EXECUTABLE
+    SOURCES
+        "fullscreen.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_multi_display
+    EXECUTABLE
+    SOURCES
+        "multi_display.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_multiscreen
+    EXECUTABLE
+    SOURCES
+        "multiscreen.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_screen
+    EXECUTABLE
+    SOURCES
+        "screen.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_svrimage
+    EXECUTABLE
+    SOURCES
+        "svrimage.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_vkbd_fonts
+    EXECUTABLE
+    SOURCES
+        "vkbd_fonts.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_vkbd_colors
+    EXECUTABLE
+    SOURCES
+        "vkbd_colors.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_misc_visual
+    EXECUTABLE
+    SOURCES
+        "visual.c"
+    DEFINITIONS
+        "STANDALONE"
+)

@@ -1,0 +1,43 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_menus_menu
+    EXECUTABLE
+    SOURCES
+        "menu.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_menus_menu_dir
+    EXECUTABLE
+    SOURCES
+        "menu_dir.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_menus_menu_dir2
+    EXECUTABLE
+    SOURCES
+        "menu_dir2.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_menus_pin_menu
+    EXECUTABLE
+    SOURCES
+        "pin_menu.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_menus_simple_menu
+    EXECUTABLE
+    SOURCES
+        "simple_menu.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_menus_xv_menu
+    EXECUTABLE
+    SOURCES
+        "xv_menu.c"
+    DEFINITIONS
+        "STANDALONE"
+)

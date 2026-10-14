@@ -67,12 +67,7 @@ set_target_properties(olgx_static PROPERTIES
 # Install the library
 install(TARGETS olgx olgx_static
     EXPORT olgxTargets
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
-    RUNTIME DESTINATION bin
-)
-
-# Install public headers
-install(FILES ${HEADERS_PUBLIC}
-    DESTINATION include/olgx
+    ARCHIVE DESTINATION lib COMPONENT SDK
+    LIBRARY DESTINATION lib COMPONENT SDK
+    RUNTIME DESTINATION bin COMPONENT SDK
 )

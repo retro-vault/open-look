@@ -10,6 +10,10 @@
 #if !defined(MACROS_H)
 #define MACROS_H
 
+/* GUIDE-generated interfaces can contain more than 64 attribute arguments. */
+#ifndef BOOST_PP_LIMIT_VARIADIC
+#define BOOST_PP_LIMIT_VARIADIC 256
+#endif
 #include <boost/preprocessor.hpp>
 
 #define ARG(z, n, array) \

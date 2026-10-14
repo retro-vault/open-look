@@ -42,7 +42,11 @@
 
 #include <stdlib.h>		/* #2 (MB_CUR_MAX) */
 #include <limits.h>		/* #2 (MB_LEN_MAX) */
-#include <widec.h>		/* #1, #4 */
+#if defined(__sun) || defined(sun)
+#include <widec.h>
+#else
+#include <wchar.h>
+#endif		/* #1, #4 */
 #include <locale.h>		/* #3 */
 #include <wctype.h>		/* #5 */
 
@@ -55,7 +59,9 @@
  */
 #include <X11/XlibR5.h>		/* #6 */
 #endif /* XlibSpecificationRelease <= 5 */
-#include <X11/XSunExt.h>	/* #7 */
+#if defined(__sun) || defined(sun)
+#include <X11/XSunExt.h>	/* Sun-specific XIM extensions */
+#endif
 
 #endif /* OW_I18N */
 

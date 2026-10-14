@@ -1,0 +1,36 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_seln_svc_long_seln
+    EXECUTABLE
+    SOURCES
+        "long_seln.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_seln_svc_seln
+    EXECUTABLE
+    SOURCES
+        "seln.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_seln_svc_seln_line
+    EXECUTABLE
+    SOURCES
+        "seln_line.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_seln_svc_simple_seln
+    EXECUTABLE
+    SOURCES
+        "simple_seln.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_seln_svc_text_seln
+    EXECUTABLE
+    SOURCES
+        "text_seln.c"
+    DEFINITIONS
+        "STANDALONE"
+)

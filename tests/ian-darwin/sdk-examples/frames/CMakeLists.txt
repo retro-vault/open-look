@@ -1,0 +1,50 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_frames_command_frame
+    EXECUTABLE
+    SOURCES
+        "command_frame.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_frames_done_proc
+    EXECUTABLE
+    SOURCES
+        "done_proc.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_frames_frame_color
+    EXECUTABLE
+    SOURCES
+        "frame_color.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_frames_hdrs_n_footers
+    EXECUTABLE
+    SOURCES
+        "hdrs_n_footers.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_frames_popup
+    EXECUTABLE
+    SOURCES
+        "popup.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_frames_simple_frame
+    EXECUTABLE
+    SOURCES
+        "simple_frame.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_frames_subframe
+    EXECUTABLE
+    SOURCES
+        "subframe.c"
+    DEFINITIONS
+        "STANDALONE"
+)

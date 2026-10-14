@@ -11,6 +11,9 @@
 #ifndef	cg9var_DEFINED
 #define	cg9var_DEFINED
 
+/* These declarations describe SunOS framebuffer drivers, not the Linux SDK. */
+#if defined(__sun) || defined(sun)
+
 #include	<pixrect/memvar.h>
 #include <sys/cms.h>
 
@@ -83,5 +86,7 @@ int		cg9_getattributes();
 int		cg9_vector();
 int		cg9_get();
 int		cg9_put();
+
+#endif /* SunOS framebuffer interfaces */
 
 #endif /* 	cg9var_DEFINED */

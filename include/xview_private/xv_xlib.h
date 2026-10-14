@@ -10,9 +10,9 @@
 #ifndef _view2_private_xv_xlib_h_already_included
 #define _view2_private_xv_xlib_h_already_included
 
-#include <view2/qualifyx.h>
+#include <xview_private/qualifyx.h>
 #include <X11/Xlib.h>
-#include <view2/unqualifyx.h>
+#include <xview_private/unqualifyx.h>
 
 /*
  * To enable applications to get the current clipping list

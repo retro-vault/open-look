@@ -1,0 +1,19 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_workman
+    EXECUTABLE
+    SOURCES
+        "cdinfo.c"
+        "database.c"
+        "display.c"
+        "setup.c"
+        "ui_cdinfo.c"
+        "cdrom.c"
+        "plat_linux.c"
+        "index.c"
+        "workman_stubs.c"
+        "scsi.c"
+        "drv_toshiba.c"
+        "drv_sony.c"
+    DEFINITIONS
+        "linux"
+)

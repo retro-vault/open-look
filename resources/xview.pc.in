@@ -1,0 +1,10 @@
+prefix=${pcfiledir}/../..
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: XView
+Description: OpenLook XView SDK
+Version: 1.0.0
+Requires: olgx x11 libtirpc
+Libs: -L${libdir} -lxview
+Cflags: -I${includedir} -D_DEFAULT_SOURCE

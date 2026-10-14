@@ -1,0 +1,25 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_extensions_logo
+    EXECUTABLE
+    SOURCES
+        "logo.c"
+        "Logo.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_extensions_bitmap
+    EXECUTABLE
+    SOURCES
+        "bitmap.c"
+        "Bitmap.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_extensions_image
+    EXECUTABLE
+    SOURCES
+        "image.c"
+        "Image.c"
+    DEFINITIONS
+        "STANDALONE"
+)

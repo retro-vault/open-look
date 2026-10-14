@@ -13,7 +13,6 @@
 #include <malloc.h>
 
 #include <xview/xv_c_types.h>
-#include <xview/pkg.h>
 
 #if defined(__STDC__) || defined(__cplusplus) || defined(c_plusplus)
 #include <stdlib.h>

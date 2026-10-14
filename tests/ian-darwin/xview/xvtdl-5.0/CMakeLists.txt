@@ -1,0 +1,68 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_xvtdl_5_0
+    EXECUTABLE
+    SOURCES
+        "calendar.c"
+        "category.c"
+        "category_ui.c"
+        "colors.c"
+        "control.c"
+        "create_windows.c"
+        "deadline.c"
+        "deadline_ui.c"
+        "display.c"
+        "entry_ui.c"
+        "file.c"
+        "gcc.c"
+        "gcc_ui.c"
+        "gcm.c"
+        "gfm.c"
+        "gfm_load_dir.c"
+        "gfm_ui.c"
+        "group.c"
+        "group_data.c"
+        "lex.yy.c"
+        "list.c"
+        "logedit_ui.c"
+        "logger.c"
+        "main.c"
+        "print.c"
+        "print_ui.c"
+        "properties.c"
+        "props_ui.c"
+        "recur.c"
+        "xdefaults.c"
+        "y.tab.c"
+    DEFINITIONS
+        "STANDALONE"
+        "XVIEW3"
+        "MAILPGM=\"mail\""
+        "HELPDIR=\".\""
+        "PRINT_PROLOG1=\"prolog1.ps\""
+        "PRINT_PROLOG2=\"prolog2.ps\""
+    LIBRARIES ian_guidexv
+)
+ian_program(ian_tdl
+    EXECUTABLE
+    SOURCES
+        "tdl.c"
+        "tdl_utils.c"
+        "calendar.c"
+        "deadline.c"
+        "list.c"
+        "print.c"
+        "recur.c"
+        "file.c"
+        "display.c"
+        "category.c"
+        "xdefaults.c"
+        "y.tab.c"
+    DEFINITIONS
+        "STANDALONE"
+        "XVIEW3"
+        "MAILPGM=\"mail\""
+        "HELPDIR=\".\""
+        "PRINT_PROLOG1=\"prolog1.ps\""
+        "PRINT_PROLOG2=\"prolog2.ps\""
+        "TDL"
+)

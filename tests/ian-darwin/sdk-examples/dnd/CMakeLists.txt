@@ -1,0 +1,22 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_dnd_dest
+    EXECUTABLE
+    SOURCES
+        "dest.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_dnd_source1
+    EXECUTABLE
+    SOURCES
+        "source1.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_dnd_source2
+    EXECUTABLE
+    SOURCES
+        "source2.c"
+    DEFINITIONS
+        "STANDALONE"
+)

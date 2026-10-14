@@ -1,0 +1,10 @@
+prefix=${pcfiledir}/../..
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: olgx
+Description: OPEN LOOK graphics library
+Version: 1.0.0
+Requires: x11
+Libs: -L${libdir} -lolgx
+Cflags: -I${includedir}

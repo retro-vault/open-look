@@ -11,6 +11,9 @@
 #ifndef		mem32var_DEFINED
 #define		mem32var_DEFINED
 
+/* These declarations describe SunOS framebuffer drivers, not the Linux SDK. */
+#if defined(__sun) || defined(sun)
+
 #include	<pixrect/pixrect.h>
 #include	<pixrect/memvar.h>	/* mprp */
 #include <sys/cms.h>
@@ -32,5 +35,7 @@ extern
 struct pixrectops   mem32_ops;
 int                 mem32_rop();
 int                 mem32_getcolormap();
+
+#endif /* SunOS framebuffer interfaces */
 
 #endif					/* !mem32var_DEFINED */

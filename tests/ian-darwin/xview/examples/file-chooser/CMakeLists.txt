@@ -1,0 +1,43 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_file_chooser_cmdrunner
+    EXECUTABLE
+    SOURCES
+        "cmdrunner.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_file_chooser_filelist
+    EXECUTABLE
+    SOURCES
+        "filelist.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_file_chooser_new_load
+    EXECUTABLE
+    SOURCES
+        "new_load.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_file_chooser_pathfield
+    EXECUTABLE
+    SOURCES
+        "pathfield.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_file_chooser_text_editor
+    EXECUTABLE
+    SOURCES
+        "text_editor.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_file_chooser_text_exten
+    EXECUTABLE
+    SOURCES
+        "text_exten.c"
+    DEFINITIONS
+        "STANDALONE"
+)

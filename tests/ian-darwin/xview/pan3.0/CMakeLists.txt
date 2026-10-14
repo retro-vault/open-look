@@ -1,0 +1,28 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_pan3_0
+    EXECUTABLE
+    SOURCES
+        "pan.c"
+        "control.c"
+        "event.c"
+        "folder.c"
+        "hidexp.c"
+        "llm.c"
+        "menu.c"
+        "misc.c"
+        "move.c"
+        "note.c"
+        "parser.c"
+        "rmfolder.c"
+        "noteaction.c"
+        "search.c"
+        "update.c"
+        "win.c"
+        "work.c"
+        "dnd.c"
+    DEFINITIONS
+        "STANDALONE"
+        "XVIEW3"
+        "PAN_DND"
+        "HAS_STDLIB"
+)

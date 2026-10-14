@@ -1,0 +1,35 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_sspkg
+    LIBRARY
+    SOURCES
+        "array.c"
+        "array_data.c"
+        "bag.c"
+        "bkg_event.c"
+        "box.c"
+        "box_data.c"
+        "canshell.c"
+        "cbox.c"
+        "clock.c"
+        "display_list.c"
+        "dnd.c"
+        "drawarea.c"
+        "drawicon.c"
+        "drawimage.c"
+        "drawline.c"
+        "drawobj_data.c"
+        "drawrect.c"
+        "drawtext.c"
+        "event.c"
+        "grip.c"
+        "list.c"
+        "rectobj.c"
+        "rectobj_data.c"
+        "selection.c"
+        "tacho.c"
+        "tree.c"
+        "tree_data.c"
+    DEFINITIONS
+        "NO_SINCOS"
+        "_OTHER_RECT_FUNCTIONS"
+)

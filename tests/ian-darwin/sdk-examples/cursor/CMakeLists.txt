@@ -1,0 +1,22 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_cursor_hot_spot
+    EXECUTABLE
+    SOURCES
+        "hot_spot.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_cursor_simple_cursor
+    EXECUTABLE
+    SOURCES
+        "simple_cursor.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_cursor_stop_cursor
+    EXECUTABLE
+    SOURCES
+        "stop_cursor.c"
+    DEFINITIONS
+        "STANDALONE"
+)

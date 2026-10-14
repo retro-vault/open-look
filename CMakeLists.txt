@@ -81,19 +81,27 @@ file(WRITE "${OPENWINHOME_ENV_SCRIPT}"
 )
 execute_process(COMMAND chmod +x "${OPENWINHOME_ENV_SCRIPT}")
 
-# Stage public development headers into OPENWINHOME/include.
+# Stage the complete SDK header inventory into OPENWINHOME/include.
 add_custom_target(openlook_headers ALL
     COMMAND ${CMAKE_COMMAND} -E make_directory "${OPENWINHOME_STAGE_INCLUDE_DIR}"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${PROJECT_SOURCE_DIR}/include/olgx"
-            "${OPENWINHOME_STAGE_INCLUDE_DIR}/olgx"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${PROJECT_SOURCE_DIR}/include/pixrect"
-            "${OPENWINHOME_STAGE_INCLUDE_DIR}/pixrect"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${PROJECT_SOURCE_DIR}/include/xview"
-            "${OPENWINHOME_STAGE_INCLUDE_DIR}/xview"
-    COMMENT "Staging OpenLook public headers into ${OPENWINHOME_STAGE_INCLUDE_DIR}"
+            "${PROJECT_SOURCE_DIR}/include"
+            "${OPENWINHOME_STAGE_INCLUDE_DIR}"
+    COMMENT "Staging OpenLook SDK headers into ${OPENWINHOME_STAGE_INCLUDE_DIR}"
+)
+
+# Keep the staged and installed SDK inventories in sync. Install complete
+# namespaces, including compatibility and private headers used by old clients.
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/"
+    DESTINATION include
+    COMPONENT SDK
+)
+configure_file(resources/xview.pc.in "${CMAKE_CURRENT_BINARY_DIR}/xview.pc" @ONLY)
+configure_file(resources/olgx.pc.in "${CMAKE_CURRENT_BINARY_DIR}/olgx.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/xview.pc"
+              "${CMAKE_CURRENT_BINARY_DIR}/olgx.pc"
+    DESTINATION lib/pkgconfig
+    COMPONENT SDK
 )
 
 # Add subdirectories

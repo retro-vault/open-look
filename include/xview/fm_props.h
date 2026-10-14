@@ -42,7 +42,7 @@
 #include <pixrect/memvar.h>
 
 #include <pixrect/pixfont.h>
-#include <rasterfile.h>
+#include <pixrect/rasterfile.h>
 #include <pixrect/pr_io.h>
 #endif	/* pixrect_hs_DEFINED */
 

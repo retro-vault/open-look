@@ -1,0 +1,85 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_color_animate
+    EXECUTABLE
+    SOURCES
+        "animate.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_color
+    EXECUTABLE
+    SOURCES
+        "color.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_color_animate
+    EXECUTABLE
+    SOURCES
+        "color_animate.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_color_logo
+    EXECUTABLE
+    SOURCES
+        "color_logo.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_color_objs
+    EXECUTABLE
+    SOURCES
+        "color_objs.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_color_panel
+    EXECUTABLE
+    SOURCES
+        "color_panel.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_example1
+    EXECUTABLE
+    SOURCES
+        "example1.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_example2
+    EXECUTABLE
+    SOURCES
+        "example2.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_example3
+    EXECUTABLE
+    SOURCES
+        "example3.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_example4
+    EXECUTABLE
+    SOURCES
+        "example4.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_x_draw
+    EXECUTABLE
+    SOURCES
+        "x_draw.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_color_animate2
+    EXECUTABLE
+    SOURCES
+        "animate2.c"
+    DEFINITIONS
+        "STANDALONE"
+)

@@ -11,6 +11,9 @@
 #ifndef	gp1var_DEFINED
 #define	gp1var_DEFINED
 
+/* These declarations describe SunOS framebuffer drivers, not the Linux SDK. */
+#if defined(__sun) || defined(sun)
+
 /*
  * The same pixrect data structure is now used for both cg2
  * and gp1 pixrects.
@@ -109,5 +112,7 @@ int gp1_polypoint();
 #define GP1IO_SATTR _IOW(G, 101, struct fbgattr)
 #define GP1IO_SCMAP _IO(G, 102)
 #define GP_SHMEMSIZE	5
+
+#endif /* SunOS framebuffer interfaces */
 
 #endif /* 	gp1var_DEFINED */

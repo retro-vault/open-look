@@ -82,15 +82,7 @@ set_target_properties(xview_static PROPERTIES
 )
 
 install(TARGETS xview xview_static
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
-    RUNTIME DESTINATION bin
-)
-
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/xview/
-    DESTINATION include/xview
-)
-
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/xview_private/
-    DESTINATION include/xview_private
+    ARCHIVE DESTINATION lib COMPONENT SDK
+    LIBRARY DESTINATION lib COMPONENT SDK
+    RUNTIME DESTINATION bin COMPONENT SDK
 )

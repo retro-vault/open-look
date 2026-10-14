@@ -1,0 +1,22 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_notice_notice
+    EXECUTABLE
+    SOURCES
+        "notice.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notice_simple_notice
+    EXECUTABLE
+    SOURCES
+        "simple_notice.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notice_trigger_notice
+    EXECUTABLE
+    SOURCES
+        "trigger_notice.c"
+    DEFINITIONS
+        "STANDALONE"
+)

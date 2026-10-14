@@ -1,0 +1,92 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_panels_btn_menu
+    EXECUTABLE
+    SOURCES
+        "btn_menu.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_choices
+    EXECUTABLE
+    SOURCES
+        "choices.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_client_data
+    EXECUTABLE
+    SOURCES
+        "client_data.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_item_move
+    EXECUTABLE
+    SOURCES
+        "item_move.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_list_glyphs
+    EXECUTABLE
+    SOURCES
+        "list_glyphs.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_list_6_glyphs
+    EXECUTABLE
+    SOURCES
+        "list_6_glyphs.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_panel_repaint
+    EXECUTABLE
+    SOURCES
+        "panel_repaint.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_quit
+    EXECUTABLE
+    SOURCES
+        "quit.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_repaint
+    EXECUTABLE
+    SOURCES
+        "repaint.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_simple_panel
+    EXECUTABLE
+    SOURCES
+        "simple_panel.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_slider
+    EXECUTABLE
+    SOURCES
+        "slider.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_stop_frame
+    EXECUTABLE
+    SOURCES
+        "stop_frame.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_panels_panel_dnd
+    EXECUTABLE
+    SOURCES
+        "panel_dnd.c"
+    DEFINITIONS
+        "STANDALONE"
+)

@@ -11,6 +11,9 @@
 #ifndef cg8var_DEFINED
 #define	cg8var_DEFINED
 
+/* These declarations describe SunOS framebuffer drivers, not the Linux SDK. */
+#if defined(__sun) || defined(sun)
+
 /* <sundev/p4reg.h> and <pixrect/memvar.h> included */
 #include <pixrect/cg4var.h>
 #include <sys/cms.h>
@@ -86,5 +89,7 @@ int		cg8_vector();
 int		cg8_get();
 int		cg8_put();
 int		cg8_rop();
+
+#endif /* SunOS framebuffer interfaces */
 
 #endif /* cg8var_DEFINED */

@@ -1,0 +1,29 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_Ftptool4_6b4
+    EXECUTABLE
+    SOURCES
+        "batch.c"
+        "button_funcs.c"
+        "change_dir.c"
+        "create_main.c"
+        "create_other.c"
+        "dircache.c"
+        "dirlist.c"
+        "dofuncs.c"
+        "dnd.c"
+        "event.c"
+        "ftp.c"
+        "host_list.c"
+        "main.c"
+        "menu_funcs.c"
+        "misc.c"
+        "readdir.c"
+        "schedule.c"
+        "tar_view.c"
+        "transfer.c"
+        "view_file.c"
+        "lex.c"
+    DEFINITIONS
+        "MAIN"
+        "STANDALONE"
+)

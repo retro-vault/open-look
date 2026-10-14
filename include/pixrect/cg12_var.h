@@ -11,6 +11,9 @@
 #ifndef cg12_var_DEFINED
 #define	cg12_var_DEFINED
 
+/* These declarations describe SunOS framebuffer drivers, not the Linux SDK. */
+#if defined(__sun) || defined(sun)
+
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/fbio.h>
@@ -136,5 +139,7 @@ Pixrect            *cg12_region();
 int                 cg12_stencil();
 int                 cg12_vector();
 
+
+#endif /* SunOS framebuffer interfaces */
 
 #endif	/* cg12var_DEFINED */

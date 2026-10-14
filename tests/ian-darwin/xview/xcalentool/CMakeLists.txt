@@ -1,0 +1,65 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_xcalentool
+    EXECUTABLE
+    SOURCES
+        "calentool.c"
+        "common.c"
+        "datelib.c"
+        "devent.c"
+        "dpaint.c"
+        "event.c"
+        "expire.c"
+        "holidays.c"
+        "init.c"
+        "moon.c"
+        "mpaint.c"
+        "notify.c"
+        "pcal.c"
+        "pcaldw.c"
+        "printer.c"
+        "riseset.c"
+        "tool.c"
+        "utils.c"
+        "version.c"
+        "wevent.c"
+        "wpaint.c"
+        "ypaint.c"
+    DEFINITIONS
+        "NO_SUN_MOON"
+)
+ian_program(ian_calendar_calencheck
+    EXECUTABLE
+    SOURCES
+        "calencheck.c"
+        "common.c"
+        "datelib.c"
+        "utils.c"
+    DEFINITIONS
+        "NO_SUN_MOON"
+        "CALENCHECK"
+)
+ian_program(ian_calendar_cal2ct
+    EXECUTABLE
+    SOURCES
+        "cal2ct.c"
+        "put_aentry.c"
+    DEFINITIONS
+        "NO_SUN_MOON"
+)
+ian_program(ian_calendar_month2ct
+    EXECUTABLE
+    SOURCES
+        "month2ct.c"
+        "put_aentry.c"
+        "read_sched.c"
+    DEFINITIONS
+        "NO_SUN_MOON"
+)
+ian_program(ian_calendar_mt2ct
+    EXECUTABLE
+    SOURCES
+        "mt2ct.c"
+        "put_aentry.c"
+    DEFINITIONS
+        "NO_SUN_MOON"
+)

@@ -203,6 +203,10 @@ extern Xv_pkg 		xv_sel_item_pkg;
  */
 
 EXTERN_FUNCTION (Bool sel_convert_proc, (Selection_owner sel_owner, Atom * type, Xv_opaque *data, unsigned long *length, int *format));
+/* Start an asynchronous request on the caller-owned selection requestor.
+ * Replies are delivered through SEL_REPLY_PROC. The requestor must remain
+ * alive until the transfer completes; setup errors have no return value.
+ */
 EXTERN_FUNCTION (void sel_post_request, (Selection_requestor sel_req));
 
 

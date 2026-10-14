@@ -1,0 +1,22 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_scrollbar_scroll_cells
+    EXECUTABLE
+    SOURCES
+        "scroll_cells.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_scrollbar_scroll_cells2
+    EXECUTABLE
+    SOURCES
+        "scroll_cells2.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_scrollbar_scrollto
+    EXECUTABLE
+    SOURCES
+        "scrollto.c"
+    DEFINITIONS
+        "STANDALONE"
+)

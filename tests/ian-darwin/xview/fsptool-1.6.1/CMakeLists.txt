@@ -1,0 +1,23 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_fsptool_1_6_1
+    EXECUTABLE
+    SOURCES
+        "xview/batch.c"
+        "xview/create.c"
+        "xview/file.c"
+        "xview/frame.c"
+        "xview/fsptool.c"
+        "xview/icon.c"
+        "xview/menu.c"
+        "xview/resource.c"
+        "xview/system.c"
+        "lib/cache.c"
+        "lib/file.c"
+        "lib/fsp.c"
+        "lib/logging.c"
+        "lib/unix.c"
+    DEFINITIONS
+        "STANDALONE"
+        "LOGFILE=\"fsptool.log\""
+        "FSPTOOL_HELP=\"fsptool.info\""
+)

@@ -1,0 +1,50 @@
+# CMake replacement for the archived make/imake build.
+ian_program(ian_example_notifier_animate
+    EXECUTABLE
+    SOURCES
+        "animate.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notifier_interpose
+    EXECUTABLE
+    SOURCES
+        "interpose.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notifier_notify
+    EXECUTABLE
+    SOURCES
+        "notify.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notifier_notify_input
+    EXECUTABLE
+    SOURCES
+        "notify_input.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notifier_ntfy_do_dis
+    EXECUTABLE
+    SOURCES
+        "ntfy_do_dis.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notifier_ntfy_pipe
+    EXECUTABLE
+    SOURCES
+        "ntfy_pipe.c"
+    DEFINITIONS
+        "STANDALONE"
+)
+ian_program(ian_example_notifier_ntfy_sig
+    EXECUTABLE
+    SOURCES
+        "ntfy_sig.c"
+    DEFINITIONS
+        "STANDALONE"
+)

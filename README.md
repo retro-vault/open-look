@@ -120,6 +120,39 @@ If you override the prefix only with `cmake --install --prefix`, set
 `OPENWINHOME` to that prefix when running.
 The window manager and all accessories are installed in `<prefix>/bin`.
 
+### SDK installation and application builds
+
+The `SDK` component installs both shared and static XView/olgx libraries,
+all headers under `include/` (including Pixrect compatibility and private
+headers), and relocatable `pkg-config` files. It is also included in a full
+installation. To install only the SDK after building:
+
+```bash
+sudo cmake --install build --component SDK
+sudo ldconfig
+gcc quit.c $(pkg-config --cflags --libs xview) -o quit_prog
+```
+
+For a custom prefix, add `<prefix>/lib/pkgconfig` to `PKG_CONFIG_PATH`.
+The flags include the libtirpc header path required by selection-service
+headers and enable the BSD types used by XView in strict C modes.
+X11, libtirpc and Boost development headers remain external SDK
+prerequisites; `pkg-config` is needed for the command above.
+
+Check SDK installation completeness without modifying the system:
+
+```bash
+cmake --build build --target sdk_install_check
+```
+
+This installs into a temporary prefix, compares every header with its source,
+preprocesses every installed header with and without `OW_I18N`, and compiles
+and links an independent XView client using installed `pkg-config` flags.
+Historical Sun framebuffer declarations requiring SunOS interfaces are guarded
+on Linux. Installing their headers does not provide Sun framebuffer drivers
+or a complete Pixrect implementation. The `OW_I18N` checks validate header
+dependencies; they do not enable internationalization in the built libraries.
+
 `cmdtool` uses `TERM=sun-cmd`. The build compiles its terminal description
 into `share/terminfo` in both the staged tree and the installed prefix.
 `cmdtool` adds `$OPENWINHOME/share/terminfo` to `TERMINFO_DIRS` for its child
@@ -238,6 +271,22 @@ python3 tests/run-props-colors.py
 - Legacy non-Linux path branches have been reduced where possible.
 - More validation and compatibility testing is still required before final
   release.
+
+## Archived CD-ROM compatibility fixtures
+
+The optional programs under `tests/ian-darwin/` build against this repository's
+SDK. Enable them and attempt every target with:
+
+```bash
+cmake -S . -B build -DOPENLOOK_BUILD_IAN_DARWIN=ON
+python3 tests/ian-darwin/build-all.py --label current
+```
+
+Build individual programs with, for example,
+`cmake --build build --target ian_coffee`. Executables stage under
+`bin/bin/ian-darwin/`. The runner records per-target logs and returns nonzero
+when any target fails. See [docs/IAN.md](docs/IAN.md) for the source inventory,
+fixes, remaining failures, and validation commands.
 
 ## Legal notice
 
