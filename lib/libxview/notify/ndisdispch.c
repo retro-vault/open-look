@@ -355,7 +355,7 @@ notify_fd(nclient, fd, type)
     int             fd;
     NTFY_TYPE       type;
 {
-    Notify_func     func;
+    Notify_func     func = NOTIFY_FUNC_NULL;
 
     /* Check arguments and get function to call */
     if (ndet_check_fd(fd) ||
@@ -398,7 +398,7 @@ notify_itimer(nclient, which)
     int             which;
 {
     NTFY_TYPE       type;
-    Notify_func     func;
+    Notify_func     func = NOTIFY_FUNC_NULL;
 
     /* Check arguments and get function to call */
     if (ndet_check_which(which, &type) ||
@@ -417,8 +417,8 @@ notify_event(nclient, event, arg)
     Notify_event    event;
     Notify_arg      arg;
 {
-    Notify_func     func;
-    Notify_release  release_func;
+    Notify_func     func = NOTIFY_FUNC_NULL;
+    Notify_release  release_func = NOTIFY_RELEASE_NULL;
 
     /* Get function to call */
     if (ndis_send_func(nclient, NTFY_SAFE_EVENT, (NTFY_DATA) event,
@@ -441,7 +441,7 @@ notify_signal(nclient, sig)
     Notify_client   nclient;
     int             sig;
 {
-    Notify_func     func;
+    Notify_func     func = NOTIFY_FUNC_NULL;
 
     /* Check arguments and get function to call */
     if (ndet_check_sig(sig) ||
@@ -460,7 +460,7 @@ notify_destroy(nclient, status)
     Notify_client   nclient;
     Destroy_status  status;
 {
-    Notify_func     func;
+    Notify_func     func = NOTIFY_FUNC_NULL;
 
     /* Check arguments and get function to call */
     if (ndet_check_status(status) ||
@@ -492,8 +492,8 @@ extern          Notify_error
 notify_wait3(nclient)
     Notify_client   nclient;
 {
-    Notify_func     func;
-    NTFY_WAIT3_DATA *wd;
+    Notify_func     func = NOTIFY_FUNC_NULL;
+    NTFY_WAIT3_DATA *wd = NULL;
     NTFY_CLIENT    *client;
 
     /* Loop until no more wait conditions to notify */

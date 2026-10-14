@@ -692,15 +692,16 @@ ttysw_output_it(ttysw_view, addr, len0)
     /* -1 => defaulted		 */
     static int      ac;		/* number of args in av		 */
 #define BUFSIZE 8192
-    Textsw          textsw;
-    Ev_chain	    views;
+    Textsw          textsw = (Textsw) 0;
+    Ev_chain	    views = (Ev_chain) 0;
     Ev_handle	    e_view;
     Ev_pd_handle    private;
-    Termsw_folio    termsw;
+    Termsw_folio    termsw = (Termsw_folio) 0;
     CHAR            buf[BUFSIZE];
     CHAR            *cp = buf;
     register int    len = 0;
     int             upper_context;
+    int             text_mode = FALSE;
 #ifdef OW_I18N
     /* implement save and restore cursor per Japanese users' requests */
     static int      saved_row, saved_col; /* \E7 and \E8 */
@@ -711,7 +712,8 @@ ttysw_output_it(ttysw_view, addr, len0)
 	textsw = (Textsw) TTY_PUBLIC(ttysw);
 	views = (VIEW_ABS_TO_REP(textsw)->e_view)->view_chain;
 	termsw = TERMSW_FOLIO_FOR_VIEW(TERMSW_VIEW_PRIVATE_FROM_TEXTSW(textsw));
-	if (!ttysw_getopt(ttysw, TTYOPT_TEXT) &&
+	text_mode = ttysw_getopt(ttysw, TTYOPT_TEXT);
+	if (!text_mode &&
 	    do_cursor_draw /* jcb */ ) {
 	    (void) ttysw_removeCursor();
 	}
@@ -825,7 +827,7 @@ ttysw_output_it(ttysw_view, addr, len0)
 
 	  case S_ALPHA:
 	  default:
-	    if (ttysw_getopt(ttysw, TTYOPT_TEXT)) {
+	    if (text_mode) {
 		state = S_ALPHA;
 		switch (*addr) {
 		  case CTRL('['):	/* Escape */
@@ -1111,7 +1113,7 @@ ttysw_output_it(ttysw_view, addr, len0)
 	}			/* switch (state) */
     }				/* for (; *addr; addr++) */
 ret:
-    if (ttysw_getopt(ttysw, TTYOPT_TEXT)) {
+    if (text_mode) {
 	cp = from_pty_to_textsw(textsw, cp, buf);
         if (TTY_IS_TERMSW(ttysw)) {
 	    FORALLVIEWS(views,e_view){

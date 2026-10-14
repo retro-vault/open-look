@@ -616,12 +616,13 @@ CHAR			*pos;
 	return;
 
     /* if mods or keysyms already found, look for '+' */
-    if( avp->keysym || avp->some || avp->none )
+    if (avp->keysym || avp->some || avp->none) {
 	if( *pos != XV_PROC_CODE('+') ) {
 	    avp->error = 1;
 	    return;
 	} else
 	    pos += 1 + STRSPN( pos+1, XV_PROC_CODE(" \t") );
+    }
 
     /* look for one of the regular keywords */
     for( kp = keywordTbl ; kp < keywordTblEnd ; kp++ )

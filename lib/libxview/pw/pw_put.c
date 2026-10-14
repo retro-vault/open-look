@@ -27,4 +27,5 @@ pw_put(pw, x, y, val)
 		 (val) ? XV_DEFAULT_FG_BG : XV_INVERTED_FG_BG);
 
     XDrawPoint(display, xv_xid(info), gc, x, y);
+	return 0;
 }

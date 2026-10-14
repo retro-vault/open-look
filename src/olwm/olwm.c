@@ -196,6 +196,14 @@ main(argc, argv)
 	extern char		*getenv();
 #endif /* OW_I18N_L3 */
 
+#ifdef OPENWINHOME_DEFAULT
+    /* Display managers need not supply OPENWINHOME. Export the fallback so
+     * menu commands and their children use the same tree as the manager.
+     */
+    if (getenv("OPENWINHOME") == NULL || !*getenv("OPENWINHOME"))
+        setenv("OPENWINHOME", OPENWINHOME_DEFAULT, 1);
+#endif
+
 #ifdef MALLOCDEBUG
 	malloc_debug(MALLOCDEBUG);
 #endif /* MALLOCDEBUG */
@@ -406,10 +414,14 @@ handleExitSignal(int signal_number)
 {
 	int savedErrno = errno;
 	unsigned char signalByte = (unsigned char)signal_number;
+	ssize_t writeResult;
 
 	exitRequested = True;
-	if (exitSignalPipe[1] != -1)
-		(void)write(exitSignalPipe[1], &signalByte, sizeof(signalByte));
+	if (exitSignalPipe[1] != -1) {
+		writeResult = write(exitSignalPipe[1], &signalByte,
+				    sizeof(signalByte));
+		(void)writeResult;
+	}
 	errno = savedErrno;
 }
 
@@ -543,6 +555,8 @@ openDisplay(rdb)
     if (XrmGetResource(rdb, namebuf, namebuf, &type, &value)) {
 	dpystr = (char *)value.addr;
 	envstr = (char *)MemAlloc(8+strlen(dpystr)+1);
+	if (envstr == NULL)
+	    return NULL;
 	sprintf(envstr, "DISPLAY=%s", dpystr);
 	putenv(envstr);
     }
@@ -695,6 +709,7 @@ RestartOLWM()
     execvp(argVec[0], argVec);
     ErrorGeneral("cannot restart");
     /*NOTREACHED*/
+	return 1;
 }
 
 

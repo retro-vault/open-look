@@ -507,13 +507,23 @@ menu_gen_pin_window:
                 char          **a = (char **) &attrs[1];
                 while (*a) {
                     if (m->nitems < m->max_nitems || extend_item_list(m)) {
+			char *menu_string = *a++;
+			char *accelerator = *a++;
+			Menu_attribute string_attr =
+			    ((int)attrs[0] ==
+			     MENU_STRINGS_AND_ACCELERATORS) ?
+				MENU_STRING_AND_ACCELERATOR :
+				MENU_STRING_AND_ACCELERATOR_WCS;
+
                         m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
                                                    xv_create((Xv_object)NULL, MENUITEM,
-							     XV_INSTANCE_NAME, *a,
+						     XV_INSTANCE_NAME,
+						     menu_string,
                                                              MENU_RELEASE,
-                                        ((int)attrs[0] == MENU_STRINGS_AND_ACCELERATORS) ?
-                                                           MENU_STRING_AND_ACCELERATOR:
-                                                           MENU_STRING_AND_ACCELERATOR_WCS,                                                *a++, *a++, NULL));
+						     string_attr,
+						     menu_string,
+						     accelerator,
+						     NULL));
                     }
                     m->nitems++; 
                 }
@@ -545,12 +555,19 @@ menu_gen_pin_window:
                 char          **a = (char **) &attrs[1];
                 while (*a) {
                     if (m->nitems < m->max_nitems || extend_item_list(m)) {
+			char *instance_name = *a++;
+			char *accelerator = *a++;
+
                         m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
-                                                   xv_create((Xv_object)NULL, MENUITEM,
-                                                XV_INSTANCE_NAME, *a,
+                                                   xv_create((Xv_object)NULL,
+						     MENUITEM,
+						XV_INSTANCE_NAME,
+						instance_name,
                                                 MENU_RELEASE,
                                                 MENU_STRING_AND_ACCELERATOR,
-                                                *a++,  *a++, NULL));
+						instance_name,
+						accelerator,
+						NULL));
                     }
                     m->nitems++;
                 }
@@ -1927,7 +1944,7 @@ menu_set_key_qual(menu, item, set, keysym, modifiers,
          * We need to add more stuff to tell the menu pkg to free these 
          * strings at destroy time.
          */
-        if (key_str && strlen(key_str))  {
+        if (key_str[0] != '\0') {
             char	*key_alloc = xv_strsave(key_str);
 
             xv_set(item, MENU_ACC_KEY, key_alloc, NULL);

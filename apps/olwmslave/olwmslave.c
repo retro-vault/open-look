@@ -112,19 +112,21 @@ makeDpyEnvString(dpy,nscreen)
 	Display		*dpy;
 	int		nscreen;
 {
-	char	dpyEnv[256];
-	char	scrNum[5];
-extern	char	*strtok();
+	char	*dpyEnv;
+	char	*dpyName = MemNewString(DisplayString(dpy));
+	char	*colon = strrchr(dpyName, ':');
+	char	*screenSeparator = colon ? strchr(colon, '.') : NULL;
+	int	length;
 
-	(void)strcpy(dpyEnv,"DISPLAY=");
+	if (screenSeparator)
+		*screenSeparator = '\0';
+	length = snprintf(NULL, 0, "DISPLAY=%s.%d", dpyName, nscreen);
+	dpyEnv = MemAlloc((unsigned int)length + 1);
+	(void)snprintf(dpyEnv, (size_t)length + 1, "DISPLAY=%s.%d",
+		dpyName, nscreen);
+	MemFree(dpyName);
 
-	(void)strcat(dpyEnv,DisplayString(dpy));
-	(void)strtok(dpyEnv,".");
-
-	(void)sprintf(scrNum,".%d",nscreen);
-	(void)strcat(dpyEnv,scrNum);
-
-	return MemNewString(dpyEnv);
+	return dpyEnv;
 }
 
 /* ----------------------------------------------------------------------
@@ -179,7 +181,7 @@ InputReader(client,fd)
 {
 	int		count;
 
-	count = read(fd,cmdBuf,CMDBUFLEN);
+	count = read(fd, cmdBuf, CMDBUFLEN - 1);
 
 	switch (count) {
 	case -1:		/* error */

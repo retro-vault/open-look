@@ -83,7 +83,8 @@ window_set_cms_data(win_public, cms_data)
 
     visual_class = (int)xv_get(win_public, XV_VISUAL_CLASS);
     visual = (Visual *)xv_get(win_public, XV_VISUAL);
-    if ((cms_data->type == XV_DYNAMIC_CMS) && !(visual_class % 2)) {
+    if ((cms_data->type == XV_DYNAMIC_CMS) && !(visual_class % 2) &&
+        visual_class != TrueColor) {
 	xv_error((Xv_object)NULL,
 		 ERROR_STRING,
 		   XV_MSG("Cannot set a dynamic colormap segment on a window created\n\

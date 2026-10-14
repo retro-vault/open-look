@@ -873,7 +873,7 @@ menu_pkg_find(menu_public, pkg, avlist)		/*ARGSUSED*/
 		break;
 
 	      case MENU_FEEDBACK:
-		correct = !mi->no_feedback == (unsigned) attrs[1];
+		correct = (!mi->no_feedback) == (unsigned) attrs[1];
 		break;
 
 	      case XV_FONT:
@@ -951,7 +951,7 @@ menu_pkg_find(menu_public, pkg, avlist)		/*ARGSUSED*/
 	if (correct)
 	    goto exit;
 
-	if (mi->pullright)
+	if (mi->pullright) {
 	    if (descend_first) {
 		mi_public = menu_pkg_find(mi->value, MENUITEM, avlist);
 		if (mi_public) {
@@ -961,6 +961,7 @@ menu_pkg_find(menu_public, pkg, avlist)		/*ARGSUSED*/
 	    } else {
 		submenus = TRUE;
 	    }
+	}
     }
 
     if (submenus) {
@@ -1519,7 +1520,7 @@ menu_accelerator_notify_proc(accelerator_data, event)
 	Menu			(*m_gen_proc)();
 	Menu_item		(*mi_gen_proc)();
 	Xv_opaque		(*notify_proc)();
-	Xv_opaque		result;
+	Xv_opaque		result = MENU_NO_VALUE;
 	int			nitems, saved_event = FALSE;
 	Event			save_last_event,
 				save_first_event;

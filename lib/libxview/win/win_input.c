@@ -490,7 +490,7 @@ xv_input_readevent(window, event, block, type, im)
     Inputmask      *im;
 {
     register Xv_Drawable_info *info;
-    unsigned int    xevent_mask;
+    unsigned int    xevent_mask = NoEventMask;
     XEvent          xevent;
     extern Xv_object xv_default_display;
     Xv_object	    retval;
@@ -1830,6 +1830,9 @@ win_get_cmdline_option(window, str, appl_cmdline)
     XWindowAttributes	 xwin_attr;
     Xv_Drawable_info 	*icon_info,
     			*info;
+
+    if (str == NULL)
+	return;
 
     DRAWABLE_INFO_MACRO(window, info);
     rect = (Rect *) xv_get(window, WIN_RECT);

@@ -101,7 +101,7 @@ textsw_do_move(view, selection_is_local)
     register Es_handle secondary = ES_NULL;
     register Ev_chain chain = folio->views;
     register int    is_pending_delete;
-    CHAR           *string;
+    CHAR           *string = (CHAR *) 0;
     int             lower_context =
     (int) ev_get(view->e_view, EV_CHAIN_LOWER_CONTEXT);
 
@@ -184,6 +184,10 @@ textsw_do_move(view, selection_is_local)
 	    /* Test if is SELN_REQ_CONTENTS_ASCII */
 	    data += sizeof(Seln_attribute);
 	    string = MALLOC(STRLEN((CHAR *)data) + 1);
+	    if (string == (CHAR *) 0) {
+		ev_set(view->e_view, EV_CHAIN_DELAY_UPDATE, FALSE, NULL);
+		return (TEXTSW_PE_BUSY);
+	    }
 	    STRCPY(string, (CHAR *)data);
 	    result = seln_ask(&holder, SELN_REQ_COMMIT_PENDING_DELETE, 0, 0);
 	}
@@ -586,6 +590,9 @@ display_notice(public_view, dnd_status)
         break;
       case XV_ERROR:
         error_msg = XV_MSG("Unexpected internal error");
+        break;
+      default:
+        error_msg = XV_MSG("Unknown drag and drop error");
         break;
     }
     notice = xv_create((Frame)xv_get(public_view, WIN_FRAME), NOTICE,

@@ -36,4 +36,5 @@ xv_vector(window, x0, y0, x1, y1, op, cms_index)
 	xv_set_gc_op(display, info, gc, op, XV_USE_OP_FG, XV_DEFAULT_FG_BG);
     }
     XDrawLine(display, d, gc, x0, y0, x1, y1);
+	return 0;
 }

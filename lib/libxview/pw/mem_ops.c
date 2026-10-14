@@ -46,4 +46,5 @@ xv_pr_error(pr)
 	         XV_MSG("Unsupported pixrect operation attempted"),
 	     NULL);
     /* doesn't return */
+	return PIX_ERR;
 }

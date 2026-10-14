@@ -40,9 +40,8 @@ extern	ScreenInfo	screenInfo;
 
 #ifdef OW_I18N_L3
 #include <locale.h>
-extern	char			*gettext();
+#include <libintl.h>
 #define LOCALIZE(msg)		gettext(msg)
 #else
 #define LOCALIZE(msg)		(msg)
 #endif
-

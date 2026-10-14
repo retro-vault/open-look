@@ -106,4 +106,5 @@ pw_polyline(pw, dx, dy, npts, ptlist, mvlist, brush, tex, op)
     if (tex) {
 	(void) free((char *) dash_set);
     }
+	return 0;
 }				/* pw_polyline */

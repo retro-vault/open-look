@@ -112,7 +112,9 @@ cms_init(parent, cms_public, avlist)
      * Check to see if they are trying to create a dynamic cms from a 
      * static visual.
      */
-    if (cms->type == XV_DYNAMIC_CMS && !XV_DYNAMIC_VISUAL(cms->visual->vinfo->class)) {
+    if (cms->type == XV_DYNAMIC_CMS &&
+        !XV_DYNAMIC_VISUAL(cms->visual->vinfo->class) &&
+        cms->visual->vinfo->class != TrueColor) {
 	xv_error((Xv_object)NULL, 
 		 ERROR_STRING,
 		 XV_MSG("Can not allocate a read/write cms from a static visual"),
@@ -123,7 +125,7 @@ cms_init(parent, cms_public, avlist)
 	if (cms->size == 0)
 	  cms->size = STATUS(cms, control_cms) ? CMS_CONTROL_COLORS : XV_DEFAULT_CMS_SIZE;
 	cms->index_table = xv_alloc_n(unsigned long, cms->size);
-	if (cms->type == XV_STATIC_CMS) {
+        if (cms->type == XV_STATIC_CMS || cms->visual->vinfo->class == TrueColor) {
 	    for (i = 0; i <= cms->size - 1; i++)
 	      cms->index_table[i] = XV_INVALID_PIXEL;
 	}
@@ -316,7 +318,7 @@ cms_get_attr(cms_public, status, attr, args)
     va_list         	args;
 {
     Cms_info		*cms = CMS_PRIVATE(cms_public);
-    Xv_opaque		value;
+    Xv_opaque		value = XV_NULL;
 /* Alpha compatibility, mbuck@debian.org */
 #if 0
     Attr_avlist     	avlist = (Attr_avlist) args;
@@ -333,11 +335,8 @@ cms_get_attr(cms_public, status, attr, args)
 #else
 	  index = (unsigned int)avlist[0];
 #endif
-	  if (index >= cms->size) {
+	  if (index >= cms->size)
 	      index = cms->size - 1;
-	  } else if (index < 0) {
-	      index = 0;
-	  }
 	  value = (Xv_opaque)cms->index_table[index];
 	  break;
       }

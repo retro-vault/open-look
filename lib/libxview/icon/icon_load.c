@@ -48,7 +48,7 @@ icon_open_header(from_file, error_msg, info)
     char            c_temp;
     register FILE  *result;
 
-    if (from_file == "" ||
+    if (from_file == NULL || from_file[0] == '\0' ||
 	(result = fopen(from_file, "r")) == NULL) {
 	(void) sprintf(error_msg, 
 	    XV_MSG("Cannot open file %s.\n"), from_file);
@@ -251,7 +251,7 @@ icon_load_svrim(from_file, error_msg)
     Xv_icon_header_info header;
     Xv_Drawable_info *info;
     register struct pixrect *mpr;
-    Server_image result;
+    Server_image result = (Server_image)NULL;
 
     fd = icon_open_header(from_file, error_msg, &header);
     if (fd == NULL)

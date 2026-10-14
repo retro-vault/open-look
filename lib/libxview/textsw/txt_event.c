@@ -92,7 +92,7 @@ textsw_event(view_public, event, arg, type)
     Xv_object       frame;
     Xv_Window	    next_view;
     Xv_Window	    nth_view;
-    Xv_Window	    previous_view;
+    Xv_Window	    previous_view = (Xv_Window) 0;
     Scrollbar	    sb;
     Textsw	    textsw = TEXTSW_PUBLIC(folio);
     int		    view_nbr;

@@ -19,6 +19,8 @@ static char sccsid[] = "@(#)color_props.c 1.11 91/09/14";
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
+#include <X11/Xutil.h>
 
 #include "props.h"
 #include "color.h"
@@ -125,6 +127,72 @@ static Server_image val_image;
 static int  huepix[NUM_HUES];
 static int  satpix[NUM_SATURATIONS];
 static int  valpix[NUM_GRAYS];
+static Server_image preview_image;
+
+/* The source artwork stores CMS indices, not X pixels. TrueColor images
+ * need the actual pixel values and the frame's depth (including 16-bit).
+ */
+static void
+paint_indexed_image(Server_image image, const char *indices, int width, int height)
+{
+    Visual *visual = (Visual *)xv_get(frame, XV_VISUAL);
+    int depth = (int)xv_get(frame, XV_DEPTH);
+    unsigned long *pixels = (unsigned long *)xv_get(cms, CMS_INDEX_TABLE);
+    XImage *data;
+    GC gc;
+    int x, y;
+    Drawable pixmap = (Drawable)xv_get(image, SERVER_IMAGE_PIXMAP);
+
+    data = XCreateImage(dsp, visual, depth, ZPixmap, 0, NULL,
+                        width, height, 32, 0);
+    if (!data)
+        return;
+    data->data = calloc(height, data->bytes_per_line);
+    if (!data->data) {
+        XDestroyImage(data);
+        return;
+    }
+    for (y = 0; y < height; y++)
+        for (x = 0; x < width; x++)
+            XPutPixel(data, x, y, pixels[(unsigned char)indices[y * width + x]]);
+    gc = XCreateGC(dsp, pixmap, 0, NULL);
+    XPutImage(dsp, pixmap, gc, data, 0, 0, 0, 0, width, height);
+    XFreeGC(dsp, gc);
+    XDestroyImage(data);
+}
+
+static Server_image
+create_indexed_image(const char *indices, int width, int height)
+{
+    Server_image image;
+    if ((int)xv_get(frame, XV_DEPTH) == 8 &&
+        (int)xv_get(frame, XV_VISUAL_CLASS) != TrueColor)
+        return xv_create(XV_NULL, SERVER_IMAGE,
+                         SERVER_IMAGE_COLORMAP, "palette",
+                         XV_WIDTH, width, XV_HEIGHT, height,
+                         SERVER_IMAGE_DEPTH, 8,
+                         SERVER_IMAGE_X_BITS, indices, NULL);
+
+    image = xv_create(XV_NULL, SERVER_IMAGE,
+                      SERVER_IMAGE_CMS, cms,
+                      XV_WIDTH, width, XV_HEIGHT, height,
+                      SERVER_IMAGE_DEPTH, xv_get(frame, XV_DEPTH), NULL);
+    paint_indexed_image(image, indices, width, height);
+    return image;
+}
+
+static void
+refresh_truecolor_preview(void)
+{
+    int i;
+    if (!preview_image || (int)xv_get(frame, XV_VISUAL_CLASS) != TrueColor)
+        return;
+    paint_indexed_image(preview_image, image_data, IMAGE_WIDTH, IMAGE_HEIGHT);
+    xv_set(preview, PANEL_LABEL_IMAGE, preview_image, NULL);
+    /* Logical colour indices stay the same, but their RGB pixels changed. */
+    for (i = 0; i < NUM_CUSTOM; i++)
+        xv_set(palette, PANEL_CHOICE_COLOR, i, CMS_CONTROL_COLORS + i, NULL);
+}
 
 /*
  * string_to_xcolor()
@@ -176,6 +244,7 @@ update_colors()
 	   CMS_INDEX, CMS_CONTROL_COLORS + COLOR_CHOICES,
 	   CMS_X_COLORS, xcolors,
 	   NULL);
+    refresh_truecolor_preview();
 }
 
 static void
@@ -234,6 +303,7 @@ store_custom_colors()
 	   CMS_INDEX, CMS_CONTROL_COLORS + CUSTOM_INDEX,
 	   CMS_X_COLORS, xcolors,
 	   NULL);
+    refresh_truecolor_preview();
 }
 
 static void
@@ -505,15 +575,10 @@ create_color_panel()
 	}
 	image_data[i] = j;
     }
+    preview_image = create_indexed_image(image_data, IMAGE_WIDTH, IMAGE_HEIGHT);
     preview = xv_create(panel_group[COLOR_PANEL], PANEL_MESSAGE,
 			PANEL_LABEL_IMAGE,
-			xv_create(XV_NULL, SERVER_IMAGE,
-				  SERVER_IMAGE_COLORMAP, "palette",
-				  XV_WIDTH, IMAGE_WIDTH,
-				  XV_HEIGHT, IMAGE_HEIGHT,
-				  SERVER_IMAGE_DEPTH, 8,
-				  SERVER_IMAGE_X_BITS, image_data,
-				  NULL),
+			preview_image,
 			XV_Y, 20,
 			XV_HELP_DATA, "props:AppImageInfo",
 			NULL);
@@ -587,13 +652,7 @@ create_color_panel()
 	for (i = 0; i < SIMAGE_WIDTH; i++)
 	    hue_data[j * SIMAGE_WIDTH + i] = CMS_CONTROL_COLORS +
 		huepix[i * NUM_HUES / SIMAGE_WIDTH];
-    hue_image = xv_create(XV_NULL, SERVER_IMAGE,
-			  SERVER_IMAGE_COLORMAP, "palette",
-			  XV_WIDTH, SIMAGE_WIDTH,
-			  XV_HEIGHT, SIMAGE_HEIGHT,
-			  SERVER_IMAGE_DEPTH, 8,
-			  SERVER_IMAGE_X_BITS, hue_data,
-			  NULL);
+    hue_image = create_indexed_image(hue_data, SIMAGE_WIDTH, SIMAGE_HEIGHT);
     h_ticks = xv_create(panel_group[COLOR_PANEL], PANEL_MESSAGE,
 			PANEL_LABEL_IMAGE, hue_image,
 			NULL);
@@ -616,13 +675,7 @@ create_color_panel()
 	for (i = 0; i < SIMAGE_WIDTH; i++)
 	    sat_data[j * SIMAGE_WIDTH + i] = CMS_CONTROL_COLORS +
 		satpix[i * NUM_SATURATIONS / SIMAGE_WIDTH];
-    sat_image = xv_create(XV_NULL, SERVER_IMAGE,
-			  SERVER_IMAGE_COLORMAP, "palette",
-			  XV_WIDTH, SIMAGE_WIDTH,
-			  XV_HEIGHT, SIMAGE_HEIGHT,
-			  SERVER_IMAGE_DEPTH, 8,
-			  SERVER_IMAGE_X_BITS, sat_data,
-			  NULL);
+    sat_image = create_indexed_image(sat_data, SIMAGE_WIDTH, SIMAGE_HEIGHT);
     s_ticks = xv_create(panel_group[COLOR_PANEL], PANEL_MESSAGE,
 			PANEL_LABEL_IMAGE, sat_image,
 			NULL);
@@ -645,13 +698,7 @@ create_color_panel()
 	for (i = 0; i < SIMAGE_WIDTH; i++)
 	    val_data[j * SIMAGE_WIDTH + i] = CMS_CONTROL_COLORS +
 		valpix[i * NUM_GRAYS / SIMAGE_WIDTH];
-    val_image = xv_create(XV_NULL, SERVER_IMAGE,
-			  SERVER_IMAGE_COLORMAP, "palette",
-			  XV_WIDTH, SIMAGE_WIDTH,
-			  XV_HEIGHT, SIMAGE_HEIGHT,
-			  SERVER_IMAGE_DEPTH, 8,
-			  SERVER_IMAGE_X_BITS, val_data,
-			  NULL);
+    val_image = create_indexed_image(val_data, SIMAGE_WIDTH, SIMAGE_HEIGHT);
     v_ticks = xv_create(panel_group[COLOR_PANEL], PANEL_MESSAGE,
 			PANEL_LABEL_IMAGE, val_image,
 			NULL);

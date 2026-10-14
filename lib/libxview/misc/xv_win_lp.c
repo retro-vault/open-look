@@ -175,13 +175,14 @@ printf("save_loop_frame = %lx\n", (unsigned long)save_loop_frame);
     /*
      * Unset window_loop flag for frame and its subwindows
      */
-if (--count)
-    if (window_set_tree_flag(frame, 0, FALSE, FALSE) != XV_OK)  {
+    if (--count) {
+	if (window_set_tree_flag(frame, 0, FALSE, FALSE) != XV_OK) {
         xv_error(frame,
                 ERROR_STRING,
                     XV_MSG("xv_window_loop : Attempt to unblock input to windows failed (2)"),
                 0);
         return(XV_ERROR);
+	}
     }
 
     /*

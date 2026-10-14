@@ -71,8 +71,33 @@
 
 static Notify_value ttysw_pty_output_pending(Tty tty_public, int pty);
 static Notify_value ttysw_prioritizer(Tty tty_public, register int nfd, fd_set *ibits_ptr, fd_set *obits_ptr, fd_set *ebits_ptr, int nsig, int *sigbits_ptr, register int *auto_sigbits_ptr, int *event_count_ptr, Notify_event *events, Notify_arg *args);
+static void ttysw_text_dimensions(Ttysw_view_handle ttysw_view,
+	int *columns, int *rows);
 
 Notify_func     ttysw_cached_pri;	/* Default prioritizer */
+
+/*
+ * A termsw view shares its public object with a textsw and a ttysw.  TTY
+ * callbacks run while parent_data.private_data selects the tty private
+ * object, so temporarily select the saved text private object before using
+ * textsw accessors.
+ */
+static void
+ttysw_text_dimensions(ttysw_view, columns, rows)
+    Ttysw_view_handle ttysw_view;
+    int              *columns;
+    int              *rows;
+{
+    Xv_termsw_view   *view =
+	(Xv_termsw_view *) TTY_VIEW_PUBLIC(ttysw_view);
+    Xv_opaque         saved_private = view->parent_data.private_data;
+    Textsw            text_view = (Textsw) view;
+
+    view->parent_data.private_data = view->private_text;
+    *columns = textsw_screen_column_count(text_view);
+    *rows = textsw_screen_line_count(text_view);
+    view->parent_data.private_data = saved_private;
+}
 
 
 /*
@@ -476,8 +501,11 @@ ttysw_resize(ttysw_view)
     pagemode = ttysw_getopt(ttysw, TTYOPT_PAGEMODE);
     (void) ttysw_setopt(ttysw, TTYOPT_PAGEMODE, 0);
     if (ttysw_getopt(ttysw, TTYOPT_TEXT)) {
-	(void) xv_tty_new_size(ttysw, textsw_screen_column_count(TTY_PUBLIC(ttysw)),
-			       textsw_screen_line_count(TTY_PUBLIC(ttysw)));
+	int columns;
+	int rows;
+
+	ttysw_text_dimensions(ttysw_view, &columns, &rows);
+	(void) xv_tty_new_size(ttysw, columns, rows);
     } else {
 	/* Have character image update self */
 	csr_resize(ttysw_view);

@@ -1073,7 +1073,7 @@ record_deleted_pieces(esh, pieces, first, last_plus_one, next)
     int             dummy;
     register Piece  current, stop_plus_one;
     register int    result = 0;
-    register Es_index replace_result;
+    register Es_index replace_result = ES_CANNOT_SET;
 
     stop_plus_one = &pieces[last_plus_one];
     for (current = &pieces[first]; current < stop_plus_one; current++) {

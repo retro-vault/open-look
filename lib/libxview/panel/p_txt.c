@@ -1073,7 +1073,7 @@ text_begin_preview(item_public, event)
     Cursor_drag_type cursor_drag_type;	/* CURSOR_MOVE or CURSOR_DUPLICATE */
     Text_info	   *dp = TEXT_PRIVATE(item_public);
     int             dragging;
-    char	   *error_msg;
+    char	   *error_msg = NULL;
     int		    event_offset;
     int             ext_caret_offset;	/* new caret offset when adjusting to
 					 * the right */
@@ -2347,7 +2347,7 @@ paint_caret(ip, on)
     int		    max_x;
     Rect           *r;
     int             painted_caret_offset;
-    Xv_Window       pw;
+    Xv_Window       pw = XV_NULL;
     XID		    pw_xid;
     char	    str[2];
     int    	    x;
@@ -2463,7 +2463,7 @@ paint_value(ip, highlight)
     register Panel_info *panel = ip->panel;
     int             i, j, len;
     Xv_Drawable_info *info;
-    Xv_Window       pw;
+    Xv_Window       pw = XV_NULL;
     CHAR           *str;
     int		    x;
     int		    y;
@@ -2535,12 +2535,14 @@ paint_value(ip, highlight)
 	    int             length, i;
 	    length = dp->last_char - dp->first_char + 2;
 	    buf = (CHAR *) xv_malloc(length*sizeof(CHAR));
-	    for (j = 0, i = dp->first_char; i <= dp->last_char; i++, j++)
+	    for (j = 0, i = dp->first_char; i <= dp->last_char; i++, j++) {
 #ifdef OW_I18N
-		buf[j] = dp->mask_wc; buf[length - 1] = '\0';
+		buf[j] = dp->mask_wc;
 #else
-		buf[j] = dp->mask; buf[length - 1] = '\0';
+		buf[j] = dp->mask;
 #endif /* OW_I18N */
+	    }
+	    buf[length - 1] = '\0';
 
 	    PANEL_EACH_PAINT_WINDOW(panel, pw)
 #ifdef OW_I18N
@@ -2600,7 +2602,7 @@ paint_value(ip, highlight)
     if (panel->kbd_focus_item == ip)
 	paint_caret(ip, TRUE);
 
-    if (inactive(ip)) {
+    if (inactive(ip) && pw != XV_NULL) {
 	Xv_Screen      screen;
 	GC             *gc_list;
 	DRAWABLE_INFO_MACRO(pw, info);
@@ -3001,6 +3003,9 @@ text_add_selection(panel, ip)
 	    diff_first = dp->seln_first[PANEL_SEL_PRIMARY];
 	    diff_last = primary_seln_first - 1;
 	}
+	} else {
+	paint_value(ip, PV_HIGHLIGHT);
+	return;
     }
     /* Highlight characters bounded by diff_first and diff_last */
     if (diff_first >= dp->first_char) {

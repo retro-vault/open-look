@@ -398,6 +398,7 @@ frame_adjust_rect(frame_public, child, is_subframe, r)
 	frame_grant_extend_to_edge(child, FALSE);
 	frame_grant_extend_to_edge(child, TRUE);
     }
+	return XV_OK;
 }
 
 #ifdef OW_I18N

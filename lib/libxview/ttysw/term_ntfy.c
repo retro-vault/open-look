@@ -348,8 +348,8 @@ ttysw_text_event(textsw, event, arg, type)
 	 * at the TERMCAP.  (ttysw_be_ttysw() is too late, because vi, etc.
 	 * will have already read the size of the terminal.)
 	 */
-	(void) xv_tty_new_size(ttysw, textsw_screen_column_count(TERMSW_PUBLIC(termsw)),
-			   textsw_screen_line_count(TERMSW_PUBLIC(termsw)));
+	(void) xv_tty_new_size(ttysw, textsw_screen_column_count(textsw),
+			   textsw_screen_line_count(textsw));
 	break;
       case KBD_DONE:
       case LOC_MOVE:
@@ -499,14 +499,14 @@ ttysw_post_error(public_folio_or_view, msg1, msg2)
     Frame	    frame;
     Xv_Notice	tty_notice;
     char            buf[1000];
-    int             size_to_use = sizeof(buf);
+    size_t          size_to_use = sizeof(buf);
 
     buf[0] = '\0';
-    (void) strncat(buf, msg1, size_to_use);
+    (void) strncat(buf, msg1, size_to_use - 1);
     if (msg2) {
 	int             len = strlen(buf);
-	if (len < size_to_use) {
-	    (void) strncat(buf, msg2, size_to_use - len);
+	if ((size_t) len < size_to_use - 1) {
+	    (void) strncat(buf, msg2, size_to_use - (size_t) len - 1);
 	}
     }
     frame = (Frame)xv_get(public_folio_or_view, WIN_FRAME),
@@ -670,7 +670,7 @@ ttysw_cooked_echo_cmd(ttysw_view, buf, buflen)
 						   TEXTSW_INSERTION_POINT_I18N);
     int             length = (Textsw_index) xv_get(textsw, TEXTSW_LENGTH_I18N);
     Textsw_index    insert_at;
-    Textsw_mark     insert_mark;
+    Textsw_mark     insert_mark = TEXTSW_NULL_MARK;
 
     if (termsw->append_only_log) {
 	textsw_remove_mark(textsw, termsw->read_only_mark);

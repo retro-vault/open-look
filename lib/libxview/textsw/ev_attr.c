@@ -198,7 +198,7 @@ ev_set_internal(view, chain, attrs)
     Es_index        display_start = ES_CANNOT_SET;
     Ev_chain_pd_handle chain_private = EV_CHAIN_PRIVATE(chain);
     register int    temp;
-    register Ev_pd_handle private;
+    register Ev_pd_handle private = (Ev_pd_handle) 0;
     register Ev_handle next;
 
     status = EV_STATUS_OKAY;

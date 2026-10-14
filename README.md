@@ -16,6 +16,8 @@ This repository is the initial release preview of the full package:
 Source tree:
 
 - `src/olwm`: Open Look window manager sources (`olwm`)
+- `apps`: accessories (`cmdtool`, `textedit`, `clock`, `props`,
+  `xtoolplaces`, `hello`, and `olwmslave`)
 - `lib/olgx`: OPEN LOOK graphics library (`libolgx`)
 - `lib/libxview`: XView toolkit library (`libxview`)
 - `include/olgx`, `include/pixrect`, `include/xview`,
@@ -30,7 +32,7 @@ Build/staging layout:
 All build intermediates stay in `build/`.
 Final staged output is assembled under `bin/` as an `OPENWINHOME` tree.
 
-- `bin/bin`: executables (currently `olwm`)
+- `bin/bin`: window manager and accessory executables
 - `bin/lib`: shared/static libs and runtime menu/config files
 - `bin/include`: headers plus runtime `images` and `bitmaps`
 - `bin/share/man`: man pages
@@ -50,6 +52,7 @@ Requirements:
   live under `/usr/include/tirpc` and CMake adds that include path.
 - Boost
 - Standard C math library (`libm`, usually provided by libc toolchain)
+- Terminfo compiler (`tic`, provided by ncurses)
 
 Recommended package install commands:
 
@@ -57,19 +60,19 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev libboost-dev
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev
 ```
 
 Fedora/RHEL:
 
 ```bash
-sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils boost-devel
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils ncurses boost-devel
 ```
 
 Arch Linux:
 
 ```bash
-sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir boost-libs
+sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir ncurses boost-libs
 ```
 
 
@@ -104,11 +107,25 @@ This sets:
 ### 2) System install with CMake
 
 ```bash
-cmake --install build --prefix /usr/local
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr/local
+cmake --build build -j"$(nproc)"
+sudo cmake --install build
 sudo ldconfig
 ```
 
-If you use a different prefix, set `OPENWINHOME` to that prefix when running.
+Set `CMAKE_INSTALL_PREFIX` when configuring to choose another prefix. Programs
+use this prefix when `OPENWINHOME` is unset. `olwm` also exports that default
+to menu-launched applications, including in display-manager sessions.
+If you override the prefix only with `cmake --install --prefix`, set
+`OPENWINHOME` to that prefix when running.
+The window manager and all accessories are installed in `<prefix>/bin`.
+
+`cmdtool` uses `TERM=sun-cmd`. The build compiles its terminal description
+into `share/terminfo` in both the staged tree and the installed prefix.
+`cmdtool` adds `$OPENWINHOME/share/terminfo` to `TERMINFO_DIRS` for its child
+processes, preserving existing search paths and the system defaults. This
+allows Vim, `clear`, and other terminfo applications to recognize `sun-cmd`
+even when the host's terminal database omits it.
 
 ## Font installation (important)
 
@@ -154,7 +171,32 @@ The runtime package expects these assets to exist under `OPENWINHOME`:
 For staged local runs (`OPENWINHOME=<repo>/bin`), these are already in place
 after build.
 
+The default workspace menu search checks `$HOME/.openwin-menu`, then
+`/etc/X11/olwm/openwin-menu`, then `$OPENWINHOME/lib/openwin-menu`
+(with additional locale-specific paths in internationalized builds).
+Installed programs do not require the source tree. Source paths may still
+appear in debugging information; these are separate from runtime lookups.
+On compilers supporting `-fmacro-prefix-map`, assertion messages use relative
+source filenames even in Debug builds. Full paths remain in debug information
+for IDE source debugging. `cmake --install build --strip` removes debug
+information from installed binaries while keeping the local build debuggable.
+Absolute paths in `build/CMakeCache.txt` are normal build metadata and are
+not installed runtime configuration.
+
 ## Running from the staged tree
+
+In VS Code, select **Debug workspace (OpenLook)** and press F5 to build
+the package and debug `olwm` in a nested Xephyr session on `:2`.
+The Programs menu launches Command Tool, Clock, Text Editor, Properties,
+and Hello. The Workspace menu also offers Refresh, Restart WM, Reread Menu
+File, Save Window Layout (`xtoolplaces`, writing to `~/.xtoolplaces`), Exit WM,
+and Exit, with separators between groups. `olwmslave` is a window-manager
+helper and has no standalone menu entry.
+**Debug textedit (OpenLook)** starts the editor automatically.
+
+Compiled window-manager font defaults match `config/Xdefaults`: medium
+Helvetica for menu items and bold Helvetica for titles. User X resources
+can override these, and the fonts must be available in the X server font path.
 
 Use the generated helper so runtime lookup paths point to `bin/`:
 
@@ -177,6 +219,16 @@ DISPLAY=:2 olwm
 ```
 
 ## Notes
+
+`props` supports its colour palette on 8-bit PseudoColor and 16/24-bit
+TrueColor displays. Grayscale displays omit the Colours category.
+For automated palette, preview, Apply/Reset, and grayscale checks (requires
+Xvfb):
+
+```bash
+cmake --build build --target props_color_test
+python3 tests/run-props-colors.py
+```
 
 - Linux is the target platform in this port.
 - Legacy non-Linux path branches have been reduced where possible.

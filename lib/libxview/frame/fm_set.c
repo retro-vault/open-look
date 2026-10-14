@@ -1664,5 +1664,6 @@ Xv_opaque		data;
     xv_set(server_public, SERVER_ADD_ACCELERATOR_MAP, 
                         keysym, state,
                         NULL);
+	return XV_OK;
 }
 /* ACC_XVIEW */

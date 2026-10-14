@@ -1111,6 +1111,8 @@ Client	*cli;
 	case IconicState:
 		win = cli->iconwin->core.self;
 		break;
+	default:
+		return;
 	}
 
 	xwc.stack_mode = Opposite;
@@ -1200,6 +1202,7 @@ ClientTogglePin(cli)
 
     pin = (WinPushPin *)cli->framewin->winDeco;
     PushPinTogglePinState(cli->dpy,pin,True);
+	return True;
 }
 
 
@@ -1236,6 +1239,8 @@ ClientInBoxClosure *close;
 		break;
 
 	case InvisibleState:
+		return NULL;
+	default:
 		return NULL;
 	}
 

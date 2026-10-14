@@ -286,7 +286,7 @@ Attr_avlist	avlist;
     register unsigned	cardinality;
     char		*attr_name;
     Attr_attribute	attr;
-    XID			db;
+    XID			db = 0;
     XrmQuarkList	instance_qlist = NULL;
     Xv_opaque		server;
     Xv_opaque		temp;

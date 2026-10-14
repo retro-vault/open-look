@@ -107,6 +107,7 @@ WinGeneric *winInfo;
 Bool focus;
 {
 	/* REMIND: change background pixel of pane window */
+    return 0;
 }
 
 /*
@@ -127,6 +128,7 @@ WinIconPane *winInfo;
 				  winInfo->core.self);
 	}
 	MemFree(winInfo);
+    return 0;
 }
 
 /*
@@ -150,6 +152,7 @@ WinIconPane *winInfo;
                         winInfo->core.dirtyconfig&(CWX|CWY|CWWidth|CWHeight), &xwc);
                 winInfo->core.dirtyconfig &= ~(CWX|CWY|CWWidth|CWHeight);
         }
+    return 0;
 }
 
 
@@ -248,6 +251,7 @@ int w, h;
 		win->core.height = h;
 		win->core.dirtyconfig |= CWHeight;
 	}
+    return 0;
 }
 
 static int
@@ -258,6 +262,7 @@ WinIconPane	*winInfo;
 {
     if (event->xany.type == EnterNotify)
         ColorWindowCrossing(dpy, event, winInfo);
+    return 0;
 }
 
 
@@ -497,4 +502,3 @@ IconPaneSetMask(dpy,winInfo,mask)
 
 	winInfo->iconMask = mask;
 }
-

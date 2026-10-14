@@ -157,7 +157,7 @@ Window win;
 int x, y, state;
 {
 	XTextItem item;
-	int top_color, bottom_color, fill_color;
+	int top_color, bottom_color, fill_color = OLGX_BG1;
 	char string[2];
 
 	item.nchars = 1;

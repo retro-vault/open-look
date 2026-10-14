@@ -54,8 +54,10 @@ xv_initrandom(r)
     int r;
 {
     register int	i;
-    for (i = 0; i != P; i++)
+    for (i = 0; i != P; i++) {
 	Table[i] ^= r;
+	}
+	return 0;
 }
 
 int

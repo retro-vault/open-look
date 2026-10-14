@@ -1741,8 +1741,13 @@ layout_choices(ip)
     ip->value_rect.r_width = 0;
     ip->value_rect.r_height = 0;
 
-    if (dp->display_level == PANEL_NONE)
+    if (dp->display_level == PANEL_NONE) {
 	return;
+	}
+	if (dp->last < 0 || nrows <= 0 || ncols <= 0) {
+	return;
+	}
+	rect = &dp->choice_rects[0];
 
     top = ip->value_rect.r_top;
     left = ip->value_rect.r_left;
@@ -1910,9 +1915,9 @@ modify_choice(ip, type, which_choice, choice_info)
     size = panel_make_image(ip->value_font, &dp->choices[which_choice],
 			    type, choice_info, choice_is_bold, FALSE);
     if (dp->display_level == PANEL_NONE) {
-	dp->choice_rects[i].r_width =
+	dp->choice_rects[which_choice].r_width =
 	    Abbrev_MenuButton_Width(ip->value_ginfo);
-	dp->choice_rects[i].r_height =
+	dp->choice_rects[which_choice].r_height =
 	    Abbrev_MenuButton_Height(ip->value_ginfo);
     } else {
 	dp->choice_rects[which_choice].r_width = size.x;
@@ -2030,12 +2035,12 @@ paint_choice(panel, ip, dp, which_choice, selected)
     Display        *display;
     Panel_image    *image;
     Xv_Drawable_info *info;
-    Xv_opaque	    label;
+    Xv_opaque	    label = XV_NULL;
     int             left;
     Pixlabel	    pixlabel;
     Xv_Window       pw;
     Rect           *rect;
-    int		    save_black;
+    int		    save_black = 0;
     int		    state;
     int             top;
     Drawable        xid;

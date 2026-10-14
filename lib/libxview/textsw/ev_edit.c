@@ -491,6 +491,7 @@ ev_make_visible(view, position, lower_context, auto_scroll_by, delta)
     switch (ev_xy_in_view(view, position, &lt_index, &rect)) {
       case EV_XY_BELOW:
 	/* BUG ALERT: The following heuristic must be replaced! */
+	old_top = line_seq[0].pos;
 #ifdef SCROLL_DEBUG
         printf("delta=%d,pos=%d,lineseqpos=%d,last+one=%d,lcontext=%d,autoscrby=%d\n",
                delta, position, line_seq[top_of_lc].pos,
@@ -502,7 +503,6 @@ ev_make_visible(view, position, lower_context, auto_scroll_by, delta)
 	if (delta < 50 * view->line_table.last_plus_one
 	    	&& lower_context < view->line_table.last_plus_one - 1
 	    	&& auto_scroll_by < view->line_table.last_plus_one - 1) {
-	    old_top = line_seq[0].pos;
 #ifdef SCROLL_DEBUG
 	printf("ev_scroll_lines(), MAX()=%d, total=%d\n", 
 	      MAX(1, MAX(lower_context, auto_scroll_by) + (delta / 50)),

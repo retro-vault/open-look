@@ -88,6 +88,7 @@ WinPushPin	*winInfo;
 	    currentAction = a;
 	    break;
 	}
+    return 0;
 }
 
 /* 
@@ -206,6 +207,7 @@ WinPushPin *winInfo;
 	}
 	olgx_draw_pushpin(gis, winInfo->core.self, 0, 0,
               	  ((winInfo->pushpinin) ? OLGX_PUSHPIN_IN : OLGX_PUSHPIN_OUT));
+    return 0;
 }
 
 
@@ -222,6 +224,7 @@ WinPushPin *winInfo;
 	ScreenDestroyWindow(winInfo->core.client->scrInfo, winInfo->core.self);
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 /* 
@@ -234,6 +237,7 @@ WinPushPin *winInfo;
 Bool selected;
 {
         (WinFunc(winInfo,core.drawfunc))(dpy, winInfo);
+    return 0;
 }
 
 /*

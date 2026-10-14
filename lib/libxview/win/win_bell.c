@@ -83,14 +83,12 @@ win_blocking_wait(wait_tv)
     struct timeval  wait_tv;
 {
     struct timeval  start_tv, now_tv, waited_tv;
-    fd_set		bits;
-
     /* Get starting time */
     (void) gettimeofday(&start_tv, (struct timezone *) 0);
     /* Wait */
     while (timerisset(&wait_tv)) {
 	/* Wait for awhile in select */
-	(void) select(0, &bits, &bits, &bits, &wait_tv);
+	(void) select(0, NULL, NULL, NULL, &wait_tv);
 	/* Get current time */
 	(void) gettimeofday(&now_tv, (struct timezone *) 0);
 	/* Compute how long waited */

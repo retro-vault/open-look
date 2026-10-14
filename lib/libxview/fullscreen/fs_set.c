@@ -35,7 +35,7 @@ fullscreen_set_avlist(fullscreen_public, avlist)
     Xv_Cursor       cursor = fullscreen->cursor;
     int             saw_win_attr = FALSE;
     int             new_im = FALSE;
-    int		    saw_allow_events_attr = FALSE, allow_mode;
+    int		    saw_allow_events_attr = FALSE, allow_mode = AsyncBoth;
     int             saw_sync_now_attr = FALSE;
     int             sync_now = FALSE;	/* set only, create taken already */
     int             allow_sync_event = FALSE;	/* set takes care of it */
@@ -268,7 +268,7 @@ fullscreen_set_avlist(fullscreen_public, avlist)
     if (saw_allow_events_attr) {
 	fullscreen_allow_events(display, allow_mode);
     }
-    if (allow_sync_event)
+    if (allow_sync_event) {
 	if (fullscreen->sync_mode_now == TRUE) {
 	    if (fullscreen->grab_pointer && fullscreen->grab_kbd) {
 	        fullscreen_allow_events(display, SyncBoth);
@@ -283,6 +283,7 @@ fullscreen_set_avlist(fullscreen_public, avlist)
 		     ERROR_PKG, FULLSCREEN,
 		     0);
 	}
+    }
 
     return ((Xv_opaque) XV_OK);
 }

@@ -141,6 +141,7 @@ selection_init_agent(server, screen)
 	exit(1);
     }
     (void) xv_set(server, XV_KEY_DATA, (Attr_attribute)SELN_AGENT_INFO, agent, NULL);
+	return XV_OK;
 }
 
 /*

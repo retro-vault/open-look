@@ -93,7 +93,7 @@ va_dcl
                     argc = 0;
     char          **argv = (char **)NULL,
                    *server_name = (char *) NULL;
-    Xv_object	    server;
+    Xv_object	    server = xv_default_server;
     extern int	    _Xdebug;
 
     /* can only be called once */

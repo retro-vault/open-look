@@ -34,9 +34,9 @@ panel_normalize_scroll(sb, offset, motion, vs)
     Xv_Window       view;
     Xv_Window       pw;
     int             line_ht;
-    int             align_to_max, scrolling_up, vertical;
+    int             align_to_max = FALSE, scrolling_up = FALSE, vertical;
     Item_info      *low_ip, *high_ip;
-    int offset2;
+    int offset2 = (int)offset, candidate;
 
     vertical = (Scrollbar_setting) xv_get(sb, SCROLLBAR_DIRECTION)
 	== SCROLLBAR_VERTICAL;
@@ -88,17 +88,19 @@ panel_normalize_scroll(sb, offset, motion, vs)
 	    (void) top_pair(panel, offset, &low_ip, &high_ip);
 	    if (scrolling_up && high_ip)
 		offset = high_ip->rect.r_top + high_ip->rect.r_height + 1;
-	    else if (!scrolling_up && low_ip)
-		offset = low_ip->rect.r_top - 1;
+	    else if (!scrolling_up && low_ip) {
+		candidate = low_ip->rect.r_top - 1;
+		offset = candidate < 0 ? 0 : (unsigned long)candidate;
+	    }
 	} else {
 	    (void) left_pair(panel, offset, &low_ip, &high_ip);
 	    if (scrolling_up && high_ip)
 		offset = high_ip->rect.r_left + high_ip->rect.r_width + 1;
-	    else if (!scrolling_up && low_ip)
-		offset = low_ip->rect.r_left - 1;
+	    else if (!scrolling_up && low_ip) {
+		candidate = low_ip->rect.r_left - 1;
+		offset = candidate < 0 ? 0 : (unsigned long)candidate;
+	    }
 	}
-	if (offset < 0)		/* be sure we didn't go negative */
-	    offset = 0;
     }
     if (vertical) {
 	if (align_to_max)
@@ -181,7 +183,7 @@ normalize_top(panel, offset)
 {
     Item_info      *low_ip, *high_ip;
     register int    top;
-    int             intersects;
+    int             intersects = FALSE;
 
     intersects = top_pair(panel, *offset, &low_ip, &high_ip);
 
@@ -333,7 +335,7 @@ normalize_right(panel, pw, scrolling_up, offset)
     register int    high_right = panel_width(panel);
     register int    left, right;
     int             target = *offset + panel_viewable_width(panel, pw);
-    int             intersects;
+    int             intersects = FALSE;
 
     for (ip = panel->items; ip; ip = ip->next) {
 	if (!hidden(ip)) {

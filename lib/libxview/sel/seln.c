@@ -145,7 +145,7 @@ selection_filename()
     static char homename[MAXNAMLEN];
 #endif
 
-    if ((name = getenv("SELECTION_FILE")) == NULL)
+    if ((name = getenv("SELECTION_FILE")) == NULL) {
 #ifdef XVIEW_USE_INSECURE_TMPFILES
 	name = "/tmp/winselection";
 #else
@@ -154,5 +154,6 @@ selection_filename()
 	}
 	name = homename;
 #endif
+    }
     return (name);
 }

@@ -20,6 +20,8 @@
 #ifdef HAVE_TSEARCH
 #include <search.h>
 #endif
+#include <limits.h>
+#include <stdint.h>
 #include <xview_private/portable.h>
 
 #ifdef HAVE_TSEARCH
@@ -39,17 +41,20 @@ static void **ndet_root = &ndet_rootv;
 static int ndet_compar( key1, key2 )
    const void *key1, *key2;
 {
-   u_int key1a, key2a, tmp, tmp1;
+   const unsigned int key_bits = sizeof(uintptr_t) * CHAR_BIT;
+   uintptr_t key1a, key2a;
 
-   key1a = (u_int)(((NTFY_CLIENT*)key1)->nclient);
-   key2a = (u_int)(((NTFY_CLIENT*)key2)->nclient);
-   tmp = key1a >> 16;
-   tmp1 = key1a << 21;
-   key1a = tmp1 | ((key1a << 5) & 0x001f0000) | tmp;
-   tmp = key2a >> 16;
-   tmp1 = key2a << 21;
-   key2a = tmp1 | ((key2a << 5) & 0x001f0000) | tmp;
-#if 1
+   /*
+    * Rotate the complete client address to keep sequential allocations
+    * distributed through the search tree.  The historical code performed
+    * this permutation in u_int, which made distinct 64-bit pointers with
+    * equal low words compare as the same notifier client.
+    */
+   key1a = (uintptr_t)(((NTFY_CLIENT*)key1)->nclient);
+   key2a = (uintptr_t)(((NTFY_CLIENT*)key2)->nclient);
+   key1a = (key1a << 21) | (key1a >> (key_bits - 21));
+   key2a = (key2a << 21) | (key2a >> (key_bits - 21));
+
    /* OUCH, trying to store the result of the subtraction of two unsigned
     * ints (which potentially can use the whole range of an unsigned int, due
     * to the bit-shifting above) in a signed int is not a very clever idea.
@@ -62,9 +67,6 @@ static int ndet_compar( key1, key2 )
    return  (key1a < key2a) ? -1 :
           ((key1a > key2a) ?  1 :
                               0);
-#else
-   return key1a - key2a;
-#endif
 }
 #endif /* HAVE_TSEARCH */
 

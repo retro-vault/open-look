@@ -203,6 +203,7 @@ textsw_view_chain_notify(folio, attributes)
 	    break;
 	}
     }
+	return 0;
 }
 
 static int
@@ -430,6 +431,7 @@ textsw_read_defaults(textsw, defaults)
     *defaults++ = textsw_get_from_defaults(attr);
 #endif
     *defaults = 0;
+	return 0;
 }
 
 #define needctrlmask(c)		((0<=(c) && (c)<=31) || (128<=(c) && (c)<=159))

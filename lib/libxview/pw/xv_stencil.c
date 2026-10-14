@@ -138,5 +138,7 @@ xv_stencil(window, dx, dy, width, height, op, stpr, stx, sty, spr, sx, sy)
 		 ERROR_STRING, 
 		 XV_MSG("xv_stencil: xv_stencil_internal failed"),
 		 NULL);
+	return XV_ERROR;
     }
+	return XV_OK;
 }

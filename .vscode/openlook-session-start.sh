@@ -107,6 +107,11 @@ if [ -f "$XDEFAULTS_FILE" ] && command -v xrdb >/dev/null 2>&1; then
   DISPLAY="$DISPLAY_NUM" xrdb -merge "$XDEFAULTS_FILE" || true
 fi
 
+if [ "${OPENLOOK_SESSION_NO_WM:-0}" = "1" ]; then
+  echo "OpenLook display ready on DISPLAY=$DISPLAY_NUM; debugger will start olwm"
+  exit 0
+fi
+
 if [ ! -f "$WM_PID_FILE" ]; then
   (
     OPENWINHOME="$ROOT_DIR/bin" \

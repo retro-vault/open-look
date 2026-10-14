@@ -8,4 +8,14 @@
 
 "Programs" 	DEFAULT	INCLUDE	openwin-menu-programs
 
+SEPARATOR
+
+"Refresh"		REFRESH
+"Restart WM"		RESTART
+"Reread Menu File"	REREAD_MENU_FILE
+"Save Window Layout..."	exec "$OPENWINHOME/bin/xtoolplaces" -f "$HOME/.xtoolplaces"
+
+SEPARATOR
+
+"Exit WM"		WMEXIT
 "Exit..."		EXIT

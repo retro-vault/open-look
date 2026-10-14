@@ -836,5 +836,6 @@ int		screen;
 NoticeBox	*noticeBox;
 {
 	UseNoticeBoxSync(dpy,screen,noticeBox,NULL);
+	return 0;
 }
 	

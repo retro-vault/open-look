@@ -500,6 +500,7 @@ eventUnmapNotify(dpy, pEvent, winInfo)
 	if (wg != NULL) {
 		StateWithdrawn(wg->core.client,TimeFresh());
 	}
+    return 0;
 }
 
 /*
@@ -520,6 +521,7 @@ destroyRoot(dpy, winInfo)
 	/* free our data and throw away window */
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 /*

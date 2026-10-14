@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <limits.h>
 #ifdef SVR4
 #include <sys/types.h>
 #include <stdlib.h>
@@ -790,7 +791,8 @@ adjust_rect_obj(num_elems, this_sw, rect_obj_list, parent_width, parent_height)
     Window_rescale_rect_obj *rect_obj_list;
     int             parent_width, parent_height, this_sw, num_elems;
 {
-    int             sw_left_of = 0, left_coord, sw_above = 0, top_coord;
+    int             sw_left_of = -1, left_coord = INT_MIN;
+    int             sw_above = -1, top_coord = INT_MIN;
     Window_rescale_rect_obj *sw_to_adjust, *temp_sw;
     int             avw, avh, another_sw;
     int             nothing_right_of = TRUE, nothing_below = TRUE;
@@ -836,14 +838,14 @@ adjust_rect_obj(num_elems, this_sw, rect_obj_list, parent_width, parent_height)
 	     * if there is a window above this_sw that is below all other
 	     * windows above it
 	     */
-	    if (sw_above) {
+	    if (sw_above >= 0) {
 		sw_to_adjust->new_rect.r_top +=
 		    rect_obj_list[sw_above].y_change + rect_obj_list[sw_above].height_change;
 		sw_to_adjust->y_change +=
 		    rect_obj_list[sw_above].y_change + rect_obj_list[sw_above].height_change;
 	    }
 	    /* if there is a window that is right most to the left of this_sw */
-	    if (sw_left_of) {
+	    if (sw_left_of >= 0) {
 		sw_to_adjust->new_rect.r_left +=
 		    rect_obj_list[sw_left_of].x_change + rect_obj_list[sw_left_of].width_change;
 		sw_to_adjust->x_change +=
@@ -860,13 +862,13 @@ adjust_rect_obj(num_elems, this_sw, rect_obj_list, parent_width, parent_height)
 		}
 	    }
 	    if (nothing_below) {
-		avh = parent_width -
+		avh = parent_height -
 		    (sw_to_adjust->new_rect.r_top +
 		     sw_to_adjust->new_rect.r_height);
 
 		if (avh) {	/* give it whats left */
 		    sw_to_adjust->new_rect.r_height += avh;
-		    avh = parent_width;
+		    avh = parent_height;
 		}
 	    }
 	}			/* if (this_sw != another_sw) */

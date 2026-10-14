@@ -219,6 +219,7 @@ textsw_function_find(view, x, y)
 {
     textsw_begin_find(view);
     (void) textsw_end_find(view, 0, x, y);
+	return 0;
 }
 
 /*

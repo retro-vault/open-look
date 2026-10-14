@@ -204,7 +204,7 @@ do_replace_all_proc(view, do_replace_first, direction)
     int             start_checking = FALSE;	/* See if now is the time to
 						 * check for wrap point */
     Es_index        cur_pos, prev_pos, cur_mark_pos;
-    Ev_mark_object  mark;
+    Ev_mark_object  mark = (Ev_mark_object) 0;
     int             exit_loop = FALSE;
     int             first_time = TRUE, process_aborted;
     int             wrapping_off = (int) panel_get(search_panel_items[(int) WRAP_ITEM], PANEL_VALUE, NULL);

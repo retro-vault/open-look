@@ -195,7 +195,7 @@ panel_mltxt_set_avlist(item_public, avlist)
     Panel_info	   *panel = ip->panel;
     Xv_opaque       result;
     int		    rows;
-    Textsw_enum	    textsw_line_break_action;
+    Textsw_enum	    textsw_line_break_action = TEXTSW_WRAP_AT_WORD;
     Bool	    xv_end_create = FALSE;
 
     /*

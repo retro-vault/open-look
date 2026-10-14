@@ -65,7 +65,7 @@ xv_substrequal(s1, start1, s2, start2, n, case_matters)
     int             i;
 
     if ((s1 == NULL) || (s2 == NULL))
-	return ((n == 0 && s2 == s2) ? True : False);
+	return ((n == 0 && s1 == s2) ? True : False);
     for (i = 0; i < n; i++) {
 	char            c1, c2;
 	c1 = s1[start1 + i];

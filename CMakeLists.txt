@@ -8,6 +8,15 @@ endif()
 
 set(CMAKE_C_STANDARD 99)
 
+# Assertions use __FILE__ even after stripping. Keep those diagnostic paths
+# relative without remapping DWARF paths needed by local source debugging.
+include(CheckCCompilerFlag)
+check_c_compiler_flag("-fmacro-prefix-map=${CMAKE_SOURCE_DIR}=."
+    OPENLOOK_HAS_MACRO_PREFIX_MAP)
+if(OPENLOOK_HAS_MACRO_PREFIX_MAP)
+    add_compile_options("-fmacro-prefix-map=${CMAKE_SOURCE_DIR}=.")
+endif()
+
 # Keep all final build artifacts in <repo>/bin while object files and
 # intermediate state remain under the selected build tree (e.g. build/).
 set(OPENLOOK_STAGE_DIR "${CMAKE_SOURCE_DIR}/bin")
@@ -45,8 +54,9 @@ find_package(X11 REQUIRED)
 include_directories(${X11_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/resources)
 
-# Provide a deterministic fallback OPENWINHOME path in this staged tree.
-add_compile_definitions(OPENWINHOME_DEFAULT="${OPENWINHOME_STAGE_DIR}")
+# Installed programs must work after the source/staging tree is removed.
+# Local runs select the staged tree through use-openwinhome.sh instead.
+add_compile_definitions(OPENWINHOME_DEFAULT="${CMAKE_INSTALL_PREFIX}")
 
 # Convenience shell snippet for running from the staged OPENWINHOME tree.
 set(OPENWINHOME_ENV_SCRIPT "${OPENLOOK_STAGE_DIR}/use-openwinhome.sh")
@@ -63,7 +73,7 @@ file(WRITE "${OPENWINHOME_ENV_SCRIPT}"
 "else\n"
 "  export LD_LIBRARY_PATH=\"$OPENWINHOME/lib\"\n"
 "fi\n"
-"_owh_defaults=\"$OPENWINHOME/../config/Xdefaults\"\n"
+"_owh_defaults=\"$OPENWINHOME/lib/app-defaults/Olwm\"\n"
 "if [ -n \"$DISPLAY\" ] && [ -f \"$_owh_defaults\" ] && command -v xrdb >/dev/null 2>&1; then\n"
 "  xrdb -merge \"$_owh_defaults\"\n"
 "fi\n"
@@ -91,3 +101,4 @@ add_subdirectory(resources)
 add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(apps)
+add_subdirectory(tests EXCLUDE_FROM_ALL)

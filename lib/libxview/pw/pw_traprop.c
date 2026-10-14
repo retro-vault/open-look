@@ -25,4 +25,5 @@ pw_traprop(pw, dx, dy, trap, op, spr, sx, sy)
 	     ERROR_STRING, 
 	         XV_MSG("pw_traprop: not implemented"),
 	     NULL);
+	return PIX_ERR;
 }

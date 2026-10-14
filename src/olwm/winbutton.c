@@ -278,6 +278,7 @@ WinButton *winInfo;
 		   Abbrev_MenuButton_Height(gisNormal)-1);
     }
 
+    return 0;
 }
 
 
@@ -294,6 +295,7 @@ WinButton *winInfo;
 	ScreenDestroyWindow(winInfo->core.client->scrInfo, winInfo->core.self);
 	WIUninstallInfo(winInfo->core.self);
 	MemFree(winInfo);
+    return 0;
 }
 
 /* 
@@ -306,6 +308,7 @@ WinButton *winInfo;
 Bool selected;
 {
         (WinFunc(winInfo,core.drawfunc))(dpy, winInfo);
+    return 0;
 }
 
 /*

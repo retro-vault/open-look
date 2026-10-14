@@ -277,7 +277,7 @@ es_file_create(name, options, status)
     Es_status      *status;
 {
     Es_handle       esh = NEW(Es_object);
-    register Es_file_data private;
+    register Es_file_data private = (Es_file_data) 0;
     int             open_option;
     struct stat     buf;
     Es_status       dummy_status;

@@ -384,6 +384,7 @@ server_image_pf_text(rpr, op, font, string)
 		 XV_DEFAULT_FG_BG);
     XSetFont(display, gc, (Font)xv_get((Xv_opaque)font, XV_XID));
     XDrawImageString(display, xid, gc, rpr.pos.x, rpr.pos.y, string, strlen(string));
+	return 0;
 }
 
 

@@ -135,6 +135,7 @@ win_keymap_get_smask(win, code)
     Xv_object       win;
     unsigned short  code;
 {
+	return 0;
 }
 
 
@@ -206,6 +207,7 @@ win_keymap_map(win, event)
     Xv_object       win;
     Event          *event;
 {
+	return 0;
 }
 
 
@@ -216,12 +218,14 @@ int
 win_keymap_show_inputmask(m)
     Inputmask      *m;
 {
+	return 0;
 }
 
 int
 win_keymap_show_keymap(win)
     Xv_object       win;
 {
+	return 0;
 }
 
 

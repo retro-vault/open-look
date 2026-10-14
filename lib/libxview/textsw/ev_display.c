@@ -924,6 +924,7 @@ ev_scroll_lines(view, line_count, scroll_by_display_lines)
 	register int    i;
 	Es_index        pos, pos_to_remember;
 
+	span_result.first = ES_CANNOT_SET;
 	esbuf.esh = chain->esh;
 	esbuf.buf = buf;
 	esbuf.sizeof_buf = SIZEOF(buf);
@@ -951,7 +952,7 @@ ev_scroll_lines(view, line_count, scroll_by_display_lines)
 #define MAX_SUB_LINES 128 /* max sublines per a line */
                         struct ei_process_result lpo_res;
                         int count = 0;
-                        unsigned long tmp_pos[MAX_SUB_LINES];
+                        unsigned long tmp_pos[MAX_SUB_LINES + 1];
                         tmp_pos[0] = pos;
                         for (;;) {
                                 lpo_res = ev_line_lpo(view, tmp_pos[count]);

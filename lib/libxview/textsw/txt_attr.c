@@ -947,7 +947,9 @@ textsw_set_internal_tier2(textsw, view, attrs, is_folio, status_ptr,
                 textsw_implicit_commit(textsw);
 #endif
             SET_BOOL_FLAG(textsw->state, attrs[1], TXTSW_READ_ONLY_SW);
-            *read_only_changed = (read_only_start!=TXTSW_IS_READ_ONLY(textsw));            break;
+            *read_only_changed =
+		read_only_start != TXTSW_IS_READ_ONLY(textsw);
+	    break;
 
           case TEXTSW_CONFIRM_OVERWRITE:
             SET_BOOL_FLAG(textsw->state, attrs[1],
@@ -962,9 +964,12 @@ textsw_set_internal_tier2(textsw, view, attrs, is_folio, status_ptr,
 #else
             (void) textsw_replace(VIEW_REP_TO_ABS(view), 0,
 #endif
-                   TEXTSW_INFINITY, (char *)attrs[1], strlen((char *)attrs[1]));            if (!(textsw->state & TXTSW_INITIALIZED))
+                   TEXTSW_INFINITY, (char *)attrs[1],
+		   strlen((char *)attrs[1]));
+	    if (!(textsw->state & TXTSW_INITIALIZED)) {
                 SET_BOOL_FLAG(textsw->state, temp,
                               TXTSW_NO_AGAIN_RECORDING);
+	    }
             break;
 #ifdef OW_I18N
           case TEXTSW_CONTENTS_WCS:
@@ -973,9 +978,12 @@ textsw_set_internal_tier2(textsw, view, attrs, is_folio, status_ptr,
                 textsw->state |= TXTSW_NO_AGAIN_RECORDING;
             textsw_implicit_commit(textsw);
             (void) textsw_replace(VIEW_REP_TO_ABS(view), 0,
-                   TEXTSW_INFINITY, (CHAR *)attrs[1], STRLEN((CHAR *)attrs[1]));            if (!(textsw->state & TXTSW_INITIALIZED))
+                   TEXTSW_INFINITY, (CHAR *)attrs[1],
+		   STRLEN((CHAR *)attrs[1]));
+	    if (!(textsw->state & TXTSW_INITIALIZED)) {
                 SET_BOOL_FLAG(textsw->state, temp,
                               TXTSW_NO_AGAIN_RECORDING);
+	    }
             break;
 #endif /* OW_I18N */
 
@@ -1114,11 +1122,13 @@ textsw_view_cms_change(textsw, view)
     register Textsw_folio textsw;
     Textsw_view_handle view;
 {
+	int caret_was_on = textsw->caret_state & TXTSW_CARET_ON;
+
     ev_set(view->e_view, EV_NO_REPAINT_TIL_EVENT, FALSE, NULL);
     textsw_repaint(view);
     /* if caret was up and we took it down, put it back */
-    if ((textsw->caret_state & TXTSW_CARET_ON)
-	&& (textsw->caret_state & TXTSW_CARET_ON) == 0) {
+	if (caret_was_on &&
+	    (textsw->caret_state & TXTSW_CARET_ON) == 0) {
 	textsw_remove_timer(textsw);
 	textsw_timer_expired(textsw, 0);
     }
@@ -1193,9 +1203,10 @@ textsw_get_from_defaults(attribute)
 
 	    /* Text.d may have "" rather than NULL, so check for this case.  */
 #ifdef OW_I18N
-
 	    defaults_set_locale(NULL, XV_LC_BASIC_LOCALE);
+#endif /* OW_I18N */
 	    def_str = xv_font_monospace();
+#ifdef OW_I18N
 	    defaults_set_locale(NULL, NULL);
 #endif /* OW_I18N */
       	    font = (def_str && ((int)strlen(def_str) > 0))

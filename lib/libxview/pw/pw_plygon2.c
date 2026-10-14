@@ -33,7 +33,7 @@ pw_polygon_2(pw, dx, dy, nbds, npts, vlist, op, spr, sx, sy)
     short           i;
     short           depth;
     int             temp_total = 0;
-    Server_image    tile;
+    Server_image    tile = (Server_image)NULL;
     Pixmap          tile_id;
     XPoint         *points;
 
@@ -128,7 +128,8 @@ pw_polygon_2(pw, dx, dy, nbds, npts, vlist, op, spr, sx, sy)
 	temp_total += npts[i];
     }
     free(points);
-    if (spr && PR_NOT_SERVER_IMAGE(spr)) {
+    if (tile != (Server_image)NULL) {
 	xv_destroy(tile);
     }
+	return 0;
 }
