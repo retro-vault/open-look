@@ -91,6 +91,7 @@ static void	sendSyncSignal();
 static void	initWinClasses();
 static void	initSignalHandlers(void);
 static void	handleExitSignal(int signal_number);
+static void restore_window_layout(void);
 
 
 /*
@@ -351,6 +352,8 @@ olwm: Warning: '%s' is invalid locale for the LC_CTYPE category,\n\
 
 	/* Inform anyone who's waiting that we're ready. */
 	sendSyncSignal();
+
+        restore_window_layout();
 
 	EventLoop(DefDpy);
 	return ExitOLWM();
@@ -701,10 +704,54 @@ cleanup()
 }
 
 
+/* Run the saved shell script after X has processed WM initialization.
+ * The restart marker is tied to this PID, so clients starting another olwm
+ * do not accidentally inherit a request to skip their own layout.
+ */
+static void
+restore_window_layout(void)
+{
+    const char *restart_pid = getenv("OLWM_RESTART_PID");
+    char pid_string[32];
+    pid_t pid;
+
+    snprintf(pid_string, sizeof(pid_string), "%ld", (long)getpid());
+    if (restart_pid != NULL && strcmp(restart_pid, pid_string) == 0) {
+        unsetenv("OLWM_RESTART_PID");
+        return;
+    }
+    unsetenv("OLWM_RESTART_PID");
+    if (getenv("HOME") == NULL || !*getenv("HOME"))
+        return;
+
+    XSync(DefDpy, False);
+    pid = fork();
+    if (pid < 0) {
+        perror("olwm: restore window layout: fork");
+    } else if (pid == 0) {
+        close(ConnectionNumber(DefDpy));
+        setpgrp();
+        execl("/bin/sh", "sh", "-c",
+              "[ -f \"$HOME/.xtoolplaces\" ] && "
+              "[ -r \"$HOME/.xtoolplaces\" ] || exit 0; "
+              "PATH=\"$OPENWINHOME/bin:$PATH\"; export PATH; "
+              "exec /bin/sh \"$HOME/.xtoolplaces\"", (char *)NULL);
+        perror("olwm: restore window layout: exec");
+        _exit(1);
+    }
+}
+
 /* RestartOLWM -- clean up and then re-exec argv. */
 int
 RestartOLWM()
 {
+    char pid_string[32];
+
+    snprintf(pid_string, sizeof(pid_string), "%ld", (long)getpid());
+    if (setenv("OLWM_RESTART_PID", pid_string, 1) != 0) {
+        perror("olwm: restart marker");
+        return 1;
+    }
     cleanup();
     execvp(argVec[0], argVec);
     ErrorGeneral("cannot restart");

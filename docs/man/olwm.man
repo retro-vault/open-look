@@ -18,6 +18,12 @@ X11 system.  The only requirements for running
 .B olwm
 are that the server have the OPEN LOOK glyph and cursor fonts available.
 .\" ========================================================================
+.LP
+After initializing the desktop, olwm runs a readable
+.B ~/.xtoolplaces
+using /bin/sh to restore the window layout saved by xtoolplaces.
+The file need not be executable.  $OPENWINHOME/bin is prepended to PATH
+for the saved commands.  Restart WM does not run the file again.
 .SH OPTIONS
 .LP
 Most command-line options have counterparts in the resource database.  A 

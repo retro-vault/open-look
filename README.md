@@ -190,6 +190,10 @@ and Hello. The Workspace menu also offers Refresh, Restart WM, Reread Menu
 File, Save Window Layout (`xtoolplaces`, writing to `~/.xtoolplaces`), Exit WM,
 and Exit, with separators between groups. `olwmslave` is a window-manager
 helper and has no standalone menu entry.
+At desktop startup, `olwm` runs a readable `~/.xtoolplaces` with `/bin/sh`
+after initializing the window manager. Saved commands can find tools in
+`$OPENWINHOME/bin`, and the file does not need executable permission.
+Restart WM preserves the running tools without replaying the saved layout.
 **Debug textedit (OpenLook)** starts the editor automatically.
 
 Compiled window-manager font defaults match `config/Xdefaults`: medium
