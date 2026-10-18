@@ -1,0 +1,998 @@
+.\" Copyright (c) 1994 - Sun Microsystems, Inc.
+.TH filemgr 1 "2 December 1993"
+.IX "filemgr" "" "\f3filemgr\f1(1) \(em file management tool" ""
+.IX "OpenWindows" "file" "OpenWindows" "file management tool \(em \f3filemgr\f1(1)"
+.SH NAME
+filemgr \- a GUI-based file management application
+.SH SYNOPSIS
+.B filemgr
+[
+.B \-C
+] [
+.B \-a
+] [
+.B \-c
+] [
+.B \-d
+.I directory
+] [
+.B \-i
+.I secs
+] [
+.B \-M
+] [
+.B \-name
+.I app-name
+] [
+.B \-r
+] [
+.B \-v
+] [
+.B \-?
+]
+.SH DESCRIPTION
+.B filemgr
+is a file management program that lets you navigate through directories
+and manipulate files.
+.B filemgr
+lets you find, create, copy, move, link, open, and print files using a graphical
+user interface (GUI).  You can also change file properties, create new directories,
+and view multiple directories at the same time.
+.SH OPTIONS
+In addition to the generic tool arguments described in
+.BR xview (7),
+.B filemgr
+can accept the following options:
+.TP
+.B \-a
+This will force
+.B filemgr
+to check both folder and file modification
+times.  By default,
+.B filemgr
+only checks the folder modification times.
+Be careful, as this option will severely affect performance.
+.TP
+.B \-C
+This will start
+.B filemgr
+without using the Classing Engine to try to determine what each file type is.
+This means the only three types of file icons will be displayed: the generic
+document, folder and application icons.
+.TP
+.B \-c
+This will force
+.B filemgr
+to display file pane items by columns, rather
+than by rows.
+.TP
+.BI \-d " directory"
+This will start
+.B filemgr
+in the given \fIdirectory\fP.
+.TP
+.BI \-i " secs"
+This will set the timer to check on folder and/or file modification
+times every
+.I "secs"
+seconds.
+.TP
+.B \-M
+Just display using the foreground and background colors only, even on a color
+screen.
+.TP
+.BI \-name " app-name"
+This option instructs
+.B filemgr
+to use resources associated with \fIapp-name\fP in your
+.B $HOME/.desksetfdefaults
+file instead of using resources for
+.B filemgr.
+This lets you run multiple
+.B filemgrs
+at the same time with different attributes.  \fIapp-name\fP
+should not contain ``.'' or ``*'' characters.
+.TP
+.B \-r
+This will force
+.B filemgr
+to display file pane items by rows, rather
+than by columns (default).
+.TP
+.BR \-v ", " \-ver ", " \-version
+Any of these options will display the current version number of
+.BR filemgr .
+.TP
+.B \-?
+This will display a partial list of command line options which can be passed to
+.BR filemgr .
+For additional generic options which can be passed
+to
+.BR filemgr ,
+type "\f3man xview -?\fP".  Note that
+.BR csh (1)
+shell users will have to enter a backslash ("\f3\\\fP") in front of the "\f3?\fP"
+to avoid having their shell expand the regular expresion.
+.SH RESOURCES
+.PP
+On startup,
+.B filemgr
+will use the following X resources which are stored in
+.B $HOME/.desksetdefaults.
+Note these resource names will be prepended with
+.B deskset.filemgr.
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+applicationColor
+.TP
+.B Values:
+Color name string or hexadecimal color specification string
+.TP
+.B Description
+The color of the default application icon.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+autoShowCD
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+If set to true, when a CD is inserted, then filemgr will display it's
+contents in a new window.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+autoSortOnUpdate
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+If set to true, when a file is added or deleted in a directory being viewed by
+filemgr, the contents are automatically resorted (based on the current sort
+type). This means it is impossible to retain any positional information. This
+is similar to the way that previous versions of filemgr worked and may be the
+preference of some users.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+cacheSize
+.TP
+.B Values:
+0-100000000 (1500000)
+.TP
+.B Description
+Determines the limit (in bytes) for the garbage collection run by the
+.BR fmgc (1)
+program (started by
+.B filemgr
+).
+.B fmgc
+will continue to prune the \f3~/.fm\fP hierarchy until this limit is reached.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+cdromContentMatch
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+Determines whether the Classing Engine will do matching by contents for CDROM
+files. Matching by contents is a slow operation because of the speed of CDROM
+devices.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+classingEngineBufferSize
+.TP
+.B Values:
+0-32768 (512)
+.TP
+.B Description
+Denotes how many bytes are read from each file, and passed onto the Classing
+Engine to try to determine it's file type.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+confirmDelete
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When true, sends deleted files to the wastebasket.  Otherwise, files
+are deleted normally as if you had run a
+.BR rm (1)
+command.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+confirmDeleteFolder
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When true, the user will be prompted whenever they try to delete a folder (and
+therefore it's contents) to the Wastebasket. Setting this resource to false
+disables this prompt.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+confirmDestroyFolder
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When true, the user will be prompted whenever they try to destroy a folder
+(and therefore it's contents). This could be either the Destroy option from
+the Wastebasket, or if they have set their Edit menu item to destroy (from
+the general property panel). Setting this resource to false disables this
+prompt.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+confirmQuit
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When true, the user will be prompted when they select the "Quit File Manager"
+option from the File button menu, to ask if they really want to do this.
+Setting this resource to false disables this prompt.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+documentColor
+.TP
+.B Values:
+Color name string or hexadecimal color specification string
+.TP
+.B Description
+The color of the default application icon.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+fileCheckInterval
+.TP
+.B Values:
+0-9999 (5)
+.TP
+.B Description
+The amount of time (in seconds) between checks on the various monitored
+file systems to see if changes have occured.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+filenameNoChars
+.TP
+.B Values:
+0-255 (255)
+.TP
+.B Description
+The maximum number of characters to display in a filename.  Note this
+is based on the average width of characters, so when using proportional
+fonts the number of characters displayed will vary.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+filterScript
+.TP
+.B Values:
+regular expression (NULL)
+.TP
+.B Description
+A regular expression describing which files you wish to view.  The default
+is empty, which indicates all files should be displayed.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+floppyContentMatch
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+Determines whether the Classing Engine will do matching by contents for floppy
+disk files. Matching by contents is a slow operation because of the speed of
+floppy disk devices.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+folderColor
+.TP
+.B Values
+Color name string or hexadecimal color specification string
+.TP
+.B Description
+The color of the default folder icon.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+followSymbolicLinks
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+When false, filemgr doesn't follow symbolic links when changing directories.
+Note that prior to Solaris 2.3, the automounter used a symbolic link when
+automounting directories. Setting this resource to true will not correctly
+monitor such automounted directories.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+iconDirectionVertical
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+When false, displays files row-by-column.  Otherwise, displays files
+column-by-row.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+iconListStyle
+.TP
+.B Values:
+int (0)
+.TP
+.B Description
+Saves the state of the "List Options" toggles on the Customize View
+popup.  This is not very human readable and should be changed in the
+future.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+loadDirectoryState
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When false, directory state information for each directory will not be
+read from or written to the users \f3~/.fm\fP directory.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+loadIconPositions
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When false, icon positional information for each directory will not be
+read from or written to the users \f3~/.fm\fP directory. Setting
+this resource to true, overrides the loadDirectoryState resource.
+.sp
+.\"=====================
+.TP
+.PD 0
+.B Resource:
+maxGotoMenuEntries
+.TP
+.B Values:
+1-500 (10)
+.TP
+.B Description
+The maximum number of entries that will be displayed in the Goto button menu.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+newFolderName
+.TP
+.B Values:
+String (NewFolder)
+.TP
+.B Description
+The initial name given to newly created folders.
+.sp
+.\"=====================
+.TP
+.PD 0
+.B Resource:
+newWindowOnDirectoryOpen
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+Whether a new popup sub-folder pane is created when a folder is opened.
+.sp
+.\"======================
+.TP 15
+.PD 0
+.B Resource:
+otherEditor
+.TP
+.B Values:
+UNIX command (\f3shelltool sh -c "sleep 3 ; vi $FILE"\fP)
+.TP
+.B Description
+The open method the user wishes to use for opening files.  Note this should
+provide its own window or be started in a shelltool to work correctly.  The
+sleep command is added so the window's dimensions will be set when the
+editor starts.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+printScript
+.TP
+.B Values:
+UNIX command (\f3cat $FILE | mp -lo | lp\fP)
+.TP
+.B Description
+The print method the user wishes to use for printing files.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+shellToolName
+.TP
+.B Values:
+UNIX command (\f3cmdtool\fP)
+.TP
+.B Description
+The type of tty window to use when running the Custom Command`s
+UNIX Shell menu option.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+showHidden
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+When True, displays hidden files, i.e. dot files.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+sortCaseSensitive
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+When True, sorting by name is a case sensitive operation with filenames in
+uppercase appearing first.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+sortType
+.TP
+.B Values:
+Name, Type, Size, Date (Name)
+.TP
+.B Description
+Saves the state of the "Sort By" toggles on the Customize View popup.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeClosed
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When True, start the folder view window in iconic mode.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeDirectionVertical
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+Determines the orientation of the folder view.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeHeight
+.TP
+.B Values:
+0-"Height of Screen" (18 lines)
+.TP
+.B Description
+Saves the height of the open folder view window (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeIconXPosition
+.TP
+.B Values:
+0-"Width of Screen" (0)
+.TP
+.B Description
+Saves the X location of the folder view window icon (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeIconYPosition
+.TP
+.B Values:
+0-"Height of Screen" (0)
+.TP
+.B Description
+Saves the Y location of the folder view window icon (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treePaneGap
+.TP
+.B Values:
+48-320 (96)
+.TP
+.B Description
+Gap between one level of icons in the folder view, and the next. Adjusting this
+value is a means of condensing the amount of space the folder view uses.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeView
+.TP
+.B Values:
+True, False (False)
+.TP
+.B Description
+When True, display the folder view window on startup.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeWidth
+.TP
+.B Values:
+0-"Width of Screen" (40 characters)
+.TP
+.B Description
+Saves the width of the open folder view window (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeWindowXPosition
+.TP
+.B Values:
+0-"Width of Screen" (0)
+.TP
+.B Description
+Saves the X location of the open folder view window (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+treeWindowYPosition
+.TP
+.B Values:
+0-"Height of Screen" (0)
+.TP
+.B Description
+Saves the Y location of the open folder view window (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+useCache
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When False, filemgr will not read or write directory cache information into
+the users \f3~/.fm\fP hierarchy.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+useClassingEngine
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When False, the Classing Engine is not used to try to determine what each file
+type is.  This means the only three types of file icon will be displayed; the
+generic document, folder and application icons.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+useTextedit
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When True, use the texteditor to open files.  Otherwise, use the user
+defined open method described above under "otherEditor".
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+viewType
+.TP
+.B Values:
+Icon, List, Content (Icon)
+.TP
+.B Description
+Saves the state of the "Display Mode" toggles on the Customize View popup.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketClosed
+.TP
+.B Values:
+True, False (True)
+.TP
+.B Description
+When True, start the wastebasket in iconic mode.
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketHeight
+.TP
+.B Values:
+0-"Height of Screen" (18 lines)
+.TP
+.B Description
+Saves the height of the open wastebasket (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketIconXPosition
+.TP
+.B Values:
+0-"Width of Screen" (0)
+.TP
+.B Description
+Saves the X location of the wastebasket icon (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketIconYPosition
+.TP
+.B Values:
+0-"Height of Screen" (0)
+.TP
+.B Description
+Saves the Y location of the wastebasket icon (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketWidth
+.TP
+.B Values:
+0-"Width of Screen" (40 characters)
+.TP
+.B Description
+Saves the width of the open wastebasket (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketWindowXPosition
+.TP
+.B Values:
+0-"Width of Screen" (0)
+.TP
+.B Description
+Saves the X location of the open wastebasket (in pixels).
+.sp
+.\"=====================
+.TP 15
+.PD 0
+.B Resource:
+wastebasketWindowYPosition
+.TP
+.B Values:
+0-"Height of Screen" (0)
+.TP
+.B Description
+Saves the Y location of the open wastebasket (in pixels).
+.sp
+.\"=====================
+.\"
+.\" ---- USAGE section -----
+.\"
+.SH USAGE
+.PP
+.B filemgr
+operates via a set of pulldown menus from button stacks in a control
+panel. Most menu commands operate on the currently selected files.  To
+select a file, click the SELECT mouse button on its icon.  To select
+additional files, click with the ADJUST mouse button on additional
+files.  The menu commands are described below.
+.\" +++ reset prevailing indent
+.TP
+.B File >
+.\" +++ next 2 lines do a relative indent and skips a line
+.RS
+.TP
+.B Open...
+Opening a document will open the document in the appropriate application.
+Opening a folder will create a subfolder showing the items in that folder.
+Opening an application starts the application.
+This is the default action of a double\-clicked file.
+.TP
+.B Open in Editor...
+Opens the selected items using the users prefered editor.
+See \fIFile Manager Properties\fP (below).
+.TP
+.B Create Folder
+Creates an empty subfolder in the file pane.
+.TP
+.B Duplicate
+Create a duplicate of each of the selected files.
+.TP
+.B Print One
+Prints the selected items using their default print method.
+See \fIFile Manager Properties\fP below.
+.TP
+.B Print...
+Displays a command window which allows you to print your selected
+files with a print method you specify.
+.TP
+.B Find...
+Displays a command window which allows you to search
+for files within the specified folders.
+.TP
+.B Information...
+This command window allows you to see and change the file attributes
+of the selected files.
+.TP
+.B Remote Copy...
+Displays a command window which allows you to copy files to and from
+remote machines.  You can make a reference to files on a remote
+machine by using the format \fImachine_name\fP:\fIfile_name\fP.
+See
+.BR rcp (1).
+.TP
+.B Custom Commands
+Displays a menu containing custom commands you have created.
+.\" +++ next 2 lines do a relative indent and skips a line
+.RS
+.TP
+.B "UNIX Shell..."
+Will bring up a command window where you can directly enter UNIX commands.
+.RE
+.TP
+.B Format Disk...
+Will display a command window allowing you to format a floppy diskette (in
+either DOS or Unix format).
+.TP
+.B Rename Disk...
+Will display a command window allowing you to rename a floppy diskette.
+.TP
+.B Comments...
+Displays a command window where you can send comments to the
+.B filemgr
+development team. These comments would be related to bugs, problems or
+inconsistencies found with the
+.B filemgr
+program.
+.TP
+.B Quit File Manager
+Allows you to really quit the
+.B filemgr
+program and not just the current window.
+.RE
+.TP
+.B View >
+.RS
+.TP
+.B Open Folder View
+Will show a hierarchical display of folders in a separate window.
+.TP
+.B Large Icon View
+Displays file pane items as large icons in a positioned view.
+.TP
+.B Small Icon View
+Displays file pane items as small icons in a positioned view.
+.TP
+.B Icon by Name
+Displays file pane items as large icons sorted by name.
+.TP
+.B Icon by Type
+Displays file pane items as large icons sorted by type and name.
+.TP
+.B List by Name
+Displays file pane items as small icons, one per line, sorted by name.
+.TP
+.B List by Type
+Displays file pane items as small icons, one per line, sorted by type and name.
+.TP
+.B List by Size
+Displays file pane items as small icons, one per line, sorted by size.
+.TP
+.B List by Date
+Displays file pane items as small icons, one per line, sorted by date.
+.TP
+.B Cleanup Icons (or Selection)
+Will move each file pane item to its nearest grid point. If one or more files
+are selected, then this operation only affects the selected files.
+.RE
+.TP
+.B Edit >
+.RS
+.TP
+.B Select All
+Selects all files in the current folder.
+.TP
+.B Cut
+Places selected files on the clipboard for a pending move operation.
+.TP
+.B Copy
+Places selected files on the clipboard for a pending copy operation.
+.TP
+.B Link
+Places selected files on the clipboard for a pending link operation.
+.TP
+.B Paste
+Pastes files from clipboard into the current folder.  Pasted
+files are linked, copied, or moved, depending on how they were
+first stored in the clipboard.
+.TP
+.B Delete (or Destroy)
+Deletes selected files to the wastebasket. To have files destroyed without
+going to the wastebasket (and with no hope of recovery), select the "Destroy"
+option from the "Edit Menu item is" item on the "General Defaults" sheet in
+\fIFile Manager Properties\fP.
+.TP
+.B Properties...
+Displays a multi-level property sheet allowing you to customize the behavior
+of
+.B filemgr.
+.RE
+.TP
+.B Goto >
+Used in conjunction with the destination entered on the goto line
+(located at the right of the goto button).  To change directories, type
+the directory name on the goto line and then press
+.IB " Goto" .
+.TP
+.\" +++ skip first line by printing a blank bold label
+.B "            "
+If nothing is entered on the Goto line, then the first folder displayed
+on the menu will be "Home", which will return you to your home folder.
+Next in the menu are two application specific entries for viewing the Folder
+View and the Waste Basket. If there are any floppies or CDs being viewed, they
+also have an entry in this section of the menu. Finally the menu displays
+the last folders you have visited.  Selecting a folder causes that folder to
+be opened.
+.RE
+.sp .5
+.SH SEE ALSO
+.PP
+.BR find (1),
+.BR fmgc (1),
+.BR egrep (1),
+.BR xview (7),
+.BR binder (1),
+.BR rcp (1)
+.br
+.TZ SSUG
+.br
+"About File Manager" in the Help Handbook available through the
+Help option on the Workspace menu.
+.SH FILES
+.TP
+.B $HOME/.fmcmd
+This file contains the old user defined custom commands, which can be
+referenced by the ``Custom Commands'' menu. When these commands are written
+out again, they will be written to the
+.B $HOME/.desksetdefaults
+file.
+.TP
+.B $HOME/.desksetdefaults
+This file saves the state of the DeskSet tools in X resource format.
+Do not edit this file by hand as changes will be lost when the Server
+writes to this file!
+.SH BUGS
+Comments/formatting in the
+.B $HOME/.desksetdefaults
+file can be lost when the server saves the tool's state.
+.PP
+Choosing a custom command which requires input (such as \f3rm -i $FILE\fP)
+can cause
+.B filemgr
+to hang.  Custom commands needs to be more robust.
+.PP
+Print methods, open methods, and custom commands depend on the
+.B $FILE
+variable being set properly.  Failure to include
+.B $FILE
+will cause the
+executed command to behave improperly.

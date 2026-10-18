@@ -16,8 +16,8 @@ This repository is the initial release preview of the full package:
 Source tree:
 
 - `src/olwm`: Open Look window manager sources (`olwm`)
-- `apps`: accessories (`cmdtool`, `textedit`, `clock`, `props`,
-  `xtoolplaces`, `hello`, and `olwmslave`)
+- `apps`: File Manager (`filemgr`) and accessories (`cmdtool`, `textedit`,
+  `clock`, `props`, `xtoolplaces`, and `olwmslave`)
 - `lib/olgx`: OPEN LOOK graphics library (`libolgx`)
 - `lib/libxview`: XView toolkit library (`libxview`)
 - `include/olgx`, `include/pixrect`, `include/xview`,
@@ -47,6 +47,7 @@ Requirements:
 - X11 development libraries:
   - `libX11`
   - `libXext` (used by `olwm`)
+  - `libXpm` (used by File Manager)
 - `libtirpc` development library (used by XView selection/RPC code).
   Modern glibc no longer ships `<rpc/rpc.h>` at the top level; headers
   live under `/usr/include/tirpc` and CMake adds that include path.
@@ -60,19 +61,19 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev
 ```
 
 Fedora/RHEL:
 
 ```bash
-sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libtirpc-devel xorg-x11-font-utils ncurses boost-devel
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-devel libtirpc-devel xorg-x11-font-utils ncurses boost-devel
 ```
 
 Arch Linux:
 
 ```bash
-sudo pacman -S --needed base-devel cmake libx11 libxext libtirpc xorg-mkfontscale xorg-mkfontdir ncurses boost-libs
+sudo pacman -S --needed base-devel cmake libx11 libxext libxpm libtirpc xorg-mkfontscale xorg-mkfontdir ncurses boost-libs
 ```
 
 
@@ -81,6 +82,44 @@ Build commands:
 ```bash
 cmake -S . -B build
 cmake --build build -j"$(nproc)"
+```
+
+### Build and debug with Docker
+
+The optional Docker configuration uses
+`wischner/gcc-x86_64-linux-x11:latest` for the compiler, CMake, development
+libraries, GDB, X11 tools, and Xephyr. No host compiler, development libraries,
+GDB, or Xephyr installation is needed. The host needs Bash and a running
+Docker Engine accessible to your user. Docker pulls the image on first use
+if it is missing locally.
+
+To compile without installing the native build dependencies:
+
+```bash
+bash .vscode/openlook-docker.sh build
+```
+
+In VS Code, select **Tasks: Run Task → build (Docker)**, or select
+**Debug workspace (OpenLook Docker)** and press F5 to build and debug only
+`olwm`. Debugging requires the VS Code C/C++ extension and a local Linux
+X11/XWayland desktop with `DISPLAY` and its X authority credentials available
+to VS Code. Xephyr runs inside Docker and displays a window on that desktop;
+compilation alone does not require a display. The native debug profile remains
+available separately.
+
+Docker uses `build/docker/` for intermediates and `bin/docker/` for its
+OPENWINHOME tree, separate from the native build. The repository is mounted
+at the same absolute path inside the container so source breakpoints resolve.
+Builds run as your host user to preserve file ownership. The debugger uses
+container GDB through `docker exec`; no host GDB is needed. The debug
+container receives `SYS_PTRACE` for debugging and access to the host X socket
+and authority file for its Xephyr window.
+
+Stopping debugging removes the dedicated container and its processes. If a
+session is interrupted, use **openlook: stop Docker session** or:
+
+```bash
+bash .vscode/openlook-docker.sh stop
 ```
 
 ## Installation
@@ -185,14 +224,14 @@ not installed runtime configuration.
 
 ## Running from the staged tree
 
-In VS Code, select **Debug workspace (OpenLook)** and press F5 to build
-the package and debug `olwm` in a nested Xephyr session on `:2`.
-The Programs menu launches Command Tool, Clock, Text Editor, Properties,
-and Hello. The Workspace menu also offers Refresh, Restart WM, Reread Menu
+In VS Code, use **Run Build Task** (Ctrl+Shift+B) to build the package.
+Select **Debug workspace (OpenLook)** and press F5 to debug `olwm` in a
+nested Xephyr session on `:2`. Launch applications from its Programs menu.
+The Programs menu launches File Manager, Command Tool, Clock, Text Editor,
+and Properties. The Workspace menu also offers Refresh, Restart WM, Reread Menu
 File, Save Window Layout (`xtoolplaces`, writing to `~/.xtoolplaces`), Exit WM,
 and Exit, with separators between groups. `olwmslave` is a window-manager
 helper and has no standalone menu entry.
-**Debug textedit (OpenLook)** starts the editor automatically.
 
 Compiled window-manager font defaults match `config/Xdefaults`: medium
 Helvetica for menu items and bold Helvetica for titles. User X resources
@@ -216,6 +255,34 @@ For nested testing with Xephyr:
 Xephyr :2 -ac -screen 1024x768 &
 DISPLAY=:2 xrdb -merge bin/lib/app-defaults/Olwm
 DISPLAY=:2 olwm
+```
+
+## File Manager
+
+**Programs → File Manager** launches the original Sun DeskSet File Manager
+V3.6, ported from the Solaris 2.6 source archive. It is built and installed as
+`filemgr` alongside the other applications. The menu uses its original `-C`
+mode, with generic folder/document/application icons instead of the Classing
+Engine. Source provenance and retained notices are described in
+`apps/filemgr/UPSTREAM.txt`.
+
+```bash
+filemgr -C -d /path/to/folder
+```
+
+The port supports browsing, folder/document creation, copying, moving, and
+renaming. Solaris volume management, removable-media formatting/ejecting, the
+Classing Engine, and Solaris quota RPC integration are unavailable. Free space
+comes from Linux `statvfs`. Printing and custom commands require the external
+programs configured for those actions. In Docker, the file manager sees the
+container filesystem and the mounted repository.
+
+The Docker image already provides the required `libXpm` headers and library.
+To run the isolated Xephyr operation and normal-shutdown smoke test after
+building:
+
+```bash
+bash tests/run-filemgr-smoke.sh
 ```
 
 ## Notes

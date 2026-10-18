@@ -24,6 +24,7 @@ add_custom_target(openlook_terminfo ALL
 install(DIRECTORY "${OPENLOOK_TERMINFO_DIR}/" DESTINATION share/terminfo)
 
 set(OPENLOOK_MAN_PAGES
+    filemgr
     clock
     olwm
     olwmslave
@@ -78,6 +79,13 @@ add_custom_target(openlook_resources ALL
             "${PROJECT_SOURCE_DIR}/config/Xdefaults"
             "${OPENWINHOME_RESOURCE_LIB_DIR}/app-defaults/Olwm"
 
+    # File Manager's original context-help text.
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+            "${OPENWINHOME_RESOURCE_LIB_DIR}/help"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${PROJECT_SOURCE_DIR}/apps/filemgr/filemgr.info"
+            "${OPENWINHOME_RESOURCE_LIB_DIR}/help/filemgr.info"
+
     # Manual pages in standard share/man hierarchy.
     ${OPENLOOK_MAN_STAGE_COMMANDS}
 
@@ -120,3 +128,7 @@ foreach(man_page IN LISTS OPENLOOK_MAN_PAGES)
         RENAME "${man_page}.1"
     )
 endforeach()
+
+install(FILES "${PROJECT_SOURCE_DIR}/apps/filemgr/filemgr.info"
+    DESTINATION lib/help
+)

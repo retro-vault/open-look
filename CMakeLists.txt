@@ -19,7 +19,8 @@ endif()
 
 # Keep all final build artifacts in <repo>/bin while object files and
 # intermediate state remain under the selected build tree (e.g. build/).
-set(OPENLOOK_STAGE_DIR "${CMAKE_SOURCE_DIR}/bin")
+set(OPENLOOK_STAGE_DIR "${CMAKE_SOURCE_DIR}/bin" CACHE PATH
+    "Directory for the staged OPENWINHOME tree")
 set(OPENWINHOME_STAGE_DIR "${OPENLOOK_STAGE_DIR}")
 set(OPENWINHOME_STAGE_BIN_DIR "${OPENWINHOME_STAGE_DIR}/bin")
 set(OPENWINHOME_STAGE_LIB_DIR "${OPENWINHOME_STAGE_DIR}/lib")
