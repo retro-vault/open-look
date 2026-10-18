@@ -53,7 +53,7 @@
       "name": "Debug workspace (OpenLook Docker)",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/docker/bin/olwm",
+      "program": "${workspaceFolder}/bin/bin/olwm",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

@@ -8,6 +8,16 @@ set(OPENWINHOME_RESOURCE_SHARE_DIR "${OPENWINHOME_STAGE_SHARE_DIR}")
 set(OPENWINHOME_MAN1_DIR "${OPENWINHOME_STAGE_SHARE_DIR}/man/man1")
 set(OPENWINHOME_FONT_DIR "${OPENWINHOME_STAGE_SHARE_DIR}/fonts/openlook")
 
+find_program(OPENLOOK_MKFONTDIR_EXECUTABLE NAMES mkfontdir)
+if(NOT OPENLOOK_MKFONTDIR_EXECUTABLE)
+    message(FATAL_ERROR "mkfontdir is required (install X11 font utilities).")
+endif()
+set(OPENLOOK_FONT_INDEX_COMMANDS)
+foreach(leaf misc 75dpi 100dpi)
+    list(APPEND OPENLOOK_FONT_INDEX_COMMANDS
+        COMMAND "${OPENLOOK_MKFONTDIR_EXECUTABLE}" "${OPENWINHOME_FONT_DIR}/bdf/${leaf}")
+endforeach()
+
 # Compile a self-contained entry: minimal host databases often omit sun-cmd.
 find_program(OPENLOOK_TIC_EXECUTABLE NAMES tic)
 if(NOT OPENLOOK_TIC_EXECUTABLE)
@@ -94,6 +104,7 @@ add_custom_target(openlook_resources ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_CURRENT_SOURCE_DIR}/fonts"
             "${OPENWINHOME_FONT_DIR}"
+    ${OPENLOOK_FONT_INDEX_COMMANDS}
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_CURRENT_SOURCE_DIR}/locale"
             "${OPENWINHOME_RESOURCE_SHARE_DIR}/locale"
@@ -107,8 +118,11 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bitmaps"
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/images"
     DESTINATION include
 )
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/fonts"
+install(DIRECTORY "${OPENWINHOME_FONT_DIR}/"
     DESTINATION share/fonts/openlook
+)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bitmaps"
+    DESTINATION include/X11
 )
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/locale/"
     DESTINATION share/locale

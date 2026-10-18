@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 IMAGE="wischner/gcc-x86_64-linux-x11:latest"
 CONTAINER="openlook-debug-$(printf '%s' "$ROOT_DIR" | cksum | cut -d ' ' -f 1)"
-STAGE="$ROOT_DIR/bin/docker"
+STAGE="$ROOT_DIR/bin"
 BUILD="$ROOT_DIR/build/docker"
 
 build_inside() {
@@ -20,9 +20,6 @@ case "${1:-}" in
     ;;
   session-inside)
     build_inside
-    for leaf in misc 75dpi 100dpi; do
-      mkfontdir "$STAGE/share/fonts/openlook/bdf/$leaf"
-    done
     fonts="$STAGE/share/fonts/openlook/bdf"
     DISPLAY="$OPENLOOK_PARENT_DISPLAY" Xephyr :2 -screen 1280x800 \
       -nolisten tcp -ac -fp "$fonts/misc,$fonts/75dpi,$fonts/100dpi,built-ins" \

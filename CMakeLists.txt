@@ -8,6 +8,9 @@ endif()
 
 set(CMAKE_C_STANDARD 99)
 
+# Resolve installed libraries without requiring a global loader configuration.
+set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
+
 # Assertions use __FILE__ even after stripping. Keep those diagnostic paths
 # relative without remapping DWARF paths needed by local source debugging.
 include(CheckCCompilerFlag)
@@ -78,9 +81,20 @@ file(WRITE "${OPENWINHOME_ENV_SCRIPT}"
 "if [ -n \"$DISPLAY\" ] && [ -f \"$_owh_defaults\" ] && command -v xrdb >/dev/null 2>&1; then\n"
 "  xrdb -merge \"$_owh_defaults\"\n"
 "fi\n"
+"if [ -n \"$DISPLAY\" ] && command -v xset >/dev/null 2>&1; then\n"
+"  for _owh_leaf in misc 75dpi 100dpi; do\n"
+"    _owh_font=\"$OPENWINHOME/share/fonts/openlook/bdf/$_owh_leaf\"\n"
+"    [ ! -d \"$_owh_font\" ] || xset +fp \"$_owh_font\"\n"
+"  done\n"
+"  xset fp rehash\n"
+"fi\n"
 "echo \"OPENWINHOME=$OPENWINHOME\"\n"
 )
 execute_process(COMMAND chmod +x "${OPENWINHOME_ENV_SCRIPT}")
+
+install(PROGRAMS "${OPENWINHOME_ENV_SCRIPT}" DESTINATION .)
+install(FILES "${OPENWINHOME_TEXT_EXTRAS_MENU}" DESTINATION lib)
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/pixrect" DESTINATION include)
 
 # Stage public development headers into OPENWINHOME/include.
 add_custom_target(openlook_headers ALL
@@ -94,6 +108,9 @@ add_custom_target(openlook_headers ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${PROJECT_SOURCE_DIR}/include/xview"
             "${OPENWINHOME_STAGE_INCLUDE_DIR}/xview"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${PROJECT_SOURCE_DIR}/include/xview_private"
+            "${OPENWINHOME_STAGE_INCLUDE_DIR}/xview_private"
     COMMENT "Staging OpenLook public headers into ${OPENWINHOME_STAGE_INCLUDE_DIR}"
 )
 

@@ -11,11 +11,11 @@ if [[ "${1:-}" != "--inside" ]]; then
         wischner/gcc-x86_64-linux-x11:latest \
         "$ROOT_DIR/tests/run-filemgr-smoke.sh" --inside
 fi
-if [[ ! -x "$ROOT_DIR/bin/docker/bin/filemgr" ]]; then
+if [[ ! -x "$ROOT_DIR/bin/bin/filemgr" ]]; then
     echo 'Build first: bash .vscode/openlook-docker.sh build' >&2
     exit 1
 fi
-export OPENWINHOME="$ROOT_DIR/bin/docker"
+export OPENWINHOME="$ROOT_DIR/bin"
 export LD_LIBRARY_PATH="$OPENWINHOME/lib"
 export PATH="$OPENWINHOME/bin:$PATH"
 test_dir="$(mktemp -d /tmp/filemgr-test.XXXXXX)"

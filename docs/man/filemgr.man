@@ -38,6 +38,18 @@ and manipulate files.
 lets you find, create, copy, move, link, open, and print files using a graphical
 user interface (GUI).  You can also change file properties, create new directories,
 and view multiple directories at the same time.
+.SH LINUX PORT
+This package builds Sun DeskSet File Manager V3.6 as filemgr.
+The Programs menu launches it with the generic-icon option
+.BR \-C .
+Classing Engine integration, Solaris volume management, removable-media
+formatting and ejecting, and Solaris quota RPC services are unavailable.
+Free-space reporting uses Linux statvfs.
+Printing and custom commands require separately installed external programs.
+Inside Docker, filemgr sees the container filesystem and the mounted repository.
+The historical options and resources below describe the original application;
+features requiring the unavailable Solaris services are not supplied by this port.
+The installed context-help file is $OPENWINHOME/lib/help/filemgr.info.
 .SH OPTIONS
 In addition to the generic tool arguments described in
 .BR xview (7),
