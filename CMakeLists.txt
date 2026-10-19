@@ -55,6 +55,9 @@ endforeach()
 
 # Find required X11 libraries
 find_package(X11 REQUIRED)
+if(NOT X11_Xrandr_FOUND)
+    message(FATAL_ERROR "RandR development files are required (libxrandr-dev)")
+endif()
 include_directories(${X11_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/resources)
 

@@ -289,11 +289,25 @@ olwm
 For nested testing with Xephyr:
 
 ```bash
-Xephyr :2 -ac -screen 1024x768 &
+Xephyr :2 -resizeable -ac -screen 1024x768 &
 export DISPLAY=:2
 # Wait until xdpyinfo succeeds on :2, then configure that X server.
 source ./bin/use-openwinhome.sh
 olwm
+```
+
+Xephyr's window can be resized by dragging its border. olwm and XView
+applications follow RandR changes to the X screen's virtual framebuffer:
+placement bounds, Full Size windows, icon layout, and popup bounds update
+without restarting. Mouse positions remain in the server's root coordinates.
+Existing windows move back into view when the desktop shrinks. RandR outputs
+share this desktop; individual monitor work areas are not implemented.
+Building requires the RandR development library (`libxrandr-dev`).
+
+Run the isolated resize and mouse-drag regression test after building:
+
+```bash
+bash tests/run-resize-smoke.sh
 ```
 
 ## File Manager

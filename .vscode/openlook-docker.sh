@@ -21,7 +21,7 @@ case "${1:-}" in
   session-inside)
     build_inside
     fonts="$STAGE/share/fonts/openlook/bdf"
-    DISPLAY="$OPENLOOK_PARENT_DISPLAY" Xephyr :2 -screen 1280x800 \
+    DISPLAY="$OPENLOOK_PARENT_DISPLAY" Xephyr :2 -resizeable -screen 1280x800 \
       -nolisten tcp -ac -fp "$fonts/misc,$fonts/75dpi,$fonts/100dpi,built-ins" \
       >"$BUILD/xephyr.log" 2>&1 < /dev/null &
     xephyr_pid=$!
