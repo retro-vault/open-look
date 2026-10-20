@@ -58,6 +58,8 @@ Requirements:
   Modern glibc no longer ships `<rpc/rpc.h>` at the top level; headers
   live under `/usr/include/tirpc` and CMake adds that include path.
 - Boost
+- `libnsl-dev` development library for the public client interface library for NIS (Network Information Service / Yellow Pages) and NI
+- `libXrandr` development library for xrandr to allow the capture of events
 - Standard C math library (`libm`, usually provided by libc toolchain)
 - Terminfo compiler (`tic`, provided by ncurses)
 - X11 font index generator (`mkfontdir`, required at configure time)
@@ -68,7 +70,7 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev libnsl-dev libxrandr-dev
 ```
 
 Fedora/RHEL:
