@@ -49,6 +49,7 @@ target_link_libraries(olwm
     PRIVATE
         olgx
         ${X11_LIBRARIES}
+        ${X11_Xrandr_LIB}
         ${X11_Xext_LIB}  # optional but probably needed
 )
 

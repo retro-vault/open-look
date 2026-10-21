@@ -97,7 +97,7 @@ kill_debugger_fallback() {
 kill_workspace_clients_on_display() {
   local sig="$1"
   local app pids
-  for app in textedit hello clock cmdtool props; do
+  for app in filemgr textedit clock cmdtool props; do
     pids="$(pgrep -x "$app" 2>/dev/null || true)"
     if [ -n "$pids" ]; then
       log "matched app=$app pids=$pids for SIG$sig"

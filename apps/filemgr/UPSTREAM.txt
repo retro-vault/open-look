@@ -1,0 +1,29 @@
+Sun DeskSet File Manager V3.6 — Linux port
+
+Source: https://github.com/calmsacibis995/ow-src
+Revision: bb0b2426360e4a83d9c8b33b3dddaa5c636d31b9
+Original directory: ow/external/DeskSet/filemgr
+DeskSet support: ow/external/DeskSet/libdeskset and icons
+Classing Engine interface headers: ow/external/DeskSet/ce
+The archive identifies its source as Solaris 2.6.
+
+DevGuide group layout support:
+https://github.com/IanDarwin/OpenLookCDROM
+Original directory: src/xview/guide/src/libguidexv
+Files: group.c, group.h, group_data.c, group_impl.h, gutil.c, gutil.h
+
+The original notices are retained in the imported files. In particular,
+the DeskSet files contain Sun proprietary/restricted-rights notices;
+this import does not relicense them or claim an open-source license.
+DevGuide files contain their separate Sun permission notice.
+
+Local changes: CMake integration; Linux mount/statvfs/dirfd adapters;
+C99 declarations; 64-bit pointer handling; bounded formatting for reported
+fixed-buffer overflows; explicit dot-entry filtering; conversion of generated
+attribute lists exceeding the local XView macro limit; maintained libXpm
+loading; original no-Classing-Engine mode enabled by default.
+
+Solaris Classing Engine and volume services are unavailable. The adapters
+report their absence and the existing generic-icon mode handles normal files.
+No Solaris filesystem quota RPC support is built. Printing, remote commands,
+and removable-media tools are not supplied by this port.
