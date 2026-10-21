@@ -60,6 +60,7 @@ Requirements:
 - Boost
 - `libnsl-dev` development library for the public client interface library for NIS (Network Information Service / Yellow Pages) and NI
 - `libXrandr` development library for xrandr to allow the capture of events
+- `libxpm-dev` development library for libxpm, X11 pixmap library
 - Standard C math library (`libm`, usually provided by libc toolchain)
 - Terminfo compiler (`tic`, provided by ncurses)
 - X11 font index generator (`mkfontdir`, required at configure time)
