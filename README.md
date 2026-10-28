@@ -71,14 +71,18 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev libnsl-dev libxrandr-dev
-```
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev libnsl-dev libxrandr-dev libXrandr-devel libXpm-devel
 
-Fedora/RHEL:
 
+Fedora/RHEL
 ```bash
-sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-devel libtirpc-devel xorg-x11-font-utils ncurses boost-devel
+sudo dnf config-manager --set-enabled crb
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-devel  \
+  libtirpc-devel mkfontscale mkfontdir xset fontconfig ncurses boost-devel git-core \ 
+  libXrandr-devel libnsl2-devel libtirpc-devel rpcsvc-proto-devel quota-devel
+
 ```
+
 
 Arch Linux:
 
