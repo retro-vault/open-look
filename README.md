@@ -87,7 +87,9 @@ sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-dev
 Arch Linux:
 
 ```bash
-sudo pacman -S --needed base-devel cmake libx11 libxext libxpm libtirpc xorg-mkfontscale xorg-mkfontdir ncurses boost-libs
+sudo pacman -S --needed base-devel cmake libx11 libxext libxpm libtirpc xorg-mkfontscale \
+  xorg-mkfontdir ncurses boost-libs libnsl libxrandr libxpm rpcsvc-proto xorg-xset xorg-xlsfonts
+
 ```
 
 
