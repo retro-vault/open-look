@@ -62,6 +62,7 @@ target_link_libraries(xview
         olgx
         ${TIRPC_LIBRARY}
         ${X11_LIBRARIES}
+        ${X11_Xrandr_LIB}
 )
 
 target_link_libraries(xview_static
@@ -69,6 +70,7 @@ target_link_libraries(xview_static
         olgx_static
         ${TIRPC_LIBRARY}
         ${X11_LIBRARIES}
+        ${X11_Xrandr_LIB}
 )
 
 set_target_properties(xview PROPERTIES

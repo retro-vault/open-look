@@ -18,6 +18,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
+#include <X11/extensions/Xrandr.h>
 #include <X11/cursorfont.h>
 #include <X11/Xresource.h>
 
@@ -2337,4 +2338,72 @@ ScreenUpdateWinCacheSize(dpy)
 	}
 	si->winCacheSize = newsize;
     }
+}
+
+/* RandR coordinates and core pointer events share the root coordinate space.
+ * Update Xlib before dispatching input, including while an interposer is active.
+ */
+static int resizeEventBase = -1;
+
+void
+ScreenResizeInit(Display *dpy)
+{
+    int errorBase;
+    List *l = ScreenInfoList;
+    ScreenInfo *si;
+    if (!XRRQueryExtension(dpy, &resizeEventBase, &errorBase)) {
+        resizeEventBase = -1;
+        return;
+    }
+    while ((si = ListEnum(&l)) != NULL)
+        XRRSelectInput(dpy, si->rootid, RRScreenChangeNotifyMask);
+}
+
+Bool
+ScreenResizeEvent(Display *dpy, XEvent *event)
+{
+    ScreenInfo *si;
+    Window root;
+    int width, height;
+    List *l;
+    Client *cli;
+    if (resizeEventBase >= 0 &&
+        event->type == resizeEventBase + RRScreenChangeNotify) {
+        root = ((XRRScreenChangeNotifyEvent *)event)->root;
+        XRRUpdateConfiguration(event);
+    } else if (event->type == ConfigureNotify &&
+               GetScrInfoOfRoot(event->xconfigure.window) != NULL) {
+        root = event->xconfigure.window;
+        XRRUpdateConfiguration(event);
+    } else {
+        return False;
+    }
+    si = GetScrInfoOfRoot(root);
+    if (si == NULL || si->rootwin == NULL)
+        return True;
+    width = DisplayWidth(dpy, si->screen);
+    height = DisplayHeight(dpy, si->screen);
+    if (width < 1 || height < 1 ||
+        (si->rootwin->core.width == width && si->rootwin->core.height == height))
+        return True;
+    si->rootwin->core.width = width;
+    si->rootwin->core.height = height;
+    si->framepos = 0;
+    if (si->iconGrid != NULL)
+        SlotResize(dpy, si->iconGrid, width, height);
+    l = ActiveClientList;
+    while ((cli = ListEnum(&l)) != NULL) {
+        WinPaneFrame *frame = cli->framewin;
+        int x, y;
+        if (cli->scrInfo != si || frame == NULL || (cli->flags & CLOlwmOwned))
+            continue;
+        FrameUpdateScreenSize(cli);
+        x = MAX(0, MIN(frame->core.x, width - (int)frame->core.width));
+        y = MAX(0, MIN(frame->core.y, height - (int)frame->core.height));
+        if (x != frame->core.x || y != frame->core.y) {
+            (WinFunc(frame,core.newposfunc))(frame, x, y);
+            WinCallConfig(dpy, (WinGeneric *)frame, NULL);
+        }
+    }
+    return True;
 }
