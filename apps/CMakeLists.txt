@@ -5,8 +5,10 @@ add_subdirectory(textedit)
 add_subdirectory(props)
 add_subdirectory(olwmslave)
 add_subdirectory(xtoolplaces)
+add_subdirectory(disktool)
 
 # Install the accessories alongside the window manager.
-install(TARGETS filemgr cmdtool textedit clock props xtoolplaces olwmslave
+
+install(TARGETS cmdtool textedit clock props xtoolplaces hello olwmslave disktool
     RUNTIME DESTINATION bin
 )
