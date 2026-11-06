@@ -1511,7 +1511,7 @@ are searched:
 .nf
 .sp
 	$OPENWINHOME/etc/workspace/patterns
-	$OPENWINHOME/include/X11/include/bitmaps
+	$OPENWINHOME/include/X11/bitmaps
 	/usr/X11/include/X11/include/bitmaps
 .sp
 .fi
@@ -2034,7 +2034,16 @@ OLWMMENU
 Specifies a file to use for the Workspace Menu.
 .TP
 OPENWINHOME
-Specifies the location of the OpenWindows software.
+Specifies the OpenLook runtime prefix, such as the repository's staged
+bin directory or the configured installation prefix (normally /usr/local).
+When unset, this Linux port uses the prefix selected at CMake configure time
+and exports it to menu-launched applications.
+.PP
+CMake installs the packaged fonts and their indexes under
+$OPENWINHOME/share/fonts/openlook/bdf.
+Source $OPENWINHOME/use-openwinhome.sh from Bash with DISPLAY set to register
+the fonts on the current X server and merge the packaged application defaults.
+The helper also sets PATH and LD_LIBRARY_PATH for the selected prefix.
 .\" ========================================================================
 .SH FILES
 .TP

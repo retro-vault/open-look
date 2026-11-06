@@ -434,6 +434,7 @@ EventLoop( dpy )
 {
 	XEvent		event;
 
+        ScreenResizeInit(dpy);
 	for (;;) {
 		ReapChildren();
 		if (ExitRequested())
@@ -456,6 +457,9 @@ EventLoop( dpy )
 
 		if (ExitRequested())
 		    return;
+
+                if (ScreenResizeEvent(dpy, &event))
+                    continue;
 
 		/*
 		 * Discard user events that have the Synthetic bit set.

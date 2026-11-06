@@ -77,7 +77,7 @@ apply_openlook_font_path() {
 
 if ! xdpyinfo -display "$DISPLAY_NUM" >/dev/null 2>&1; then
   (
-    setsid Xephyr "$DISPLAY_NUM" -screen 1280x800 -ac \
+    setsid Xephyr "$DISPLAY_NUM" -resizeable -screen 1280x800 -ac \
       >"$LOG_DIR/openlook-xephyr.log" 2>&1 < /dev/null &
     echo $! > "$XE_PID_FILE"
   )

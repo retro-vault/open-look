@@ -1,0 +1,1823 @@
+##################################################
+#	filemgr.info  Nov. 19
+#                     Feb. 14  Hypertext links
+##################################################
+#
+#       Filemgr Help File - Open Windows 3.0.1
+#
+#       @(#)filemgr.info        4.3 11/26/91
+#       Copyright (c) 1987-1991 Sun Microsystems, Inc.
+#
+#       11 Jul 91                       helpopen path changed
+#       27 Jun 91 James Brook           written
+#       27 Oct 91 James Brook           revised
+#       26 Nov 91 Mike Bundschuh        added $FILE warnings
+#	19 Nov 92 Mary Hamilton		rewritten for new filemgr
+#
+##################################################
+############################################
+#       Tree, File, and Path Panes
+############################################
+:Tree_Pane:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Tree Pane
+
+Displays an expanded tree view of the file
+system.
+
+Using the Folder View window menu, you can
+increase or decrease the number of folders
+displayed, grow the view horizontally, or start
+the view at another node.
+
+:File_Pane:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+File Pane
+
+Displays folders, documents, and applications
+either as icons or in a list.
+
+:Path_Pane:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Path Pane
+
+Displays the complete path to the current folder.
+
+:File_Path_Open:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open Folder
+
+Select a folder in the path, then choose Open
+Folder to display its contents.
+
+########################50########################
+#################################
+#       Control Panel
+#################################
+:Control_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Control Panel
+
+These buttons control File Manager:
+
+File	Opens, creates, finds, and transfers
+	files.  You can also add your own
+	commands to execute.
+
+View	Changes the File Manager display.
+
+Edit	Manipulates files and folders.
+
+Props	Options for customizing File Manager
+	or changing properties of a selected
+	file.
+
+Goto	Changes the File Manager display
+	to a specific folder.
+
+#################################
+#        File menu
+#################################
+########################50########################
+:File:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+File
+
+Provides functions so you can open, create,
+duplicate, print, find, and transfer files. You
+can also add your own commands to execute.
+
+Open		Opens the selected file or
+		displays the contents of the
+		selected folder.
+
+Open in Editor	Opens the selected file in
+		Text Editor.
+
+Create Document	Creates a new document
+		(called "NewDocument").
+
+		NewDocument is a file in either
+		Text Editor format or the format
+		of the Default Editor you
+		specified in Edit -> Properties ->
+		Advanced Settings.
+
+Create Folder	Creates a new folder
+		(called "NewFolder").
+
+Duplicate	Duplicates the selected file(s)
+		and adds a number to the
+		file or folder name.
+
+Print One	Prints the selected file.
+
+Print		Displays a window in which you
+		can specify print options and
+		number of copies to print.
+
+Find		Displays a window in which you
+		can specify search criteria
+		such as name, owner, and
+		modification date.
+
+Information	Displays a window containing
+		information about a selected file
+		such as its size or type.
+
+Remote Copy     Displays a window in which you can
+                transfer files to or from a
+                remote system.
+
+Custom Commands Choose from a list of frequently
+		used operating system commands or
+                opens a Command Tool.
+
+Check for Floppy
+		File Manager checks to see if a
+		floppy disk is inserted.  If it
+		is, a Floppy Disk window pops up.
+
+Format Floppy	Active only for floppy disk
+		windows.  Formats the floppy disk.
+
+Rename Floppy	Active only for floppy disk
+		windows.  Renames the floppy disk.
+
+Comments	Sends your comments back to the
+		File Manager development team.
+
+Quit File Manager
+		Really quit File Manager.  File
+		Manager will recreate your
+		environment when you restart.
+
+########################50########################
+#-----------------
+#File button menu.
+#-----------------
+:File_Open:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open
+
+Opens a selected file using the file's open
+method.
+
+Keyboard shortcut: Meta-O
+
+:File_Open_Editor:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open in Editor
+
+Opens the selected file in Text Editor, the
+default document editor, or other editor you
+specify in the General Defaults Properties window.
+
+:File_Document:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Create Document
+
+Creates a new document called "NewDocument."
+
+NewDocument is a file in either Text Editor
+format or the format for the Default Editor
+you specified in
+Edit -> Properties -> Advanced Settings.
+
+To change the name:
+
+1. Select the file name.
+   If the name is not already selected,
+   click SELECT on the name.
+
+2. Type the new name.
+
+3. Press Return.
+
+:File_Folder:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Create Folder
+
+Creates a new folder called "NewFolder."
+
+To change the name:
+
+1. Select the folder name.
+   If the name is not already selected,
+   click SELECT on the name.
+
+2. Type the new name.
+
+3. Press Return.
+
+Keyboard shortcut: Meta-N
+
+########################50########################
+:File_Duplicate:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Duplicate
+
+Duplicates the selected file(s) and adds a
+number to the file or folder name to give it a
+unique name.
+
+:File_Default_Print:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print One
+
+Prints the selected file using the default print
+method for that file type or the script defined in
+the Advanced Settings Properties window.
+
+Keyboard shortcut:  Meta-P
+
+:File_Custom_Print:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print
+
+Displays the Print window, in which
+you can specify a custom method to print
+the selected file.  You can also specify the
+number of copies to print.
+
+########################50########################
+:File_Find:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Find
+
+Displays a window in which you specify search
+criteria to find files in your file system.
+
+You can search for files by type, location, name,
+owner, modification date, or contents.
+
+Keyboard shortcut:  Meta-F
+
+:File_File_Info:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Information
+
+Displays a window containing information
+about a selected file.
+
+Click SELECT on the (+) or (-) buttons in the
+lower right corner to adjust the amount of
+information displayed.
+
+The information displayed is the file's name,
+size, type, modification date, access date,
+permissions, and owner, plus open method, print
+method, mount information, and disk space
+available if you set the display for the maximum
+amount of information.
+
+########################50########################
+:File_Remote_Copy:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Remote Copy
+
+Displays a window in which you can copy files to
+or from a remote system.
+
+:File_Custom_Commands:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Custom Commands
+
+<custom commands>	Commands you have defined
+			in the Custom Commands
+			Properties window.
+
+UNIX Shell      	Opens a Command Tool.
+
+########################50########################
+:File_Check_Floppy:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Check For Floppy
+
+Insert a floppy disk, then choose
+Check For Floppy to display a window
+showing the disk's contents.
+
+In the new floppy disk window, choose
+File -> Format Floppy or File -> Rename Floppy
+to format or name the floppy disk.
+
+:File_Format_Disk:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Format Floppy
+
+This menu item is active only for floppy disk
+windows.  You can format the disk in either
+Unix or DOS format.
+
+:File_Rename_Disk:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Rename Floppy
+
+This menu item is active only for floppy disk
+windows.  You can rename the floppy disk.
+
+########################50########################
+:File_Comments:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+
+Use the Comments window to send your comments
+on using File Manager back to the File Manager
+development team.
+
+:File_Really_Quit:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Quit File Manager
+
+Really quit File Manager.  File Manager will
+remember the windows you have open and
+recreate your environment when you restart
+File Manager.
+
+#################################
+#        View menu
+#################################
+########################50########################
+:View:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+View
+
+Provides options to change the File Manager
+display:
+
+Open Folder View	Opens or displays the
+			Folder View window, which
+			displays a view of your
+			file system that resembles
+			an inverted tree.
+
+Large Icon View		Displays files as large
+			icons as they are
+			currently positioned.
+
+Small Icon View		Displays files as small
+			icons as they are
+			currently positioned.
+
+Icon by Name    	Displays files as large
+			icons, sorted by name.
+
+Icon by Type    	Displays files as large
+			icons, sorted by file
+			type, then by name.
+
+########################50########################
+List by Name    	Displays files as small
+			icons, sorted by name.
+
+List by Type    	Displays files as small
+			icons, sorted by file
+			type, then by name.
+
+List by Size    	Displays files as small
+			icons, sorted in
+			decreasing size order.
+
+List by Date    	Displays files as small
+			icons, sorted with
+			most recent modification
+			date first.
+
+Cleanup Icons/
+Cleanup Selection	If you have no icons
+			selected, then this option
+			is "Cleanup Icons" and
+			moves all the icons
+			in the folder pane window
+			to their nearest grid
+			point.
+
+			If you select one or more
+			icons, then just the
+			selected icon(s) are
+			moved to the nearest grid
+			point.
+
+########################50########################
+#-----------------
+#View button menu.
+#-----------------
+:View_Tree:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open Folder View
+
+Opens or displays the Folder View window, which
+displays a view of your file system that resembles
+an inverted tree.
+
+:View_Position_Icon:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Large Icon View
+
+Displays files as large icons.  You can select
+and drag a large icon to any position in the
+Folder View window.
+
+Note: Positions of large and small icons can be
+adjusted independently.
+
+:View_Position_List:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Small Icon View
+
+Displays files as small icons.  You can select
+and drag a small icon to any position in the
+Folder View window.
+
+Note: Positions of large and small icons can be
+adjusted independently.
+
+:View_Icon_Name:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Icon by Name
+
+Displays files as large icons, sorted
+alphabetically by name.
+
+:View_Icon_Type:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Icon by Type
+
+Displays files as large icons, sorted by file
+type, then by name.
+
+########################50########################
+:View_List_Name:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+List by Name
+
+Displays files as small icons, sorted
+alphabetically by name.
+
+:View_List_Type:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+List by Type
+
+Displays files as small icons, sorted by file
+type, then by name.
+
+:View_List_Size:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+List by Size
+
+Displays files as small icons, sorted in
+decreasing size order.
+
+:View_List_Date:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+List by Date
+
+Displays files as small icons, sorted with
+most recent modification date first.
+
+:View_Cleanup:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Cleanup Icons/Cleanup Selection
+
+If you have no icons selected, then this option
+is "Cleanup Icons" and moves all the icons
+in the folder pane window to their nearest grid
+point.
+
+If you select one or more icons, then this option
+is "Cleanup Selection" and just the selected
+icon(s) move to the nearest grid point.
+########################50########################
+#########################################
+#       Edit menu
+#########################################
+:Edit:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit
+
+Provides options for manipulating files and
+folders:
+
+Select All      Selects all files in the file
+                pane.
+
+Cut             Removes selected files to a
+		temporary storage location--the
+                clipboard.
+
+Copy            Copies selected files to the
+                clipboard.
+
+Link		Copies selected files to the
+                clipboard as links.
+
+Paste           Pastes the contents of the
+                clipboard into the open folder.
+
+Delete/Destroy  Delete removes selected files
+		to the Wastebasket.  Files
+		in the Wastebasket are
+		recoverable.
+
+		Destroy really deletes the
+		selected files.  They are
+		not recoverable.
+
+		Choose whether Delete or
+		Destroy appears on the Edit
+		menu in the General Defaults
+		Properties window.
+
+Properties	Opens the File Manager
+		Properties window, in which
+		you can change:
+
+		- General Defaults
+		- New Folder Defaults
+		- Current Folder Settings
+		- Go To Menu Defaults
+		- Custom Commands
+		- Advanced Settings
+
+########################50########################
+#-----------------
+#Edit button menu.
+#-----------------
+:Edit_Select_All:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Select All
+
+Selects all files in the File pane.
+
+Keyboard shortcut:  Meta-A
+
+:Edit_Cut:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Cut
+
+Removes selected files to a temporary storage
+location--the clipboard.
+
+Keyboard shortcut:  Meta-X
+
+:Edit_Copy:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Copy
+
+Copies selected files to the clipboard.
+
+Keyboard shortcut:  Meta-C
+
+:Edit_Link:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Link
+
+Copies selected files to the clipboard as links.
+
+:Edit_Paste:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Paste
+
+Pastes the contents of the clipboard into
+the open folder.
+
+Pasted files are linked, copied, or moved,
+depending on how they were stored on the
+clipboard.
+
+Keyboard shortcut:  Meta-V
+
+########################50########################
+:Edit_Delete:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Delete/Destroy
+
+Delete removes selected files to the Wastebasket.
+Files in the Wastebasket are recoverable.
+
+Destroy really deletes the selected files.
+They are not recoverable.
+
+Choose whether Delete or Destroy appears
+on the Edit menu in the General Defaults
+Properties window.
+
+:Edit_Properties:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Properties
+
+Opens the File Manager Properties window,
+in which you can change:
+
+- General Defaults
+- New Folder Defaults
+- Current Folder Settings
+- Go To Menu Defaults
+- Custom Commands
+- Advanced Settings
+
+Keyboard shortcut:  Meta-I
+
+########################50########################
+#################################
+#       Go To menu
+#################################
+:Goto:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Go To
+
+Home		Changes the File pane to
+		display the contents of
+		your home directory.
+
+<User-defined folders>
+		Displays folders you have
+		specified in the Go To Menu
+		Defaults Properties window.
+
+
+Folder View	Displays the Folder View window,
+		which displays a view of your
+		file system that resembles an
+		inverted tree.
+
+Waste		Displays the Wastebasket window,
+		which displays files you have
+		deleted, but not destroyed.
+
+<Application-specific folders>
+		Displays folders for all removable
+		media (floppies and CDs).
+
+<Recently Used Folders>
+		Press MENU and choose a
+		folder from the Go To menu.
+
+To move to another folder, click SELECT in
+the Go To text field, type its name on the
+line, then click SELECT on the Go To button.
+
+For more, see help for the Go To text field.
+
+########################50########################
+:Goto_Line:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Go To: _______
+
+To Change Folders       Type a folder name here,
+                        and then click SELECT on
+                        the Go To button. You can
+                        use environment
+                        variables such as
+                        $OPENWINHOME.
+
+To Find Files           Type a pattern to be
+                        matched (e.g., *.rs to
+                        match all files with that
+                        suffix) and click SELECT
+                        on the Go To button. This
+                        selects all files that
+                        match the pattern.
+
+:Goto_Home:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Home
+
+Changes the File pane to display the contents
+of your home directory.
+
+:Goto_User:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+<User-defined folders>
+
+Displays folders you have specified
+in the Go To Menu Defaults Properties window.
+
+########################50########################
+:Goto_Tree:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Folder View
+
+Displays the Folder View window, which
+shows a view of your file system that resembles
+an inverted tree.
+
+:Goto_Waste:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Waste
+
+Displays the Wastebasket window, showing
+files you have deleted, but not destroyed.
+
+:Goto_Media:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+<Application-specific folders>
+
+Displays the contents of folders for all
+removable media (floppies and CDs).
+
+:Goto_Latest:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+<Recently visited folders>
+
+Select a recently-visited folder from the menu
+to return to it.
+########################50########################
+:Left_Status:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Status bar message area
+
+The status bar contains three message areas:
+
+The left side lists the number of items in the
+current folder.
+
+The right side shows the amount of available
+disk space in the file system being displayed.
+
+The middle is an "Eject Disk" button for
+ejecting floppy disks or CDs.  When you choose
+"Eject Disk", the window that opened when the
+disk was inserted quits.
+
+:Eject_Disk:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Eject Disk
+
+Click on Eject Disk to eject the disk from
+the drive.  When you choose "Eject Disk",
+the window that opened when the disk was
+inserted quits.
+
+:Right_Status:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Status bar message area
+
+The status bar contains three message areas:
+
+The left side lists the number of items in the
+current folder.
+
+The right side shows the amount of available
+disk space in the file system being displayed.
+
+The middle is an "Eject Disk" button for
+ejecting floppy disks or CDs.  When you choose
+"Eject Disk", the window that opened when the
+disk was inserted quits.
+
+#-----------------
+#Floating path pane menu
+#-----------------
+#:Path_Open_Folder:
+:File_Open:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open Folder
+
+Displays the contents of the selected folder.
+This item is only active when a folder is
+selected.
+
+########################50########################
+#-----------------
+#All Property sheets
+#-----------------
+:apply:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Apply
+
+Click SELECT on Apply to apply all the settings
+you have changed for the File Manager that is
+currently running.
+
+:set_default:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Save as Defaults
+
+Click SELECT on Set Defaults to save
+the current settings as the defaults for
+this and every future File Manager (until you
+change them again).
+
+:reset:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Reset
+
+Click SELECT on Reset to display the
+File Manager defaults since you
+clicked Apply or Save as Defaults.
+
+#-----------------
+#Property sheet - general defaults.
+#-----------------
+:Props_Category:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Category
+
+To customize your File Manager, use these
+Properties windows:
+
+########################50########################
+General Defaults	Sets the method for
+			opening folders, the
+			layout of the Folder View
+			window, the method for
+			deleting files, and
+			the default document name.
+
+New Folder Defaults	Sets properties for
+			newly-created folders
+			only.
+
+Current Folder Settings
+			Sets properties for
+			existing folders only.
+
+Go To Menu Defaults	Specifies folders for
+			the Go To Menu.
+
+Custom Commands	Specifies UNIX commands
+			to appear on the
+			File -> Custom Commands
+			menu.
+
+Advanced Settings	Sets the default print
+			method for files, the
+			interval for updating the
+			File pane display, the
+			default text editor for
+			creating new documents,
+			and parameters for
+			removable media windows.
+
+########################50########################
+:Props_General_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+General Defaults
+
+Provides options for customizing:
+
+- the way you open folders
+- layout of the Folder View window
+- whether files are moved to the Wastebasket or
+  really deleted
+- the default text editor
+
+:Props_General_Open_Folder:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open Folder into:
+
+Controls whether opening a new folder occurs in
+the same or a new window.
+
+:Props_General_Tree_Direction:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Folder View:
+
+Controls the direction of icons in the initial
+Folder View window (vertical or horizontal).
+
+:Props_General_Delete:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit Menu item is:
+
+Controls whether files are moved to the
+Wastebasket when you delete them or whether they
+are really destroyed.
+
+:Props_General_Default_Document:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Default Document Name:
+
+The default new file name is NewDocument.
+To change it, type a new name on the
+Default Document Name line, then click SELECT
+on Apply.
+
+#-----------------
+#Property sheet - new folder defaults.
+#-----------------
+########################50########################
+:Props_NewFolder_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+New Folder Defaults
+
+Change these settings to affect all new File
+Manager folder windows.  Any time you open a
+folder, the New Folder Defaults are active.
+They do not affect existing windows.
+
+To change the properties of existing folders, use
+the Current Folder Defaults Properties window.
+
+:Props_NewFolder_New_Folder:$OPENWINHOME/bin/helpo handbooks/filemgr.handbook
+Default Name:
+
+The default new folder name is NewFolder.
+To change this, type a new name on the
+Default Name line, then click SELECT on Apply.
+
+:Props_NewFolder_Longest_Filename:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Longest Name:
+
+The longest filename displayed is 15 characters
+long by default.  To change this value, click
+SELECT on the up or down arrows or type in a
+value on the Longest Name line.  Then click
+SELECT on Apply.
+
+:Props_NewFolder_Layout:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Icon Layout:
+
+Choose Vertical or Horizontal for the layout
+in a new Folder View window.
+
+:Props_NewFolder_Sort:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Sort By:
+
+Controls the default sort method for
+displaying files in new folders:
+
+- Name (initial default)
+- Type
+- Size
+- Date
+
+:Props_NewFolder_Hidden_Items:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Hidden Files:
+
+Controls whether files beginning with the
+character "." are displayed in the file pane.
+
+########################50########################
+:Props_NewFolder_Display_Mode:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Display Files As:
+
+Controls the way files are represented:
+
+Icons		As large icons.
+
+List		As small icons.
+		With List selected, you can
+		select the file attributes you
+		want to show in the list.  If you
+		choose to display many file
+		attributes, the files are listed
+		one per line.
+
+Content		By showing a condensed version of
+		the file's contents.
+
+:Props_NewFolder_List_Options:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Show in List:
+
+Click SELECT on file attributes you want
+to see when files are displayed in a list.
+
+:Props_NewFolder_Content_Mode:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+View Content As:
+
+Choose whether file images are displayed as
+monochrome icons, monochrome images, or
+color icons when files are displayed by content.
+
+########################50########################
+#-----------------
+#Property sheet - current folder settings.
+#-----------------
+:Props_CurFolder_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Current Folder Settings
+
+Change these settings to affect current File
+Manager folder windows.  The current folder is
+the one from which you opened the property
+window.
+
+To change the properties of all new folders, use
+the New Folder Defaults Properties window.
+
+:Props_CurFolder_Longest_Filename:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Longest Name:
+
+The longest filename displayed is 15 characters
+long by default.  To change this value, click
+SELECT on the up or down arrows or type in a
+value on the Longest Name line.  Then click
+SELECT on Apply.
+
+:Props_CurFolder_Layout:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Icon Layout:
+
+Choose Vertical or Horizontal for the layout
+in the current Folder View window.
+
+:Props_CurFolder_Sort:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Sort By:
+
+Controls the sort method for
+displaying files in the current folder:
+
+- Name (initial default)
+- Type
+- Size
+- Date
+
+:Props_CurFolder_Hidden_Items:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Hidden Files:
+
+Controls whether files beginning with the
+character "." are displayed in the file pane.
+
+:Props_CurFolder_Display_Mode:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Display Files As:
+
+Controls the way files are represented:
+
+Icons		As large icons.
+
+List		As small icons.
+		With List selected, you can
+		select the file attributes you
+		want to show in the list.  If you
+		choose to display many file
+		attributes, the files are listed
+		one per line.
+
+Content		By showing a condensed version of
+		the file's contents.
+
+:Props_CurFolder_List_Options:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Show in List:
+
+Click SELECT on file attributes you want
+to see when files are displayed in a list.
+
+:Props_CurFolder_Content_Mode:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+View Content As:
+
+Choose whether file images are displayed as
+monochrome icons, monochrome images, or
+color icons when files are displayed by content.
+
+########################50########################
+#-----------------
+#Property sheet - go to menu defaults.
+#-----------------
+:Props_Goto_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Go To Menu Defaults
+
+Change these settings to customize the Go To
+menu.
+
+:Props_Goto_Add_Button:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Add Item
+
+To add an item to the default Go To menu, type in
+the folder's path and click SELECT on Add Item.
+
+:Props_Goto_Pathname:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Pathname:
+
+To add an item to the default Go To menu,
+type a folder's path name and click SELECT on
+Add Item.
+
+Folders you add using the Go To Menu Defaults
+Properties window will always appear on the
+Go To menu even if you haven't recently visited
+them.
+
+Only the n most recently visited folders will
+remain in the scrolling list.  n is set in
+the Display n Folders text field.
+
+:Props_Goto_Menu_Label:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Menu Label:
+
+Type an optional label for the item you are
+adding to the Go To menu.  You may wish to
+use an abbreviated name if the pathname is
+very long.
+
+:Props_Goto_List:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Go To Menu Items:
+
+Displays folders you have added to the default
+Go To menu.
+
+########################50########################
+:Props_Goto_Edit_Button:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit
+
+Select a custom command from the list and press
+MENU on Edit to reposition the command in the
+list.  Edit options are:
+
+- Cut
+- Copy
+- Paste
+   Before
+   After
+   Top
+   Bottom
+- Delete
+
+:Props_Goto_Number:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Display n Folders:
+
+Only the n most recently visited folders will
+remain in the scrolling list.  The default is
+10 folders.
+
+########################50########################
+#-----------------
+#Property sheet - custom commands.
+#-----------------
+:Props_Custom_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Custom Commands
+
+Create new custom commands and edit or delete
+existing ones.
+
+Custom commands can use these environment
+variables:
+
+$FILE	a list of all the selected files
+	(full pathnames)
+
+$ARG	the user input from the optional prompt
+	window
+
+$FMPWD	The current directory pathname
+
+:Props_Custom_New_Command:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Add Item
+
+To add a UNIX command to the Custom Commands
+menu, type the command and click SELECT on
+Add Item.
+
+:Props_Custom_UNIX_Command:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+UNIX Command:
+
+Type a UNIX command that you want readily
+available to you on the File -> Custom Commands
+menu.
+
+Be sure to use $FILE in your command where the
+filename(s) of selected file(s) should appear.
+
+########################50########################
+:Props_Custom_Menu_Label:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Menu Label:
+
+After entering a UNIX Command you want readily
+accessible on the Custom Commands menu, type
+the name that you want to appear on the menu.
+
+#For example, you might frequently use the
+#UNIX command:
+#
+#spell $FILE
+#
+#to check for any misspelled words in a file.
+#To add this command to the Custom Commands menu,
+#display the Custom Commands property window,
+#type "spell $FILE" into the UNIX Command text
+#field, type "Check spelling" into the Menu
+#Label field, then click SELECT on Add Item
+#and Apply.
+#
+:Props_Custom_Custom_Commands:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Custom Commands Menu Items:
+
+This is an editable scrolling list of the custom
+commands you have added to the Custom Commands
+menu.
+
+:Custom_Command_Goto_Edit:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit menu items
+
+- Cut
+- Copy
+- Paste
+   - Before
+   - After
+   - Top
+   - Bottom
+- Delete
+
+Use these editing commands to change the custom
+commands in the scrolling list.
+
+:Custom_Command_Goto_Edit_Paste:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit menu items
+
+- Cut
+- Copy
+- Paste
+   - Before
+   - After
+   - Top
+   - Bottom
+- Delete
+
+Use these editing commands to change the custom
+commands in the scrolling list.
+
+:Props_Custom_Edit_Menu:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit
+
+Select a custom command from the list and press
+MENU on Edit to reposition the command in the
+list.  The Edit options are:
+
+- Cut
+- Copy
+- Paste
+   Before
+   After
+   Top
+   Bottom
+- Delete
+
+########################50########################
+:Props_Custom_Prompt_Window:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Prompt Window:
+
+If you want to prompt for command options, choose
+Yes and then type the prompt label in the Prompt
+text field.
+
+When the custom command is chosen from the
+Custom Command window, a window is displayed
+where you can type command options.
+
+:Props_Custom_Prompt:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Prompt:
+
+Enter the prompt label, if you chose Yes in the
+Prompt Window setting.
+
+:Props_Custom_Output_Window:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Output Window:
+
+Choose Yes if you want an output window to be
+displayed where you can see the result of running
+your custom command.
+
+#------------------------------------------------------------
+#               Custom Commands Prompt Popup
+#------------------------------------------------------------
+
+:Create_Command_Prompt_Question:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Command Prompt
+
+Enter the information asked for by the prompt and
+then click SELECT on Run.
+
+:Create_Command_Prompt_Run:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Run
+
+Run the command with the arguments entered on the
+text line.
+
+#-----------------
+#Property sheet - advanced panel.
+#-----------------
+########################50########################
+:Props_Icon_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Advanced Settings
+
+Use the Advanced Settings property window to
+change:
+
+- the default print method
+- the view filter pattern
+- the frequency with which File Manager checks
+  for changes in the current directory
+- whether File Manager should follow symbolic
+  links when displaying files
+- the default document editor
+- whether File Manager automatically detects
+  floppies and CDs when inserted, and opens
+  a special window
+- whether File Manager should check the contents
+  of files on floppies and CDs to determine the
+  icon to display.  Because floppies and CDs are
+  much slower media than hard disks, turning off
+  this checking can substantially improve
+  performance
+
+:Props_Icon_Def_Print_Script:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print Method:
+
+Edit the print script to change how files are
+automatically printed when you choose Print
+from the File menu.
+
+:Props_Icon_Filter_Pattern:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+View Filter Pattern:
+
+Specify a pattern through which to screen your
+view of the files in the current folder.
+
+For example, specifying *.ps in the View Filter
+Pattern text field causes File Manager to
+display ONLY the files with a .ps suffix.
+
+:Props_Interval_Time:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Update File System Every:
+
+File Manager regularly compares its display
+with the actual file system.
+
+Specify the interval (in seconds)
+you want to elapse between comparisons.
+
+########################50########################
+:Props_Follow_Links:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Follow Symbolic Links:
+
+Specify whether or not you want File Manager to
+include symbolically-linked files in its display.
+
+:Props_Icon_Def_Doc_Editor:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Default Editor:
+
+Choose the default editor you want when you open
+document files:
+
+texteditor	Documents open in a Text Editor
+		window.
+
+Other: 		When chosen, a text field is
+		displayed: type the name of a
+		window-based editor there.
+
+		To use a command-line editor,
+		you must start a Shell Tool
+		before starting the editor. You
+		should also invoke the sleep
+		command after the Shell Tool and
+		before the editor. For example,
+		to use the vi text editor,
+		enter this command:
+
+		shelltool sh -c "sleep 3;vi $FILE"
+
+		Be sure to use $FILE in your
+		command where the filename should
+		appear.
+
+:Props_Auto_Media:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+CD window
+
+Specify whether you want File Manager to open a
+CD window automatically when the disk is inserted.
+
+:Props_Classing_Engine_Content:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Use generic icons
+
+Specify whether or not you want File Manager to
+use generic icons for the files contained on
+floppies or CDs.  Selecting generic icons can
+result in a quicker display of the disk contents
+because reading these media is relatively slow.
+
+########################50########################
+#-----------------
+#Wastebasket window - Edit button
+#
+#View button is just like File Manager View button
+#-----------------
+:Waste_Edit:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Edit
+
+Provides options for manipulating files and
+folders in the Wastebasket:
+
+Select All	Selects all files in the
+		Wastebasket.
+
+Cut		Removes selected files to a
+		temporary storage location--the
+		clipboard.
+
+Copy		Copies selected files to the
+		clipboard.
+
+Paste		Pastes the contents of the
+		clipboard into the Wastebasket.
+
+Undelete	Replaces a selected file in the
+		Wastebasket to its original
+		location.  Undelete is how you
+		recover files that you've
+		deleted by mistake.
+
+Destroy  	Really deletes the selected
+		files from the Wastebasket.
+		They are not recoverable.
+
+Properties	Opens the File Manager
+		Properties window, in which
+		you can change:
+
+		- General Defaults
+		- New Folder Defaults
+		- Current Folder Settings
+                - Go To Menu Defaults
+		- Custom Commands
+		- Advanced Settings
+
+########################50########################
+#-----------------
+#Wastebasket window - Edit button menu
+#
+#View menu is just like File Manager View menu
+#-----------------
+:Waste_Select_All:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Select All
+
+Selects all files in the Wastebasket.
+
+Keyboard shortcut:  Meta-A
+
+:Waste_Undelete:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Undelete
+
+Undeletes selected files in the Wastebasket.
+
+Undeleted files are restored to their original
+folder.
+
+CAUTION: Files left in the Wastebasket when you
+quit File Manager cannot be recovered!
+
+:Waste_Destroy:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Destroy
+
+Destroy really deletes the selected files
+in the Wastebasket.
+You can not recover them.
+
+########################50########################
+#------------------------------------------------------------
+#			Wastebasket Floating Menu
+#------------------------------------------------------------
+:Waste_Empty_Wastebasket:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Empty Wastebasket
+
+Deletes all files in the Wastebasket.
+
+CAUTION: Files deleted with this command cannot
+be recovered!
+
+#------------------------------------------------------------
+#			Find Popup
+#------------------------------------------------------------
+
+:Find_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Find panel
+
+Choose search criteria here to find files in your
+file system.
+
+:Findtype:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+File Type
+
+Click SELECT on the types of files to be included
+in the search:
+
+- Folders
+- Documents
+- Applications
+
+:Findfrom:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Find files in and below folder:
+
+Enter the name of the folder to start searching
+from.
+
+:Findname:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Name:
+
+Enter the name of the file to search for--
+or to exclude from the search.
+
+Leave blank if you do not know the file name.
+
+You can use pattern-matching. For example, enter
+"*.ps" to find all files with that suffix.
+
+########################50########################
+:Findnametoggle:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Name Included/Excluded
+
+Click SELECT on a setting to include or exclude
+the file name from the search.
+
+:Findowner:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Owner:
+
+Enter the name of the file owner to include or
+exclude from the search.
+
+Leave blank if unknown or not important.
+
+:Findownertoggle:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Owner Included/Excluded
+
+Click SELECT on a setting to include or exclude
+files belonging to the specified owner.
+
+########################50########################
+:Findafter:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Modified After:
+
+Enter date to find files modified after that date.
+
+Leave blank if unimportant.
+
+Use with Modified Before to find files modified
+between two dates.
+
+:Findbefore:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Modified Before:
+
+Enter date to find files modified before that
+date.
+
+Use with Modified After to find files modified
+between two dates.
+
+########################50########################
+:Findpattern:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Search Files Containing String:
+
+Use to search the contents of files for the
+specified text.
+
+For example, enter the string
+
+  Fernando Pessoa
+
+to find all files that contain that name.
+
+NOTE: This option slows down the search.
+
+:Findcase:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Ignore Case
+
+Click SELECT on Ignore Case to find both upper-
+and lowercase versions of the string.
+
+########################50########################
+:Findfind:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Find
+
+Click SELECT on Find to start the search.
+
+:Findstop:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Stop
+
+Click SELECT on Stop to stop the search.
+
+:Findopen:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open
+
+To open a file in the list below, click SELECT on
+the file and then click SELECT on the Open
+button.
+
+#############################################
+### 	File Information Popup
+#############################################
+########################50########################
+:Info_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Information
+
+Use this window to get information about
+the selected file.  The Information popup
+displays a file's name, size, and type; the
+date it was last modified and accessed; its
+permissions, owner, group, open method,
+print method, mount point, where it's mounted
+from, and the space remaining on its partition.
+
+:Info_Icon:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+File Icon
+
+This is the icon associated with the
+selected file.
+
+:Info_File_Name:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Name:
+
+The name of the selected file or folder.
+
+You can change the name by selecting it, typing
+a new name, and then clicking SELECT on Apply.
+
+:Info_Byte_Size:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Size:
+
+If you selected a file before selecting
+File -> Information, the size is the number of
+bytes in the file.
+
+If you selected a folder first, then the size is
+the number of bytes in the directory itself.
+
+:Info_Contents:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Contents
+
+If you selected a folder before selecting
+File -> Information, a Contents button appears
+next to Size.
+
+Click SELECT on the Contents button to
+display the number of bytes in the contents
+of the directory.
+
+Click SELECT on Contents to again display
+the size of the directory itself.
+
+:Info_File_Type:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Type:
+
+What kind of file it is. Examples: "shell
+commands," "ascii text," "directory."
+
+########################50########################
+:Info_Modify_Time:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Last Modified:
+
+The last time the file was changed.
+
+:Info_Access_Time:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Last Accessed:
+
+The last time the file was opened.
+
+:Info_Permissions:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Permissions:
+
+Who can read, write, and execute the file:
+
+Owner:	Owner of the file
+
+Group: 	Users in your workgroup
+
+World: 	Everyone on your network
+
+If you are the owner of the file, you can click
+SELECT on any setting to change it.
+
+:Info_Owner:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Owner:
+
+You must be the owner of a file to change
+permissions.
+
+When the owner is Group or World, you are one of
+many owners.
+
+:Info_Group:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Group:
+
+The group to which the file or folder belongs.
+The owner does not have to belong to the group.
+
+########################50########################
+:Info_Open_Method:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open Method:
+
+The default method used to open the selected
+file, as defined in the Binder database.
+
+:Info_Print_Method:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print Method:
+
+The default method used to print the selected
+file, as defined in the Binder database.
+
+:Info_Mount_Point:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Mount Point:
+
+The directory where the file system is mounted on
+your system.
+
+:Info_Mount_From:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Mounted From:
+
+The server and directory the file system is
+mounted from.
+
+:Info_Free_Space:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Free Space:
+
+Shows the free space in kilobytes and percentage
+remaining in the partition.
+
+:Info_More:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
++/-
+
+Click SELECT on the + button to show more of the
+file's attributes.
+
+Click SELECT on the - button to return to the
+default display.
+
+#-------------------------
+#Rename a file or folder
+#-------------------------
+:Rename:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Rename
+
+Use standard editing commands to change the
+filename of the file pane object you selected.
+
+#----------------------------------
+# Removable media window and popups
+#----------------------------------
+##############################################
+### Format Disk Panel
+##############################################
+#included in a separate file called
+#format_floppy.info
+##############################################
+### Rename Disk Popup
+##############################################
+:Rename_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Rename Disk
+
+Use this popup to rename your CD or
+floppy disk.
+
+:Rename_Disk_Name:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Disk Name
+
+Enter the name you want to give to the disk,
+then click SELECT on Rename Disk.
+
+:Rename_Rename:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Rename Disk
+
+After entering a name for your disk, click
+SELECT on Rename Disk.
+
+:Rename_Cancel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Cancel
+
+Click SELECT on Cancel to cancel the renaming
+operation.
+
+##############################################
+### Remote Copy
+##############################################
+########################50########################
+:Rcp_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Remote Copy panel
+
+Choose options to copy remote files to
+and from your system and other systems.
+
+:Rcp_Source:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Source
+
+Machine Name:	Enter the name of the machine
+		from which files are to be
+		copied.
+
+Pathname:  	Enter the path of the files to
+		be copied.
+
+:Rcp_Destination:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Destination
+
+Machine Name:	Enter the name of the machine
+		you want to copy to.
+
+Pathname:	Enter the path to copy files to.
+
+:Rcp_Copy:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Copy File
+
+Click SELECT on Copy File to start the remote copy.
+
+:Rcp_Cancel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Cancel
+
+Click SELECT on Cancel to cancel the remote
+copy operation.
+
+#------------------------------------------------------------
+#			Custom Print Popup
+#------------------------------------------------------------
+:Custom_Print_Panel:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print
+
+Use this window to print the selected file with
+a custom print method or change the number of
+copies to be printed.
+
+:Custom_Print_Print_Method:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print Method:
+
+Enter the command you want to use to print
+the selected file.
+
+:Custom_Print_Copies:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Copies:
+
+Enter the number of copies you want to print.
+
+########################50########################
+:Custom_Print_Print:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Print
+
+Click SELECT on Print to send the file to the
+printer.
+
+#------------------------------------------------------------
+#			Folder View Floating Menu
+#------------------------------------------------------------
+########################50########################
+#
+#Open and Open Folder Window menu items are under the File menu.
+#
+:File_Open_Folder:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Open Folder Window
+
+Opens a new File Manager window, showing the
+contents of the selected folder.
+
+:Tree_Pane_Direction:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Show Horizontal/Vertical
+
+Changes the tree-shaped display from top-to-bottom
+or left-to-right.
+
+:Tree_Pane_Show_All_Subfolders:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Show All Sub Folders
+
+Shows all subfolders under the selected folder.
+
+:Tree_Pane_Hide_Subfolders:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Hide Sub Folders
+
+Hides all subfolders under the selected folder.
+
+:Tree_Pane_Start_Tree_Here:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Start Folder View Here
+
+Makes the selected folder the top of the tree.
+
+:Tree_Pane_Add_Trees_Parent:$OPENWINHOME/bin/helpopen handbooks/filemgr.handbook
+Add Parent
+
+Adds the folder one level above the selected
+folder to the display.
+
+# Moves the top of the tree to the parent of the
+# selected folder.
+########################50########################

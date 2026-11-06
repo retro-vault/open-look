@@ -6,8 +6,9 @@
 
 "Programs" TITLE PIN
 
+"File Manager..."		exec $OPENWINHOME/bin/filemgr -C
+
 "Command Tool..." 		exec $OPENWINHOME/bin/cmdtool
 "Clock..."			exec $OPENWINHOME/bin/clock
 "Text Editor..."			exec $OPENWINHOME/bin/textedit
 "Properties..."			exec $OPENWINHOME/bin/props
-"Hello..."			exec $OPENWINHOME/bin/hello

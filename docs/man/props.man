@@ -11,6 +11,11 @@ props \- Change OpenWindows settings
 .I generic-tool-arguments
 ] 
 
+.SH LINUX PORT
+The Colours category supports 8-bit PseudoColor and 16/24-bit TrueColor
+screens; grayscale screens omit this category.
+Locale configuration is installed under $OPENWINHOME/share/locale/C/props.
+See the repository README for runtime environment and font setup.
 .SH DESCRIPTION
 \fBprops\fP can be used to change certain settings for OpenWindows/XView
 programs using a GUI. As most of these settings are stored in

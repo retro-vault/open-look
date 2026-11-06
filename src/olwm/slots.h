@@ -29,6 +29,7 @@ typedef struct _iconGrid {
 } IconGrid;
 
 /* SlotInit: Initialize slot. */
+void SlotResize(Display *dpy, IconGrid *grid, int width, int height);
 extern IconGrid *SlotInit();	 /* Display *dpy, int screeno */
 	/* initialises the Slots package; should be called for
 	 * each screen

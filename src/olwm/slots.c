@@ -273,6 +273,8 @@ IconSlot *slot;
 	return;
     }
 
+    x = MAX(0, MIN(x, iconGrid->pixhoriz - (int)win->core.width));
+    y = MAX(0, MIN(y, iconGrid->pixvert - (int)win->core.height));
     (WinFunc(win,core.newposfunc))(win,x,y);
 }
 
@@ -379,8 +381,8 @@ int	screenno;
 	iconGrid->iconList = NULL_LIST;
 	iconGrid->pixhoriz = DisplayWidth(dpy,screenno);
 	iconGrid->pixvert = DisplayHeight(dpy,screenno);
-	iconGrid->slotshoriz = iconGrid->pixhoriz/ICON_GRID_WIDTH;
-	iconGrid->slotsvert = iconGrid->pixvert/ICON_GRID_HEIGHT;
+	iconGrid->slotshoriz = MAX(1, iconGrid->pixhoriz/ICON_GRID_WIDTH);
+	iconGrid->slotsvert = MAX(1, iconGrid->pixvert/ICON_GRID_HEIGHT);
 	occLen = iconGrid->slotshoriz * iconGrid->slotsvert * sizeof(int);
 	iconGrid->occupancy = MemAlloc(occLen);
 	iconGrid->minoccupancy = 0;
@@ -429,7 +431,8 @@ Bool snaptogrid;
         nhoriz = ROUNDUP(winicon->core.width, ICON_GRID_WIDTH);
         nvert = ROUNDUP(winicon->core.height, ICON_GRID_HEIGHT);
 	setMajorMinor(iconGrid, nvert, nhoriz, &nmajor, &nminor);
-	slot = incrDynamicSlots(iconGrid, nmajor, nminor);
+	slot = incrDynamicSlots(iconGrid, MIN(nmajor, iconGrid->maslots),
+                                MIN(nminor, iconGrid->mislots));
 	winicon->iconslot = slot;
 	setIconPos(winicon,slot);
     }
@@ -589,4 +592,25 @@ IconGrid *iconGrid;
 	}
 	ListDestroy(lauto);
 	return True;
+}
+
+/* Rebuild occupancy before placing icons in the new root coordinate space. */
+void
+SlotResize(Display *dpy, IconGrid *grid, int width, int height)
+{
+    List *l = grid->iconList;
+    WinIconFrame *win;
+    grid->pixhoriz = width;
+    grid->pixvert = height;
+    grid->slotshoriz = MAX(1, width / ICON_GRID_WIDTH);
+    grid->slotsvert = MAX(1, height / ICON_GRID_HEIGHT);
+    MemFree(grid->occupancy);
+    grid->occupancy = MemAlloc(grid->slotshoriz * grid->slotsvert * sizeof(int));
+    grid->minoccupancy = 0;
+    while ((win = ListEnum(&l)) != NULL) {
+        int x = MAX(0, MIN(win->core.x, width - (int)win->core.width));
+        int y = MAX(0, MIN(win->core.y, height - (int)win->core.height));
+        (WinFunc(win,core.newposfunc))(win, x, y);
+    }
+    SlotSetLocations(dpy, grid);
 }

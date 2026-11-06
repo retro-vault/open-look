@@ -95,10 +95,8 @@ textedit
 ]
 .I filename 
 .SH AVAILABILITY
-This command is available with the OpenWindows 
-environment.
-For information about installing OpenWindows, refer to the
-.I OpenWindows Installation and Start-Up Guide.
+This command is built and installed by the OpenLook Linux package.
+See the repository README for CMake installation and X11 font setup.
 .SH DESCRIPTION
 .IX tools textedit "" "\fLtextedit\fR"
 .LP
