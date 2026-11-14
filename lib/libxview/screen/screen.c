@@ -24,6 +24,7 @@
 #include <xview/window.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/extensions/Xrandr.h>
 #include <X11/Xatom.h>
 #include <stdlib.h>		/* free() */
 #include <strings.h>
@@ -99,6 +100,13 @@ screen_init(parent, screen_public, avlist)
 	  default:
 	    break;
 	}
+    }
+
+    {
+        int event_base, error_base;
+        if (XRRQueryExtension(display, &event_base, &error_base))
+            XRRSelectInput(display, RootWindow(display, screen->number),
+                           RRScreenChangeNotifyMask);
     }
 
     /*

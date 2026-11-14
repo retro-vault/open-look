@@ -32,6 +32,7 @@
 #include <X11/Xlib.h>		/* required by Xutil.h */
 #endif
 #include <X11/keysym.h>
+#include <X11/extensions/Xrandr.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #include <xview_private/svr_impl.h>
@@ -632,6 +633,26 @@ xevent_to_event(display, xevent, event, pwindow)
 #ifdef OW_I18N
     static KeySym	 paste_keysym, cut_keysym;
 #endif
+
+    /* Each toolkit Display owns a separate cached screen geometry. */
+    {
+        int event_base, error_base;
+        if (xevent->type >= LASTEvent &&
+            XRRQueryExtension(display, &event_base, &error_base) &&
+            xevent->type == event_base + RRScreenChangeNotify) {
+            XRRScreenChangeNotifyEvent *change = (XRRScreenChangeNotifyEvent *)xevent;
+            Xv_object root_window = win_data(display, change->root);
+            XRRUpdateConfiguration(xevent);
+            if (root_window) {
+                int screen_number = XRRRootToScreen(display, change->root);
+                Rect rect = {0, 0, DisplayWidth(display, screen_number),
+                             DisplayHeight(display, screen_number)};
+                window_update_cache_rect(root_window, &rect);
+            }
+            *pwindow = XV_NULL;
+            return 0;
+        }
+    }
 
     /* XXX: assuming 0 => error, 1 => reply */
     /* XXX: This is bogus!  When will X return an event type < 1??? */

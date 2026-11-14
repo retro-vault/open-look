@@ -59,6 +59,15 @@ Pkg_private long textsw_get_from_defaults(Textsw_attribute);
 long	textsw_store_file();
 */
 
+/* Match File Manager's compact menu panel: button height plus six pixels. */
+static void
+scrunch_window(Panel panel, Panel_item button)
+{
+    const Rect *button_rect = (const Rect *)xv_get(button, PANEL_ITEM_RECT);
+
+    xv_set(panel, XV_HEIGHT, button_rect->r_height + 6, NULL);
+}
+
 static Frame		base_frame;
 static char		current_filename[MAXNAMLEN];
 static char		current_directory[MAXPATHLEN];
@@ -833,7 +842,7 @@ textedit_main(argc, argv)
 		
 	textswwidth = (int)xv_get(textsw, WIN_WIDTH);
 
-	(void)window_fit_height(panel);
+	scrunch_window(panel, file_panel_item);
 
 	xv_set(textsw, WIN_BELOW, panel, NULL);
 

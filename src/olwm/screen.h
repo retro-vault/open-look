@@ -124,6 +124,8 @@ typedef struct _screeninfo {
  */
 /* InitScreens: Initialize screens. */
 extern	void		InitScreens(Display *dpy);
+void ScreenResizeInit(Display *dpy);
+Bool ScreenResizeEvent(Display *dpy, XEvent *event);
 /* DestroyScreens: Destroy screens. */
 extern	void		DestroyScreens(Display *dpy);
 /* GetFirstScrInfo: Return first scr info. */

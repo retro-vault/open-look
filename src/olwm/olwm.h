@@ -161,6 +161,7 @@ extern struct _winpaneframe *MakeFrame();
 extern void FrameSetPosFromPane();
 /* FrameFullSize: Full frame size. */
 extern void FrameFullSize();
+extern void FrameUpdateScreenSize();
 /* FrameNormSize: Process frame norm size. */
 extern void FrameNormSize();
 /* FrameNewFooter: Process frame new footer. */

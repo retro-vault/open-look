@@ -600,7 +600,7 @@ MakeRoot(dpy, cli)
 	ErrorSensitive(
 		GetString("Perhaps there is another window manager running?"));
 	XSelectInput(dpy,win,
-		KeyPressMask | SubstructureRedirectMask |
+		KeyPressMask | SubstructureRedirectMask | StructureNotifyMask |
 		ButtonPressMask | ButtonReleaseMask | ButtonMotionMask |
 		EnterWindowMask | PropertyChangeMask | OwnerGrabButtonMask);
 	XSync(dpy, False);

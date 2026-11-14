@@ -316,55 +316,66 @@ Event		*event;
 		(int) xv_get(handle, XV_WIDTH, NULL), (int) xv_get(handle, XV_HEIGHT, NULL));
 }
 
-static void
-readrc(o)
-	Options o;
+/* Resolve preferences without requiring a passwd entry inside containers. */
+static FILE *
+open_clockrc(const char *mode)
 {
-        struct  passwd *pw;
-        char    buf[100];
-        FILE    *fp;
-        int n;
- 
-	if (o==NULL) return;
-	o-> face = analog;
-	o-> seconds = 0;
-	o-> date = 0;
-        pw = getpwuid (getuid ());
-        if (pw == NULL) {
-                fprintf(stderr,"clock: can't find home directory\n");
-                exit(1);
-        }
-        strcpy(buf, pw->pw_dir);
-        strcat(buf, "/");
-        strcat(buf, ".clockrc");
-        fp = fopen(buf, "r");
-        if (fp == NULL) return;
-        n = fscanf(fp, "%x %d %d", &o->face, &o->seconds, &o->date);
-	backup_values (o);
-        fclose(fp);
+    const char *home_dir = getenv("HOME");
+    struct passwd *pw;
+    char *path;
+    size_t length;
+    FILE *fp;
+
+    if (home_dir == NULL || *home_dir == '\0') {
+        pw = getpwuid(getuid());
+        home_dir = pw != NULL ? pw->pw_dir : NULL;
+    }
+    if (home_dir == NULL || *home_dir == '\0')
+        return NULL;
+    length = strlen(home_dir) + sizeof("/.clockrc");
+    path = malloc(length);
+    if (path == NULL)
+        return NULL;
+    snprintf(path, length, "%s/.clockrc", home_dir);
+    fp = fopen(path, mode);
+    free(path);
+    return fp;
 }
 
 static void
-writerc(o)
-	Options o;
+readrc(Options o)
 {
-	struct	passwd *pw;
-	char	buf[100];
-	FILE	*fp;
+    FILE *fp;
+    int face, seconds, date;
 
-	if (o==NULL) return;
-	pw = getpwuid (getuid());
-	if (pw==NULL) {
-		fprintf (stderr, "clock: can't find home directory\n");
-		exit (1);
-	}
-	strcpy (buf, pw->pw_dir);
-	strcat (buf, "/");
-	strcat (buf, ".clockrc");
-	fp = fopen (buf, "w");
-	if (fp==NULL) return;
-	fprintf (fp, "%d %d %d\n", o->face, o->seconds, o->date);
-	fclose (fp);
+    if (o == NULL) return;
+    o->face = analog;
+    o->seconds = 0;
+    o->date = 0;
+    fp = open_clockrc("r");
+    if (fp != NULL) {
+        if (fscanf(fp, "%d %d %d", &face, &seconds, &date) == 3 &&
+            (face == analog || face == digital) &&
+            (seconds == 0 || seconds == 1) && (date == 0 || date == 1)) {
+            o->face = face;
+            o->seconds = seconds;
+            o->date = date;
+        }
+        fclose(fp);
+    }
+    backup_values(o);
+}
+
+static void
+writerc(Options o)
+{
+    FILE *fp;
+
+    if (o == NULL) return;
+    fp = open_clockrc("w");
+    if (fp == NULL) return;
+    fprintf(fp, "%d %d %d\n", o->face, o->seconds, o->date);
+    fclose(fp);
 }
 
 

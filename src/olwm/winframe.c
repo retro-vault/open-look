@@ -1603,6 +1603,16 @@ Time	timestamp;
     return 0;
 }
 
+/* Reapply Full Size using the new screen height while retaining restore data. */
+void
+FrameUpdateScreenSize(Client *client)
+{
+    if (client->framewin->fcore.fullsize) {
+        client->framewin->fcore.fullsize = False;
+        fullrestoreFrame(client, CurrentTime);
+    }
+}
+
 /***************************************************************************
 * global functions
 ***************************************************************************/

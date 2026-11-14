@@ -19,7 +19,9 @@ important.
   Docker image.
 
 Required development dependencies are documented in `README.md`. They
-currently include X11, Xext, and libtirpc development files.
+include X11, Xext, Xpm, libtirpc, and Boost development files, plus `tic`
+and `mkfontdir`. The optional Docker workflow provides these tools in
+`wischner/gcc-x86_64-linux-x11:latest`; see the README for host requirements.
 
 ## 2. Project directory structure
 
@@ -204,7 +206,18 @@ external-library limitation rather than silently skipping the check.
 
 Object files and CMake state must remain in `build/`. Final artifacts are
 expected in `bin/` because the top-level CMake project intentionally stages a
-complete local OPENWINHOME tree there.
+complete local OPENWINHOME tree there. Docker keeps intermediates in
+`build/docker/` and stages into the same `bin/` tree. Keep debug launch paths
+and test scripts aligned with `bin/bin` and the other staged directories.
+
+Build and install must provide matching runtime layouts: exported headers,
+images and bitmap compatibility paths, menus, defaults, help, manuals, locale
+resources, compiled terminfo, indexed fonts, and the environment helper.
+Generate `fonts.dir` with `mkfontdir` during the build; install the generated
+font tree with its aliases and indexes. Preserve `DESTDIR` and install-prefix
+support. Installed programs must find packaged libraries and resources without
+the source tree. Font files must also be registered with the target X server;
+the sourced helper handles the current display when `xset` is available.
 
 ## 9. Testing
 
