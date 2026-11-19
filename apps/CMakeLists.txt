@@ -9,6 +9,6 @@ add_subdirectory(disktool)
 
 # Install the accessories alongside the window manager.
 
-install(TARGETS cmdtool textedit clock props xtoolplaces hello olwmslave disktool
+install(TARGETS cmdtool textedit clock props xtoolplaces olwmslave disktool
     RUNTIME DESTINATION bin
 )
