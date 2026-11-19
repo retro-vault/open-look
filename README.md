@@ -205,6 +205,9 @@ change the compiled default `OPENWINHOME`. Docker builds use the CMake install
 rules in `build/docker`; run installation with the same container toolchain,
 using a writable bind mount or `DESTDIR` to retain the resulting package.
 
+Both the staged and installed `bin` directories include a relative
+`shelltool -> cmdtool` symlink, which starts the terminal in shelltool mode.
+
 `cmdtool` uses `TERM=sun-cmd`. The build compiles its terminal description
 into `share/terminfo` in both the staged tree and the installed prefix.
 `cmdtool` adds `$OPENWINHOME/share/terminfo` to `TERMINFO_DIRS` for its child

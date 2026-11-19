@@ -36,6 +36,7 @@ install(DIRECTORY "${OPENLOOK_TERMINFO_DIR}/" DESTINATION share/terminfo)
 set(OPENLOOK_MAN_PAGES
     filemgr
     clock
+    cmdtool
     olwm
     olwmslave
     props
