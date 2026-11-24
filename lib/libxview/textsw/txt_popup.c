@@ -119,6 +119,12 @@ textsw_popup_destroy_func(client, status)
     Textsw textsw;
     int popup_key_name;
 
+    /* A checking pass can be vetoed by another child (for example the
+     * unsaved-edits notice). Keep the popup registered until it actually
+     * dies, so destroying the text view can still find and close it. */
+    if (status != DESTROY_CLEANUP && status != DESTROY_PROCESS_DEATH)
+        return notify_next_destroy_func(client, status);
+
     popup_key_name = (int)xv_get(popup_frame, XV_KEY_DATA, (Attr_attribute)TEXTSW_POPUP_KEY);
     textsw = (Textsw)xv_get(popup_frame,XV_KEY_DATA, (Attr_attribute)TEXTSW_CURRENT_POPUP_KEY);
     

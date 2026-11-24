@@ -1,0 +1,13 @@
+Navigation icons: Tango icon theme 0.8.90, original 16x16/actions PNGs.
+Source archive:
+https://deb.debian.org/debian/pool/main/t/tango-icon-theme/tango-icon-theme_0.8.90.orig.tar.gz
+
+Authors: Tango Desktop Project contributors.
+License: Public Domain; see the unmodified COPYING file from the archive.
+
+go-previous.png, go-next.png, view-refresh.png, process-stop.png, go-home.png
+are unmodified upstream images with their original alpha channels.
+toolbar-rgba.h embeds 13x13 versions in that order for the C renderer, resized
+with premultiplied-alpha Lanczos filtering to leave room for button borders.
+It can be regenerated with tools/embed-mosaix-icons.py (requires Pillow).
+The three-line Properties glyph is drawn directly by MosaiX.

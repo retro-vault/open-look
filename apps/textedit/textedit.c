@@ -20,6 +20,7 @@ static char sccsid[] = "@(#)textedit.c 15.50 90/05/22";
  *   editing facilities together.
  */
 
+#include "app-icon.h"
 #include <sys/param.h> /* MAXPATHLEN (include types.h if removed) */
 #include <sys/dir.h>   /* MAXNAMLEN */
 #include <sys/stat.h>
@@ -321,7 +322,7 @@ set_name_frame(textsw_local, attributes)
 		break;
 	      case TEXTSW_ACTION_USING_MEMORY:
 		(void)strcpy(current_filename, "(NONE)");
-		(void)strcpy(icon_text, "NO FILE");
+		(void)strcpy(icon_text, "No file");
 		edited = read_only = 0;
 		ATTR_CONSUME(*attrs);
 		break;
@@ -540,6 +541,8 @@ textedit_main(argc, argv)
 			ICON_MASK_IMAGE, mask_image,
 			ICON_TRANSPARENT, TRUE,
                         NULL);
+
+	app_icon_apply(edit_icon, "text-editor");
 
 	xv_set(edit_icon,
 		WIN_CONSUME_EVENTS,

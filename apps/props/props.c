@@ -12,6 +12,7 @@
 static char sccsid[] = "@(#)props.c 1.64 91/09/14";
 #endif
 
+#include "app-icon.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -870,6 +871,9 @@ main(argc, argv)
 #endif
 		      NULL);
 
+    Icon properties_icon = xv_create(frame, ICON, ICON_LABEL, "", NULL);
+    app_icon_apply(properties_icon, "properties");
+    xv_set(frame, FRAME_ICON, properties_icon, NULL);
     dsp = (Display *) xv_get(frame, XV_DISPLAY);
     visual_class = (int)xv_get(frame, XV_VISUAL_CLASS);
     depth = (int)xv_get(frame, XV_DEPTH);

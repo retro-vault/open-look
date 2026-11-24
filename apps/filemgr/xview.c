@@ -21,6 +21,7 @@ static char sccsid[]="@(#)xview.c	1.146 09/07/94 Copyright 1987-1992 Sun Microsy
  *  NASA FAR Supplement.
  */
 
+#include "app-icon.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -3938,6 +3939,7 @@ enum media_type mtype ;
                           WIN_RETAINED,     TRUE,
                           ICON_TRANSPARENT, TRUE,
                           0) ;
+  app_icon_apply(icon, "folder");
   XV_SET(X->fileX[wno]->frame, FRAME_ICON, icon, 0) ;
 }
 

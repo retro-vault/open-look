@@ -4,7 +4,7 @@ add_executable(cmdtool
 
 target_link_libraries(cmdtool
     PRIVATE
-        xview
+        app_icons
 )
 
 # cmdtool selects terminal mode from argv[0], so shelltool shares its binary.

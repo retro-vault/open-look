@@ -1,0 +1,20 @@
+find_package(X11 REQUIRED COMPONENTS Xpm)
+set(app_icon_source "${PROJECT_SOURCE_DIR}/assets/icons/bw-theme/xpm")
+set(app_icon_stage "${OPENWINHOME_STAGE_SHARE_DIR}/openlook/icons/bw-theme")
+file(GLOB app_icon_files CONFIGURE_DEPENDS "${app_icon_source}/*.xpm")
+set(app_icon_outputs)
+foreach(icon IN LISTS app_icon_files)
+    get_filename_component(name "${icon}" NAME)
+    add_custom_command(OUTPUT "${app_icon_stage}/${name}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${app_icon_stage}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${icon}" "${app_icon_stage}/${name}"
+        DEPENDS "${icon}" VERBATIM)
+    list(APPEND app_icon_outputs "${app_icon_stage}/${name}")
+endforeach()
+add_custom_target(app_icon_theme ALL DEPENDS ${app_icon_outputs})
+add_library(app_icons STATIC app-icon.c)
+add_dependencies(app_icons app_icon_theme)
+target_include_directories(app_icons PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(app_icons PUBLIC xview ${X11_Xpm_LIB})
+target_compile_options(app_icons PRIVATE -Wall -Wextra -Werror)
+install(FILES ${app_icon_files} DESTINATION share/openlook/icons/bw-theme)

@@ -15,4 +15,4 @@ target_compile_options(filemgr PRIVATE
     -Werror=incompatible-pointer-types -Werror=int-conversion
 )
 find_package(X11 REQUIRED COMPONENTS Xpm)
-target_link_libraries(filemgr PRIVATE xview ${X11_Xpm_LIB} m)
+target_link_libraries(filemgr PRIVATE app_icons m)

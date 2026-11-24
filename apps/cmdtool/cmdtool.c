@@ -18,6 +18,7 @@ static  char sccsid[] = "@(#)cmdtool.c 15.61 93/06/28";
  *  cmd/shelltool - run a process in a tty subwindow
  */
 
+#include "app-icon.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -192,6 +193,8 @@ main(argc,argv)
             ICON_LABEL, icon_label,
             ICON_TRANSPARENT,TRUE,
             NULL);
+
+	app_icon_apply(tool_icon, "terminal");
 
 	base_frame = (Frame)xv_create((Xv_window)NULL, FRAME,
 			FRAME_ICON, tool_icon,

@@ -53,7 +53,8 @@ Requirements:
 - X11 development libraries:
   - `libX11`
   - `libXext` (used by `olwm`)
-  - `libXpm` (used by File Manager)
+  - `libXpm` (used by File Manager and the shared application icon theme)
+  - `libXrender` (used by MosaiX's transparent toolbar icons)
 - `libtirpc` development library (used by XView selection/RPC code).
   Modern glibc no longer ships `<rpc/rpc.h>` at the top level; headers
   live under `/usr/include/tirpc` and CMake adds that include path.
@@ -71,13 +72,13 @@ Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev libnsl-dev libxrandr-dev libXrandr-devel libXpm-devel
+sudo apt install -y build-essential cmake libx11-dev libxext-dev libxpm-dev libxrender-dev libtirpc-dev xutils-dev ncurses-bin libboost-dev libnsl-dev libxrandr-dev libXrandr-devel libXpm-devel
 
 
 Fedora/RHEL
 ```bash
 sudo dnf config-manager --set-enabled crb
-sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-devel  \
+sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-devel libXrender-devel \
   libtirpc-devel mkfontscale mkfontdir xset fontconfig ncurses boost-devel git-core \ 
   libXrandr-devel libnsl2-devel libtirpc-devel rpcsvc-proto-devel quota-devel
 
@@ -87,7 +88,7 @@ sudo dnf install -y gcc gcc-c++ make cmake libX11-devel libXext-devel libXpm-dev
 Arch Linux:
 
 ```bash
-sudo pacman -S --needed base-devel cmake libx11 libxext libxpm libtirpc xorg-mkfontscale \
+sudo pacman -S --needed base-devel cmake libx11 libxext libxpm libxrender libtirpc xorg-mkfontscale \
   xorg-mkfontdir ncurses boost-libs libnsl libxrandr libxpm rpcsvc-proto xorg-xset xorg-xlsfonts
 
 ```
@@ -135,12 +136,97 @@ container GDB through `docker exec`; no host GDB is needed. The debug
 container receives `SYS_PTRACE` for debugging and access to the host X socket
 and authority file for its Xephyr window.
 
+MosaiX is included in the full build. Docker builds use the pinned CEF
+distribution under `build/docker/deps/cef/source`, downloading it on first
+use and reusing it afterward. The Docker helper resets `MOSAIX_CEF_ROOT`
+so paths from temporary containers cannot break F5. For native builds,
+`-DMOSAIX_CEF_ROOT=/path/to/cef` selects an existing matching distribution;
+`-DMOSAIX_CEF_ROOT=` restores automatic dependency management.
+
+MosaiX uses a single compact toolbar with native square buttons, transparent
+13×13 Tango icons (resized from the original 16×16 artwork), an unlabeled URL
+field, and a Properties button at the right. Native image buttons are 21×21
+pixels and the toolbar is 26 pixels high, with bottom padding balancing
+OpenLook's title-bar inset. The image-button outline has squarer corners and
+four pixels of inset around each icon to keep its border clear. Disabled tools
+retain the normal border and fade only the inner image.
+A plain click selects the complete URL for replacement; dragging still selects
+part of it. The default homepage is `https://github.com/retro-vault/open-look/`;
+saved homepage preferences take precedence.
+Properties groups General, Privacy, Content, and browsing-data controls in a
+compact native sheet; Reset restores the currently applied values. Dialogs open
+centered on the browser. Icon provenance and the upstream public-domain notice
+are in `apps/mosaix/icons/`.
+
+Application icons use the artwork in `assets/icons/bw-theme/`: browser for
+MosaiX, terminal for Cmdtool/Shelltool, text-editor for Text Editor, folder for
+File Manager, waste for Wastebasket, and properties for Workspace Properties.
+Clock keeps its original face in the open window and uses the supplied square
+frame with live hour/minute hands only in its minimized icon. Digital mode and
+the seconds/date options remain available. Its icon label shows local time in
+24-hour `HH:MM` format. MosaiX uses the label `MosaiX`, and an unnamed Text Editor
+document uses `No file`. Theme artwork is shifted up eight pixels within each
+64px PNG to leave room for the native labels. Disk Tool retains its existing
+icon because the theme has no match.
+Regenerate the checked-in XPM files with `python3 tools/convert-app-icons.py`
+(Pillow is needed only for regeneration). The build stages them in
+`bin/share/openlook/icons/bw-theme/`; installation copies them to
+`share/openlook/icons/bw-theme/`. The shared loader preserves opaque black and
+white pixels and the separate transparency mask, and also supports colour art.
+
+The Docker debug session sets `MOSAIX_DISABLE_SANDBOX=1` for MosaiX because
+Docker's default seccomp policy blocks Chromium's namespace sandbox. This
+disables Chromium's process sandbox inside the development container; use
+this session for trusted development content. Native launches retain the
+sandbox unless explicitly started with `--no-sandbox` or that environment
+variable. Restart F5 after changing the Docker launch environment.
+
+After building, run `bash tests/run-mosaix-smoke.sh` to check menu-style
+startup, compact toolbar resizing, dialog centering, JavaScript rendering,
+vertical/horizontal scrollbar dragging, wheel synchronization,
+certificate database initialization, relaunch, and both
+keyboard and window-manager shutdown in an isolated Xephyr session.
+Logs are written under `build/docker/mosaix-smoke/`.
+
 Stopping debugging removes the dedicated container and its processes. If a
 session is interrupted, use **openlook: stop Docker session** or:
 
 ```bash
 bash .vscode/openlook-docker.sh stop
 ```
+
+## Compact menu panel fitting
+
+`window_fit_height(panel)` and the height part of `window_fit(panel)` use a
+compact bottom inset for horizontal panels containing only `PANEL_BUTTON`
+items with attached `PANEL_ITEM_MENU` menus. With the default panel insets,
+the height is the lowest button bottom plus two pixels: a single row is its
+button height plus six pixels, matching DeskSet's compact menu bars. Wrapped
+rows remain included. Applications using these standard fitting calls need
+no private `scrunch_window()` helper.
+
+Empty panels, ordinary command buttons, mixed forms, vertical layouts,
+width fitting and explicit nonzero `WIN_FIT_HEIGHT` margins retain their
+existing sizing. `PANEL_EXTRA_PAINT_HEIGHT` and horizontal scrollbar space
+remain additive. Explicit `XV_HEIGHT` values are unchanged.
+
+The change is in `libxview`, so applications must load the rebuilt shared
+library (or relink if using the static library). Rebuilding a consumer against
+an older SDK does not update the toolkit. Docker consumers must also update
+their SDK/runtime image.
+
+The `panel_fit_test` target exercises menu and non-menu fitting, wrapped rows,
+explicit margins, extra paint space, scrollbar reservation and placement of
+content immediately below a fitted panel. Build it in the same environment
+as XView, then run it on a test X display with the packaged fonts:
+
+```bash
+cmake --build build/docker --target panel_fit_test
+OPENWINHOME="$PWD/bin" LD_LIBRARY_PATH="$PWD/bin/lib" \
+    build/docker/tests/panel_fit_test -scale medium
+```
+
+Repeat with `small`, `large`, and `extra_large` to check the font scales.
 
 ## Installation
 
@@ -276,7 +362,7 @@ nested Xephyr session on `:2`. Native debugging requires GDB, Xephyr, and
 X11 utilities (`xdpyinfo`, `xrdb`, `xset`, and `xprop`) on the host, alongside
 the VS Code C/C++ extension. Use the Docker profile described above when
 those tools are provided by the container. Launch applications from its Programs menu.
-The Programs menu launches File Manager, Command Tool, Clock, Text Editor,
+The Programs menu launches File Manager, MosaiX, Command Tool, Clock, Text Editor,
 and Properties. The Workspace menu also offers Refresh, Restart WM, Reread Menu
 File, Save Window Layout (`xtoolplaces`, writing to `~/.xtoolplaces`), Exit WM,
 and Exit, with separators between groups. `olwmslave` is a window-manager

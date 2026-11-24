@@ -4,7 +4,7 @@ add_executable(textedit
 
 target_link_libraries(textedit
     PRIVATE
-        xview
+        app_icons
 )
 
 target_compile_definitions(textedit

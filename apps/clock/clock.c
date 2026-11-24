@@ -23,6 +23,8 @@
 #include  <sys/time.h>
 #include  <stdlib.h>			/* malloc() and friends */
 #include  "ds_popup.h"
+#include  "clock-face.h"
+#include  "app-icon.h"
 
 #define		FROMRIM			15	/* tip of hour hand to rim */
 #define		LEFTEXT			6
@@ -176,6 +178,7 @@ typedef struct clckObject {
 	Options			options;
 	ClockDisplay		display;
 	Menu			menu;
+    ClockFace icon_renderer;
 	} ClockObject, *Clock;
 
 void print_event(Xv_window handle, Event *event);
@@ -251,11 +254,6 @@ Server_image	handspr;
 Server_image	spotpr;
 Server_image	dotspr;
 Server_image	tempr;
-Server_image	iconpr;
-Server_image	iconhandspr;
-Server_image	icondotspr;
-Server_image	iconspotpr;
-Server_image	icontempr;
 int		key;		/* squirrled away for KEY_DATA */
 int		lastw;
 int		lasth;
@@ -384,6 +382,7 @@ cleanup(c)
         Clock c;
 {
         if (c==NULL) return;
+        clock_face_destroy(&c->icon_renderer);
         free(c->options);
         free(c->display);
         free(c);
@@ -446,34 +445,15 @@ canvas_interpose(pw, event, arg, type)
 /*	Interpose only to watch for open & close of tool to repaint icon */
 
 static Notify_value
-frame_interpose (frame, event, arg, type)
-	Frame frame; Event *event;
-	Notify_arg arg; Notify_event_type type;
+frame_interpose(Frame frame, Event *event, Notify_arg arg, Notify_event_type type)
 {
-	int w, h, smaller;
-	Notify_value rc;
-	Clock c;
-
-	rc = notify_next_event_func (frame, (Notify_event)event, arg, type);
-	if (event_action(event) == ACTION_CLOSE) {
-		c = (Clock) xv_get (frame, XV_KEY_DATA, (Attr_attribute)key, NULL);
-		w = (int) xv_get (c->canvas, XV_WIDTH, NULL);
-		h = (int) xv_get (c->canvas, XV_HEIGHT, NULL);
-		centerX=0; centerY=0;
-		pw_write((Xv_opaque)c->pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
-		init_images(c, 64, 64);
-		icon_repaint(c->icon, c->iconpw, NULL);
-	}
-	if (event_action(event) == ACTION_OPEN) {
-		c = (Clock) xv_get (frame, XV_KEY_DATA, (Attr_attribute)key, NULL);
-		w = (int) xv_get (c->canvas, XV_WIDTH, NULL);
-		h = (int) xv_get (c->canvas, XV_HEIGHT, NULL);
-		centerX=0; centerY=0;
-		smaller = min(w, h);
-		init_images(c, smaller, smaller);
-		clock_repaint_proc(c->canvas, c->pw, NULL);
-	}
-	return(rc);
+    Notify_value result = notify_next_event_func(frame, (Notify_event)event, arg, type);
+    Clock c = (Clock)xv_get(frame, XV_KEY_DATA, (Attr_attribute)key, NULL);
+    if (c && event_action(event) == ACTION_CLOSE)
+        icon_repaint(c->icon, c->iconpw, NULL);
+    if (c && event_action(event) == ACTION_OPEN)
+        clock_repaint_proc(c->canvas, c->pw, NULL);
+    return result;
 }
 			
 	
@@ -1097,121 +1077,39 @@ analog_repaint (canvas, pw, area)
 }
 
 static void
-icon_repaint (i, pw, area)
-	Icon i; 
-	Pixwin *pw;
-	Rectlist *area;
+icon_repaint(Icon icon, Pixwin *pw, Rectlist *area)
 {
-	time_t now;
-	Font_string_dims size;
-	struct tm *tm;
-	Clock c;
-
-	c	= (Clock) xv_get(i, XV_KEY_DATA, (Attr_attribute)key, NULL);
-	now	= time(0);
-	tm	= localtime (&now);
-	pw_write (iconhandspr, 3, 3, 58, 58, PIX_CLR, 0, 0, 0);
-	paint_hands (c, iconhandspr, tm-> tm_min*6,
-		tm-> tm_hour*30 + tm-> tm_min/2, 64);
-	pw_write (iconhandspr, 0, 0, 64, 64, PIX_SRC | PIX_DST, icondotspr, 0, 0);
-
-	/* draw icon border 
-        pw_vector (iconhandspr, 0, 0, 63, 0, PIX_SET, 3);
-        pw_vector (iconhandspr, 0, 0, 0, 63, PIX_SET, 3);
-        pw_vector (iconhandspr, 63, 0, 63, 63, PIX_SET, 3);
-        pw_vector (iconhandspr, 0, 63, 63, 63, PIX_SET, 3);
-	*/
-
-	pw_write (c->icon, 0, 0, 64, 64, PIX_SRC, iconhandspr, 0, 0);
-	if (seconds_on (c->options)) paint_second_hand(c);
+    Clock c = (Clock)xv_get(icon, XV_KEY_DATA, (Attr_attribute)key, NULL);
+    time_t now = time(NULL);
+    struct tm *local = localtime(&now);
+    if (local) {
+        char label[6];
+        strftime(label, sizeof label, "%H:%M", local);
+        const char *previous = (const char *)xv_get(icon, ICON_LABEL);
+        if (!previous || strcmp(previous, label))
+            xv_set(icon, ICON_LABEL, label, NULL);
+        clock_face_paint(&c->icon_renderer, icon, local,
+                         seconds_on(c->options), 1);
+    }
 }
 
 static Notify_value
-icon_timer_expired (me, which)
-Frame me;
-int which;
+icon_timer_expired(Frame frame, int which)
 {
-	static int	mins, hours;
-/* Alpha compatibility, mbuck@debian.org */
-#if 0
-	int		now, w, h;
-#else
-	int		w, h;
-	time_t		now;
-#endif
-	struct		tm *tm;
-	Font_string_dims size;
-	Clock		c;
-	Xv_Font		f;
-
-	c	= (Clock) xv_get (me, XV_KEY_DATA, (Attr_attribute)key, NULL);
-	now	= time(0);
-	tm	= (struct tm *) localtime (&now);
-	
-	if (tm-> tm_min != mins || tm-> tm_hour != hours) {
-		mins	= tm-> tm_min;
-		hours	= tm-> tm_hour;
-		icon_repaint (c->icon, c->iconpw, NULL);
-	}
-	else {
-		if (seconds_on (c->options)) {
-			erase_second_hand(c);
-			paint_second_hand(c);
-		}
-	}
-	if (date_on (c->options)) 
-		 paint_date (c);	
-	return (NOTIFY_DONE);
+    Clock c = (Clock)xv_get(frame, XV_KEY_DATA, (Attr_attribute)key, NULL);
+    icon_repaint(c->icon, c->iconpw, NULL);
+    if (date_on(c->options)) paint_date(c);
+    return NOTIFY_DONE;
 }
 	
 
 static Notify_value
-analog_timer_expired (me, which)
-/* Alpha compatibility, mbuck@debian.org */
-#if 0
-	Notify_value	me;
-#else
-	Frame		me;
-#endif
-	int		which;
+analog_timer_expired(Frame frame, int which)
 {
-	static int	mins, hours;
-/* Alpha compatibility, mbuck@debian.org */
-#if 0
-	int		now, x, y, w, h, prw, prh;
-#else
-	int		x, y, w, h, prw, prh;
-	time_t		now;
-#endif
-	struct		tm *tm;
-	Clock		c;
-
-	c	= (Clock) xv_get (me, XV_KEY_DATA, (Attr_attribute)key, NULL);
-	w	= (int) xv_get (c->canvas, XV_WIDTH, NULL);
-	h	= (int) xv_get (c->canvas, XV_HEIGHT, NULL);
-	prw	= (int) xv_get (tempr, XV_WIDTH, NULL);
-	prh	= (int) xv_get (tempr, XV_HEIGHT, NULL);
-	now	= time(0);
-	tm	= (struct tm *) localtime (&now);
-
-	if (tm-> tm_min != mins || tm-> tm_hour != hours) {
-		mins	= tm-> tm_min;
-		hours	= tm-> tm_hour;
-		analog_repaint (c->canvas, c->pw, NULL); 
-	}
-	else {
-/*		center (w, h, &centerX, &centerY, prw, prh);
-		pw_write(c->pw, x, y, prw, prh, PIX_SRC, tempr, 0, 0);
-*/
-		if (seconds_on (c->options)) {
-			erase_second_hand(c); 
-			paint_second_hand(c);
-		}
-	
-	}
-	if (date_on (c-> options)) 
-		 paint_date (c);	
-	return (NOTIFY_DONE);
+    Clock c = (Clock)xv_get(frame, XV_KEY_DATA, (Attr_attribute)key, NULL);
+    analog_repaint(c->canvas, c->pw, NULL);
+    if (date_on(c->options)) paint_date(c);
+    return NOTIFY_DONE;
 }
 
 static void
@@ -1706,41 +1604,13 @@ Notify_client clnt;
 	
 
 static void
-init_icon (c)
-	Clock c;
+init_icon(Clock c)
 {
-	int w		= 64;
-	int h		= 64;
-	int dotsize	= w/12;
-	icontempr	= make_image (w, h, (caddr_t)c);
-	iconpr		= make_image (w, h, (caddr_t)c);
-	icondotspr	= make_image (w, h, (caddr_t)c);
-	iconhandspr	= make_image (w, h, (caddr_t)c);
-	iconspotpr	= make_image (dotsize,  dotsize,  (caddr_t)c);
-	
-	c->icon = (Icon) xv_create ((Xv_opaque)NULL, ICON, 
-		ICON_IMAGE, iconpr,
-/*		WIN_REPAINT, icon_repaint,   */
-		XV_KEY_DATA, (Attr_attribute)key, c,
-		NULL);
-
-	c->iconpw = (Pixwin *) xv_get(c->icon, CANVAS_NTH_PAINT_WINDOW, NULL);
-/*	(void) xv_set(c->iconpw, XV_KEY_DATA, (Attr_attribute)key, c, NULL); */
-
-	notify_interpose_event_func(c->icon, icon_interpose, 0);
-
-	/* draw icon border 
-	pw_write  (iconpr, 0, 0, w-1, h-1, PIX_CLR, 0, 0, 0);
-        pw_vector (iconpr, 0, 0, w-1, 0, PIX_SET, 3);
-        pw_vector (iconpr, 0, 0, 0, h-1, PIX_SET, 3);
-        pw_vector (iconpr, w-1, 0, w-1, h-1, PIX_SET, 3);
-        pw_vector (iconpr, 0, h-1, w-1, h-1, PIX_SET, 3);
-	*/
-
-	/*	init round tick marks		*/
-	draw_circle (iconspotpr, armwidth(w)/8);
-	paint_ticks ((Pixwin*)icondotspr, w/2, iconspotpr);
-	/* icon_repaint (c->icon, c->iconpw, NULL);  */
+    c->icon = xv_create(XV_NULL, ICON, ICON_LABEL, "",
+        XV_KEY_DATA, (Attr_attribute)key, c, NULL);
+    app_icon_apply(c->icon, "clock");
+    c->iconpw = (Pixwin *)c->icon;
+    notify_interpose_event_func(c->icon, icon_interpose, NOTIFY_SAFE);
 }
 
 static void
@@ -1931,6 +1801,7 @@ init_clck (argc, argv)
 	window_fit (clck-> frame);
 
 	xv_main_loop (clck-> frame);
+	cleanup(clck);
 }
 
 

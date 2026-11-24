@@ -16,6 +16,7 @@
 
 static int shrink_to_fit(register Panel_info *panel, int do_width, register int excess);
 static int panel_shrink_margin(register Panel_info *panel);
+static int panel_height_margin(Panel_info *panel);
 
 /*ARGSUSED*/
 Pkg_private     Xv_opaque
@@ -135,7 +136,7 @@ panel_get_attr(panel_public, status, attr, valist)
       case WIN_FIT_HEIGHT:
         arg = va_arg(valist, Attr_attribute);
 	return (Xv_opaque) shrink_to_fit(panel, FALSE,
-	    arg ? arg : panel_shrink_margin(panel));
+	    arg ? arg : panel_height_margin(panel));
 
       case WIN_TYPE:		/* SunView1.X compatibility */
 	return (Xv_opaque) PANEL_TYPE;
@@ -204,4 +205,25 @@ panel_shrink_margin(panel)
 	return 28;
     else
 	return 32;
+}
+
+/*
+ * Horizontal menu-button panels use the compact DeskSet bottom inset.
+ * shrink_to_fit adds extra_height separately (one pixel by default),
+ * giving two pixels below the lowest button. Ordinary forms, empty panels,
+ * vertical layouts and explicit WIN_FIT_HEIGHT margins keep their policy.
+ */
+static int
+panel_height_margin(Panel_info *panel)
+{
+    Item_info *item;
+
+    if (panel->layout != PANEL_HORIZONTAL || !panel->items)
+        return panel_shrink_margin(panel);
+
+    for (item = panel->items; item; item = item->next) {
+        if (item->item_type != PANEL_BUTTON_ITEM || !item->menu)
+            return panel_shrink_margin(panel);
+    }
+    return 1;
 }

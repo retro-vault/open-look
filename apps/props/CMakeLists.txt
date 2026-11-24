@@ -8,5 +8,5 @@ add_executable(props
 
 target_link_libraries(props
     PRIVATE
-        xview
+        app_icons
 )

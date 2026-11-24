@@ -3,14 +3,20 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-IMAGE="wischner/gcc-x86_64-linux-x11:latest"
+IMAGE="openlook-dev:local"
 CONTAINER="openlook-debug-$(printf '%s' "$ROOT_DIR" | cksum | cut -d ' ' -f 1)"
 STAGE="$ROOT_DIR/bin"
 BUILD="$ROOT_DIR/build/docker"
 
+prepare_image() {
+  docker build --tag "$IMAGE" --file "$ROOT_DIR/.vscode/Dockerfile" "$ROOT_DIR/.vscode"
+}
+
 build_inside() {
+  # Only this checkout is mounted. Discard CEF paths cached by ad-hoc
+  # containers (for example /cef) and use the managed dependency here.
   cmake -S "$ROOT_DIR" -B "$BUILD" -DCMAKE_BUILD_TYPE=Debug \
-    -DOPENLOOK_STAGE_DIR="$STAGE"
+    -DOPENLOOK_STAGE_DIR="$STAGE" -DMOSAIX_CEF_ROOT:PATH=
   cmake --build "$BUILD" --parallel "$(nproc)"
 }
 
@@ -41,12 +47,14 @@ case "${1:-}" in
     exit 1
     ;;
   build)
+    prepare_image
     exec docker run --rm --platform linux/amd64 \
       --user "$(id -u):$(id -g)" --env HOME=/tmp \
       --mount "type=bind,src=$ROOT_DIR,dst=$ROOT_DIR" --workdir "$ROOT_DIR" \
       --entrypoint /bin/bash "$IMAGE" "$0" build-inside
     ;;
   prepare)
+    prepare_image
     : "${DISPLAY:?An X11/XWayland desktop DISPLAY is required for Xephyr.}"
     if [[ ! -d /tmp/.X11-unix ]]; then
       echo 'The host X11 socket directory /tmp/.X11-unix is missing.' >&2
@@ -75,6 +83,7 @@ case "${1:-}" in
       --env OPENWINHOME="$STAGE" --env LD_LIBRARY_PATH="$STAGE/lib" \
       --env XENVIRONMENT="$ROOT_DIR/config/Xdefaults" \
       --env XV_USE_XGETVISUALINFO_ALL=1 \
+      --env MOSAIX_DISABLE_SANDBOX=1 \
       --env PATH="$STAGE/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
       --mount "type=bind,src=$ROOT_DIR,dst=$ROOT_DIR" \
       --tmpfs /tmp/.X11-unix:rw,mode=1777 \

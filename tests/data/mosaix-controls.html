@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Loading</title>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; width: 3000px; height: 6000px;
+    background: repeating-linear-gradient(0deg, #eee 0px, #eee 199px,
+      #9bc 200px, #9bc 399px); }
+  h1 { position: fixed; top: 50px; left: 30px; padding: 20px; background: white; }
+</style>
+<h1 id="position">MosaiX controls test</h1>
+<div style="position:fixed;left:30px;top:150px">
+  <button onclick="alert('Centered website alert')">Alert</button>
+  <button onclick="confirm('Centered website confirmation')">Confirm</button>
+  <button onclick="prompt('Centered website prompt', 'Example')">Prompt</button>
+</div>
+<script>
+  function report() {
+    const position = `${Math.round(scrollX)},${Math.round(scrollY)}`;
+    document.title = `MosaiX smoke ready ${position}`;
+    document.getElementById('position').textContent = position;
+  }
+  addEventListener('scroll', report);
+  setTimeout(report, 500);
+</script>

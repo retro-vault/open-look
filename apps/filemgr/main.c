@@ -21,6 +21,7 @@ static char sccsid[]="@(#)main.c	1.214 07/02/97 Copyright (c) 1987-1992 Sun Micr
  *  NASA FAR Supplement.
  */
 
+#include "app-icon.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <values.h>
@@ -2546,7 +2547,9 @@ char *fname ;
 
   if (defaults_exists("icon.footer", "Icon.Footer")) return ;
 
-  if (*fname == '/' && fname[1])
+  if (!X->fileX[WASTE] || frame != X->fileX[WASTE]->frame)
+    fname = "File manager" ;
+  else if (*fname == '/' && fname[1])
     fname = (char *) strrchr(fname, '/') + 1 ;
 
   edit_icon = window_get(frame, FRAME_ICON) ;
@@ -4355,6 +4358,7 @@ fm_create_tree_canvas()
                           WIN_RETAINED,           TRUE,
                           ICON_TRANSPARENT,       TRUE,
                           0) ;
+  app_icon_apply(icon, "folder");
   XV_SET(X->treeX.frame, FRAME_ICON, icon, 0) ;
 
   XV_SET(X->treeX.canvas,
@@ -5200,6 +5204,7 @@ set_waste_icon()     /* Set the wastebasket icon to full or empty. */
          WIN_RETAINED,     TRUE,
          ICON_TRANSPARENT, TRUE,
          0) ;
+  app_icon_apply(X->Waste_icon, "waste");
   XV_SET(X->fileX[WASTE]->frame, FRAME_ICON, X->Waste_icon, 0) ;
   if (Fm->iconfont && Fm->iconfont[0]) set_icon_font(X->fileX[WASTE]->frame) ;
 }

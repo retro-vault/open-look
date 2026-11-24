@@ -2,6 +2,41 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug workspace (OpenLook Docker)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/bin/olwm",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "preLaunchTask": "prepare workspace (OpenLook Docker Debug)",
+      "postDebugTask": "openlook: stop Docker session",
+      "pipeTransport": {
+        "pipeProgram": "bash",
+        "pipeArgs": [
+          "${workspaceFolder}/.vscode/openlook-docker.sh",
+          "gdb"
+        ],
+        "debuggerPath": "/usr/bin/gdb",
+        "pipeCwd": "${workspaceFolder}"
+      },
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Keep ASLR enabled inside Docker",
+          "text": "set disable-randomization off",
+          "ignoreFailures": false
+        }
+      ]
+    },
+    {
       "name": "Debug workspace (OpenLook)",
       "type": "cppdbg",
       "request": "launch",
@@ -46,41 +81,6 @@
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
-        }
-      ]
-    },
-    {
-      "name": "Debug workspace (OpenLook Docker)",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${workspaceFolder}/bin/bin/olwm",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "preLaunchTask": "prepare workspace (OpenLook Docker Debug)",
-      "postDebugTask": "openlook: stop Docker session",
-      "pipeTransport": {
-        "pipeProgram": "bash",
-        "pipeArgs": [
-          "${workspaceFolder}/.vscode/openlook-docker.sh",
-          "gdb"
-        ],
-        "debuggerPath": "/usr/bin/gdb",
-        "pipeCwd": "${workspaceFolder}"
-      },
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        },
-        {
-          "description": "Keep ASLR enabled inside Docker",
-          "text": "set disable-randomization off",
-          "ignoreFailures": false
         }
       ]
     }
