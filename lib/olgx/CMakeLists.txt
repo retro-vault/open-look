@@ -65,7 +65,7 @@ set_target_properties(olgx_static PROPERTIES
 )
 
 # Install the library
-install(TARGETS olgx olgx_static
+install(TARGETS olgx
     EXPORT olgxTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
@@ -74,5 +74,8 @@ install(TARGETS olgx olgx_static
 
 # Install public headers
 install(FILES ${HEADERS_PUBLIC}
-    DESTINATION include/olgx
+    DESTINATION include/olgx COMPONENT Development EXCLUDE_FROM_ALL
 )
+
+install(TARGETS olgx_static ARCHIVE DESTINATION lib
+    COMPONENT Development EXCLUDE_FROM_ALL)

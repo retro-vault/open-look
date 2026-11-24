@@ -129,7 +129,7 @@ while true; do
   xe_ok=0
   proto_ok=0
 
-  if is_pid_alive_and_matches "$WM_PID" "$ROOT_DIR/bin/bin/olwm"; then
+  if is_pid_alive_and_matches "$WM_PID" "$ROOT_DIR/build/runtime/bin/olwm"; then
     wm_ok=1
   fi
   if is_pid_alive_and_matches "$XE_PID" ""; then

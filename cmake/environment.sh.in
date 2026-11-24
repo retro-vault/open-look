@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Source this file from your X session before starting OpenLook applications.
+_openlook_env_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export OPENWINHOME="$(cd "$_openlook_env_dir/../.." && pwd)"
+export OPENLOOK_CONFIG_DIR="${OPENLOOK_CONFIG_DIR:-@OPENLOOK_SYSCONFDIR@}"
+export PATH="$OPENWINHOME/bin:$PATH"
+export TERMINFO_DIRS="$OPENWINHOME/share/terminfo:${TERMINFO_DIRS:-}:"
+if [ -n "${DISPLAY:-}" ]; then
+    if command -v xrdb >/dev/null 2>&1; then
+        xrdb -merge "$OPENLOOK_CONFIG_DIR/Olwm"
+    fi
+    if command -v xset >/dev/null 2>&1; then
+        for _openlook_font in misc 75dpi 100dpi; do
+            xset +fp "$OPENWINHOME/share/fonts/openlook/bdf/$_openlook_font"
+        done
+        xset fp rehash
+    fi
+fi
+unset _openlook_env_dir _openlook_font

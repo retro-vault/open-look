@@ -9,7 +9,8 @@ if [[ "${1:-}" != --inside ]]; then
         --workdir "$ROOT_DIR" --entrypoint /bin/bash \
         wischner/gcc-x86_64-linux-x11:latest "$0" --inside
 fi
-export OPENWINHOME="$ROOT_DIR/bin"
+export OPENWINHOME="$ROOT_DIR/build/docker/runtime"
+export OPENLOOK_CONFIG_DIR="$OPENWINHOME/etc/openlook"
 export LD_LIBRARY_PATH="$OPENWINHOME/lib"
 test_dir="$(mktemp -d /tmp/openlook-resize.XXXXXX)"
 cleanup() {

@@ -309,7 +309,7 @@ and backward throughout the file.
 .TP 10
 .B Extras
 A user-definable pull-right menu controlled by the
-.B $OPENWINHOME/lib/.text_extras_menu
+.B /etc/openlook/text_extras_menu
 file.
 This can be overridden in two ways:
 .br
@@ -396,7 +396,7 @@ log file
 .TP
 .B ~/.ttyswrc
 .TP
-.B $OPENWINHOME/lib/.text_extras_menu
+.B /etc/openlook/text_extras_menu
 .TP
 .B $HOME/.text_extras_menu
 .TP

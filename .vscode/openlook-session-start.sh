@@ -7,7 +7,7 @@ XE_PID_FILE="$ROOT_DIR/.vscode/.openlook-xephyr.pid"
 WM_PID_FILE="$ROOT_DIR/.vscode/.openlook-olwm.pid"
 WATCHDOG_PID_FILE="$ROOT_DIR/.vscode/.openlook-watchdog.pid"
 LOG_DIR="$ROOT_DIR/.vscode"
-FONT_BASE_STAGE="$ROOT_DIR/bin/share/fonts/openlook/bdf"
+FONT_BASE_STAGE="$ROOT_DIR/build/runtime/share/fonts/openlook/bdf"
 FONT_BASE_SOURCE="$ROOT_DIR/resources/fonts/bdf"
 XDEFAULTS_FILE="$ROOT_DIR/config/Xdefaults"
 
@@ -114,13 +114,14 @@ fi
 
 if [ ! -f "$WM_PID_FILE" ]; then
   (
-    OPENWINHOME="$ROOT_DIR/bin" \
+    OPENWINHOME="$ROOT_DIR/build/runtime" \
+    OPENLOOK_CONFIG_DIR="$ROOT_DIR/build/runtime/etc/openlook" \
     XENVIRONMENT="$XDEFAULTS_FILE" \
     XV_USE_XGETVISUALINFO_ALL="1" \
-    PATH="$ROOT_DIR/bin/bin:${PATH}" \
-    LD_LIBRARY_PATH="$ROOT_DIR/bin/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
+    PATH="$ROOT_DIR/build/runtime/bin:${PATH}" \
+    LD_LIBRARY_PATH="$ROOT_DIR/build/runtime/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
     DISPLAY="$DISPLAY_NUM" \
-      setsid "$ROOT_DIR/bin/bin/olwm" >"$LOG_DIR/openlook-olwm.log" 2>&1 < /dev/null &
+      setsid "$ROOT_DIR/build/runtime/bin/olwm" >"$LOG_DIR/openlook-olwm.log" 2>&1 < /dev/null &
     echo $! > "$WM_PID_FILE"
   )
 

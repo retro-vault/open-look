@@ -12,7 +12,8 @@ if [[ "${1:-}" != --inside ]]; then
 fi
 test_dir="$(mktemp -d /tmp/openlook-desktops.XXXXXX)"
 export HOME="$test_dir/home"
-export OPENWINHOME="$ROOT_DIR/bin"
+export OPENWINHOME="$ROOT_DIR/build/docker/runtime"
+export OPENLOOK_CONFIG_DIR="$OPENWINHOME/etc/openlook"
 export LD_LIBRARY_PATH="$OPENWINHOME/lib"
 export XENVIRONMENT="$ROOT_DIR/config/Xdefaults"
 export XV_USE_XGETVISUALINFO_ALL=1

@@ -494,7 +494,10 @@ makeBitmapSearchPath()
 		owHome = "/usr/openwin";
 #endif
 
-	bitmapSearchPath = (char **)MemAlloc(5 * sizeof(char *));
+	bitmapSearchPath = (char **)MemAlloc(6 * sizeof(char *));
+
+    (void)snprintf(bmPath, sizeof(bmPath), "%s/share/openlook/bitmaps", owHome);
+    bitmapSearchPath[i++] = MemNewString(bmPath);
 
 	(void)sprintf(bmPath, "%s/include/bitmaps",owHome);
 	bitmapSearchPath[i++] = MemNewString(bmPath);

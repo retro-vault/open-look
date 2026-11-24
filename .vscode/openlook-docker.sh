@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 IMAGE="openlook-dev:local"
 CONTAINER="openlook-debug-$(printf '%s' "$ROOT_DIR" | cksum | cut -d ' ' -f 1)"
-STAGE="$ROOT_DIR/bin"
+STAGE="$ROOT_DIR/build/docker/runtime"
 BUILD="$ROOT_DIR/build/docker"
 
 prepare_image() {
@@ -16,7 +16,7 @@ build_inside() {
   # Only this checkout is mounted. Discard CEF paths cached by ad-hoc
   # containers (for example /cef) and use the managed dependency here.
   cmake -S "$ROOT_DIR" -B "$BUILD" -DCMAKE_BUILD_TYPE=Debug \
-    -DOPENLOOK_STAGE_DIR="$STAGE" -DMOSAIX_CEF_ROOT:PATH=
+    -DOPENLOOK_STAGE_DIR="$ROOT_DIR/bin" -DMOSAIX_CEF_ROOT:PATH=
   cmake --build "$BUILD" --parallel "$(nproc)"
 }
 
@@ -80,7 +80,8 @@ case "${1:-}" in
     docker run --detach --rm --platform linux/amd64 --name "$CONTAINER" \
       --user "$(id -u):$(id -g)" --cap-add SYS_PTRACE \
       --env HOME=/tmp --env DISPLAY=:2 --env OPENLOOK_PARENT_DISPLAY="$DISPLAY" \
-      --env OPENWINHOME="$STAGE" --env LD_LIBRARY_PATH="$STAGE/lib" \
+      --env OPENWINHOME="$STAGE" --env OPENLOOK_CONFIG_DIR="$STAGE/etc/openlook" \
+      --env LD_LIBRARY_PATH="$STAGE/lib" \
       --env XENVIRONMENT="$ROOT_DIR/config/Xdefaults" \
       --env XV_USE_XGETVISUALINFO_ALL=1 \
       --env MOSAIX_DISABLE_SANDBOX=1 \

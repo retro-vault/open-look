@@ -182,11 +182,11 @@ setup_environment(void)
             return -1;
         prefix = OPENWINHOME_DEFAULT;
     }
-    length = strlen(prefix) + sizeof("/lib/help:") +
+    length = strlen(prefix) + sizeof("/share/openlook/help:") +
              (existing_help ? strlen(existing_help) : 0);
     help_path = malloc(length);
     if (!help_path) return -1;
-    snprintf(help_path, length, "%s/lib/help%s%s", prefix,
+    snprintf(help_path, length, "%s/share/openlook/help%s%s", prefix,
              existing_help ? ":" : "", existing_help ? existing_help : "");
     result = setenv("HELPPATH", help_path, 1);
     free(help_path);

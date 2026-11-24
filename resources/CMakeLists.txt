@@ -76,28 +76,28 @@ add_custom_target(openlook_resources ALL
             "${CMAKE_CURRENT_SOURCE_DIR}/bitmaps"
             "${OPENWINHOME_RESOURCE_INCLUDE_DIR}/X11/bitmaps"
 
-    # Menu/config defaults looked up under $OPENWINHOME/lib.
+    # Development configuration uses the same files as /etc/openlook.
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/config/openwin-menu"
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/openwin-menu"
+            "${OPENLOOK_RUNTIME_CONFIG_DIR}/openwin-menu"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/config/openwin-menu-programs"
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/openwin-menu-programs"
+            "${OPENLOOK_RUNTIME_CONFIG_DIR}/openwin-menu-programs"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/config/openwin-menu-demo"
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/openwin-menu-demo"
+            "${OPENLOOK_RUNTIME_CONFIG_DIR}/openwin-menu-demo"
     COMMAND ${CMAKE_COMMAND} -E make_directory
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/app-defaults"
+            "${OPENLOOK_RUNTIME_CONFIG_DIR}"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/config/Xdefaults"
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/app-defaults/Olwm"
+            "${OPENLOOK_RUNTIME_CONFIG_DIR}/Olwm"
 
     # File Manager's original context-help text.
     COMMAND ${CMAKE_COMMAND} -E make_directory
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/help"
+            "${OPENWINHOME_RESOURCE_SHARE_DIR}/openlook/help"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/apps/filemgr/filemgr.info"
-            "${OPENWINHOME_RESOURCE_LIB_DIR}/help/filemgr.info"
+            "${OPENWINHOME_RESOURCE_SHARE_DIR}/openlook/help/filemgr.info"
 
     # Manual pages in standard share/man hierarchy.
     ${OPENLOOK_MAN_STAGE_COMMANDS}
@@ -114,38 +114,21 @@ add_custom_target(openlook_resources ALL
     COMMENT "Staging OpenLook resources into ${OPENWINHOME_STAGE_DIR}"
 )
 
-# Keep install layout aligned with staged runtime layout.
+# Runtime installation follows the Linux hierarchy; no source or SDK files.
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bitmaps"
-    DESTINATION include
-)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/images"
-    DESTINATION include
-)
-install(DIRECTORY "${OPENWINHOME_FONT_DIR}/"
-    DESTINATION share/fonts/openlook
-)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bitmaps"
-    DESTINATION include/X11
-)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/locale/"
-    DESTINATION share/locale
-)
+                  "${CMAKE_CURRENT_SOURCE_DIR}/images"
+    DESTINATION share/openlook)
+install(DIRECTORY "${OPENWINHOME_FONT_DIR}/" DESTINATION share/fonts/openlook)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/locale/" DESTINATION share/locale)
 install(FILES "${PROJECT_SOURCE_DIR}/config/openwin-menu"
               "${PROJECT_SOURCE_DIR}/config/openwin-menu-programs"
               "${PROJECT_SOURCE_DIR}/config/openwin-menu-demo"
-    DESTINATION lib
-)
+    DESTINATION "${OPENLOOK_SYSCONFDIR}")
 install(FILES "${PROJECT_SOURCE_DIR}/config/Xdefaults"
-    DESTINATION lib/app-defaults
-    RENAME Olwm
-)
+    DESTINATION "${OPENLOOK_SYSCONFDIR}" RENAME Olwm)
 foreach(man_page IN LISTS OPENLOOK_MAN_PAGES)
     install(FILES "${PROJECT_SOURCE_DIR}/docs/man/${man_page}.man"
-        DESTINATION share/man/man1
-        RENAME "${man_page}.1"
-    )
+        DESTINATION share/man/man1 RENAME "${man_page}.1")
 endforeach()
-
 install(FILES "${PROJECT_SOURCE_DIR}/apps/filemgr/filemgr.info"
-    DESTINATION lib/help
-)
+    DESTINATION share/openlook/help)

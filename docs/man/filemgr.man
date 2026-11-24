@@ -49,7 +49,7 @@ Printing and custom commands require separately installed external programs.
 Inside Docker, filemgr sees the container filesystem and the mounted repository.
 The historical options and resources below describe the original application;
 features requiring the unavailable Solaris services are not supplied by this port.
-The installed context-help file is $OPENWINHOME/lib/help/filemgr.info.
+The installed context-help file is $OPENWINHOME/share/openlook/help/filemgr.info.
 .SH OPTIONS
 In addition to the generic tool arguments described in
 .BR xview (7),

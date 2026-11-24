@@ -155,6 +155,17 @@ GetAppDefaults()
     }
 #endif
 
+    {
+        const char *config_dir = getenv("OPENLOOK_CONFIG_DIR");
+        if (!config_dir || !*config_dir)
+            config_dir = OPENLOOK_CONFIG_DIR_DEFAULT;
+        if (snprintf(filename, sizeof(filename), "%s/Olwm", config_dir) <
+            (int)sizeof(filename)) {
+            appDB = XrmGetFileDatabase(filename);
+            if (appDB != NULL)
+                return appDB;
+        }
+    }
     appDB = XrmGetFileDatabase("/usr/lib/X11/app-defaults/Olwm");
     return appDB;
 }

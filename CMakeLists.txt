@@ -20,15 +20,22 @@ if(OPENLOOK_HAS_MACRO_PREFIX_MAP)
     add_compile_options("-fmacro-prefix-map=${CMAKE_SOURCE_DIR}=.")
 endif()
 
-# Keep all final build artifacts in <repo>/bin while object files and
-# intermediate state remain under the selected build tree (e.g. build/).
+# Compilation and the runnable development tree stay inside the build directory.
+# bin/ is exclusively a DESTDIR installation, assembled after all targets finish.
 set(OPENLOOK_STAGE_DIR "${CMAKE_SOURCE_DIR}/bin" CACHE PATH
-    "Directory for the staged OPENWINHOME tree")
-set(OPENWINHOME_STAGE_DIR "${OPENLOOK_STAGE_DIR}")
+    "Destination root for the clean Linux installation tree")
+get_filename_component(OPENLOOK_STAGE_DIR "${OPENLOOK_STAGE_DIR}" ABSOLUTE)
+if(NOT OPENLOOK_STAGE_DIR STREQUAL "${CMAKE_SOURCE_DIR}/bin")
+    message(FATAL_ERROR "OPENLOOK_STAGE_DIR must be ${CMAKE_SOURCE_DIR}/bin; use DESTDIR for other package roots")
+endif()
+set(OPENLOOK_SYSCONFDIR "/etc/openlook" CACHE PATH "OpenLook system configuration directory")
+set(OPENWINHOME_STAGE_DIR "${CMAKE_BINARY_DIR}/runtime")
 set(OPENWINHOME_STAGE_BIN_DIR "${OPENWINHOME_STAGE_DIR}/bin")
 set(OPENWINHOME_STAGE_LIB_DIR "${OPENWINHOME_STAGE_DIR}/lib")
 set(OPENWINHOME_STAGE_INCLUDE_DIR "${OPENWINHOME_STAGE_DIR}/include")
 set(OPENWINHOME_STAGE_SHARE_DIR "${OPENWINHOME_STAGE_DIR}/share")
+set(OPENLOOK_RUNTIME_CONFIG_DIR "${OPENWINHOME_STAGE_DIR}/etc/openlook")
+file(MAKE_DIRECTORY "${OPENLOOK_RUNTIME_CONFIG_DIR}")
 
 file(MAKE_DIRECTORY "${OPENWINHOME_STAGE_BIN_DIR}")
 file(MAKE_DIRECTORY "${OPENWINHOME_STAGE_LIB_DIR}")
@@ -37,7 +44,7 @@ file(MAKE_DIRECTORY "${OPENWINHOME_STAGE_SHARE_DIR}")
 
 # Default text extras menu file expected by XView textsw/textedit.
 # Keep it present to avoid startup warnings when OPENWINHOME is staged locally.
-set(OPENWINHOME_TEXT_EXTRAS_MENU "${OPENWINHOME_STAGE_LIB_DIR}/.text_extras_menu")
+set(OPENWINHOME_TEXT_EXTRAS_MENU "${OPENLOOK_RUNTIME_CONFIG_DIR}/text_extras_menu")
 file(WRITE "${OPENWINHOME_TEXT_EXTRAS_MENU}"
 "# Default empty text extras menu for local OpenLook builds.\n"
 )
@@ -63,24 +70,26 @@ include_directories(${PROJECT_SOURCE_DIR}/resources)
 
 # Installed programs must work after the source/staging tree is removed.
 # Local runs select the staged tree through use-openwinhome.sh instead.
-add_compile_definitions(OPENWINHOME_DEFAULT="${CMAKE_INSTALL_PREFIX}")
+add_compile_definitions(OPENWINHOME_DEFAULT="${CMAKE_INSTALL_PREFIX}"
+    OPENLOOK_CONFIG_DIR_DEFAULT="${OPENLOOK_SYSCONFDIR}")
 
 # Convenience shell snippet for running from the staged OPENWINHOME tree.
-set(OPENWINHOME_ENV_SCRIPT "${OPENLOOK_STAGE_DIR}/use-openwinhome.sh")
+set(OPENWINHOME_ENV_SCRIPT "${OPENWINHOME_STAGE_DIR}/use-openwinhome.sh")
 file(WRITE "${OPENWINHOME_ENV_SCRIPT}"
 "#!/usr/bin/env bash\n"
-"# Source this file: source ./bin/use-openwinhome.sh\n"
+"# Source this file: source ./build/runtime/use-openwinhome.sh\n"
 "_owh_script=\"$BASH_SOURCE\"\n"
 "if [ -z \"$_owh_script\" ]; then _owh_script=\"$0\"; fi\n"
 "_owh_dir=\"$(cd \"$(dirname \"$_owh_script\")\" && pwd)\"\n"
 "export OPENWINHOME=\"$_owh_dir\"\n"
+"export OPENLOOK_CONFIG_DIR=\"$OPENWINHOME/etc/openlook\"\n"
 "export PATH=\"$OPENWINHOME/bin:$PATH\"\n"
 "if [ -n \"$LD_LIBRARY_PATH\" ]; then\n"
 "  export LD_LIBRARY_PATH=\"$OPENWINHOME/lib:$LD_LIBRARY_PATH\"\n"
 "else\n"
 "  export LD_LIBRARY_PATH=\"$OPENWINHOME/lib\"\n"
 "fi\n"
-"_owh_defaults=\"$OPENWINHOME/lib/app-defaults/Olwm\"\n"
+"_owh_defaults=\"$OPENLOOK_CONFIG_DIR/Olwm\"\n"
 "if [ -n \"$DISPLAY\" ] && [ -f \"$_owh_defaults\" ] && command -v xrdb >/dev/null 2>&1; then\n"
 "  xrdb -merge \"$_owh_defaults\"\n"
 "fi\n"
@@ -95,9 +104,16 @@ file(WRITE "${OPENWINHOME_ENV_SCRIPT}"
 )
 execute_process(COMMAND chmod +x "${OPENWINHOME_ENV_SCRIPT}")
 
-install(PROGRAMS "${OPENWINHOME_ENV_SCRIPT}" DESTINATION .)
-install(FILES "${OPENWINHOME_TEXT_EXTRAS_MENU}" DESTINATION lib)
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/pixrect" DESTINATION include)
+configure_file(cmake/environment.sh.in "${CMAKE_BINARY_DIR}/environment.sh" @ONLY)
+configure_file(cmake/openlook-session.in "${CMAKE_BINARY_DIR}/openlook-session" @ONLY)
+configure_file(cmake/openlook.desktop.in "${CMAKE_BINARY_DIR}/openlook.desktop" @ONLY)
+install(FILES "${CMAKE_BINARY_DIR}/environment.sh" DESTINATION share/openlook)
+install(PROGRAMS "${CMAKE_BINARY_DIR}/openlook-session" DESTINATION bin)
+install(FILES "${CMAKE_BINARY_DIR}/openlook.desktop" DESTINATION share/xsessions)
+install(FILES "${OPENWINHOME_TEXT_EXTRAS_MENU}" DESTINATION "${OPENLOOK_SYSCONFDIR}"
+    RENAME text_extras_menu)
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/pixrect" DESTINATION include
+    COMPONENT Development EXCLUDE_FROM_ALL)
 
 # Stage public development headers into OPENWINHOME/include.
 add_custom_target(openlook_headers ALL
@@ -123,3 +139,30 @@ add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(apps)
 add_subdirectory(tests EXCLUDE_FROM_ALL)
+
+# Depend on every normal target, including resource generators, before installing.
+# Optional test executables are deliberately excluded from the deliverables.
+function(openlook_collect_targets directory)
+    get_property(targets DIRECTORY "${directory}" PROPERTY BUILDSYSTEM_TARGETS)
+    foreach(target IN LISTS targets)
+        get_target_property(excluded "${target}" EXCLUDE_FROM_ALL)
+        if(NOT excluded)
+            set_property(GLOBAL APPEND PROPERTY OPENLOOK_DELIVERY_TARGETS "${target}")
+        endif()
+    endforeach()
+    get_property(children DIRECTORY "${directory}" PROPERTY SUBDIRECTORIES)
+    foreach(child IN LISTS children)
+        if(NOT child STREQUAL "${PROJECT_SOURCE_DIR}/tests")
+            openlook_collect_targets("${child}")
+        endif()
+    endforeach()
+endfunction()
+openlook_collect_targets("${PROJECT_SOURCE_DIR}")
+get_property(delivery_targets GLOBAL PROPERTY OPENLOOK_DELIVERY_TARGETS)
+configure_file(cmake/stage.cmake.in "${CMAKE_BINARY_DIR}/stage.cmake" @ONLY)
+add_custom_target(openlook_stage ALL
+    COMMAND "${CMAKE_COMMAND}" -DOPENLOOK_INSTALL_CONFIG=$<CONFIG>
+            -P "${CMAKE_BINARY_DIR}/stage.cmake"
+    DEPENDS ${delivery_targets}
+    COMMENT "Assembling clean Linux installation tree in ${OPENLOOK_STAGE_DIR}"
+    VERBATIM)

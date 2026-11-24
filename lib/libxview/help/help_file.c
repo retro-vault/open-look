@@ -19,7 +19,7 @@
 #include <xview_private/i18n_impl.h>
 
 #ifdef OPENWINHOME_DEFAULT
-#define DEFAULT_HELP_DIRECTORY OPENWINHOME_DEFAULT "/lib/help:/usr/share/openwin/help:/usr/X11R6/lib/help:/usr/openwin/lib/help:/usr/lib/help"
+#define DEFAULT_HELP_DIRECTORY OPENWINHOME_DEFAULT "/share/openlook/help:/usr/share/openwin/help:/usr/X11R6/lib/help:/usr/openwin/lib/help:/usr/lib/help"
 #else
 #define DEFAULT_HELP_DIRECTORY "/usr/share/openwin/help:/usr/X11R6/lib/help:/usr/openwin/lib/help:/usr/lib/help"
 #endif

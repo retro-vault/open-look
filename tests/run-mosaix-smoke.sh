@@ -11,7 +11,8 @@ if [[ "${1:-}" != "--inside" ]]; then
         --workdir "$ROOT_DIR" --entrypoint /bin/bash openlook-dev:local \
         "$ROOT_DIR/tests/run-mosaix-smoke.sh" --inside
 fi
-export OPENWINHOME="$ROOT_DIR/bin"
+export OPENWINHOME="$ROOT_DIR/build/docker/runtime"
+export OPENLOOK_CONFIG_DIR="$OPENWINHOME/etc/openlook"
 export LD_LIBRARY_PATH="$OPENWINHOME/lib"
 export XV_USE_XGETVISUALINFO_ALL=1
 export XENVIRONMENT="$ROOT_DIR/config/Xdefaults"

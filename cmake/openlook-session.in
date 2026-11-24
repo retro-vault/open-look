@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+source "@CMAKE_INSTALL_PREFIX@/share/openlook/environment.sh"
+exec "$OPENWINHOME/bin/olwm" "$@"

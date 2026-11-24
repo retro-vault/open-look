@@ -115,6 +115,13 @@ textsw_get_extras_filename(mi)
 		goto found;
     }
 
+    filename = getenv("OPENLOOK_CONFIG_DIR");
+    if (!filename || !*filename)
+        filename = OPENLOOK_CONFIG_DIR_DEFAULT;
+    if (snprintf(tmp, sizeof(tmp), "%s/%s", filename, EXTRASMENU) < (int)sizeof(tmp)
+        && (result = check_filename_locale(locale, tmp, 1)) != NULL)
+        goto found;
+
 #ifdef OPENWINHOME_DEFAULT
     /* martin-2.buck@student.uni-ulm.de */
     if (!(filename = getenv("OPENWINHOME"))) {

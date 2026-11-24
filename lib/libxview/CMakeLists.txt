@@ -83,16 +83,19 @@ set_target_properties(xview_static PROPERTIES
     OUTPUT_NAME xview
 )
 
-install(TARGETS xview xview_static
+install(TARGETS xview
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/xview/
-    DESTINATION include/xview
+    DESTINATION include/xview COMPONENT Development EXCLUDE_FROM_ALL
 )
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/xview_private/
-    DESTINATION include/xview_private
+    DESTINATION include/xview_private COMPONENT Development EXCLUDE_FROM_ALL
 )
+
+install(TARGETS xview_static ARCHIVE DESTINATION lib
+    COMPONENT Development EXCLUDE_FROM_ALL)

@@ -21,7 +21,7 @@ def main():
         parser.error("Xvfb is required; install it or pass --xvfb")
     root = Path(__file__).resolve().parents[1]
     executable = (args.build / "tests/props_color_test").resolve()
-    fonts = ",".join(str(root / "bin/share/fonts/openlook/bdf" / d)
+    fonts = ",".join(str(args.build.resolve() / "runtime/share/fonts/openlook/bdf" / d)
                      for d in ("misc", "75dpi", "100dpi"))
     fonts += ",/usr/share/fonts/X11/misc"
     for depth, visual in ((8, 3), (16, 4), (24, 4), (8, 0), (8, 1)):
@@ -49,7 +49,8 @@ def main():
                         raise RuntimeError("Xvfb did not become ready")
                     env = dict(os.environ, DISPLAY=":" + display,
                                HOME=str(directory), LANG="C", LC_ALL="C",
-                               OPENWINHOME=str(root / "bin"),
+                               OPENWINHOME=str(args.build.resolve() / "runtime"),
+                               OPENLOOK_CONFIG_DIR=str(args.build.resolve() / "runtime/etc/openlook"),
                                XENVIRONMENT=str(root / "config/Xdefaults"))
                     subprocess.run([str(executable)], env=env,
                                    check=True, timeout=30)

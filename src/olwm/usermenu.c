@@ -673,7 +673,7 @@ Bool messages;
 /*
  * Menu Search Path
  */
-#define NUM_SEARCH_PATH 8
+#define NUM_SEARCH_PATH 9
 static char **menuSearchPath;
 
 /*
@@ -712,6 +712,14 @@ makeMenuSearchPath()
 
 	/* ++roman: /etc/X11/olwm/<menufile> */
 	menuSearchPath[i++] = MemNewString("/etc/X11/olwm/%s");
+
+    {
+        const char *config_dir = getenv("OPENLOOK_CONFIG_DIR");
+        if (!config_dir || !*config_dir)
+            config_dir = OPENLOOK_CONFIG_DIR_DEFAULT;
+        if (snprintf(buf, sizeof(buf), "%s/%%s", config_dir) < (int)sizeof(buf))
+            menuSearchPath[i++] = MemNewString(buf);
+    }
 
 #ifdef OW_I18N_L3
 	/* $OPENWINHOME/share/locale/<locale>/olwm/<menufile> */

@@ -532,7 +532,7 @@ A pull-right menu item for find and delimiter matching operations.
 A user definable pull-right menu item.  The
 .B Extras
 standard submenu is controlled by
-.BR /usr/lib/.text_extras_menu ,
+.BR /etc/openlook/text_extras_menu ,
 which has the same format as
 .B \&.rootmenu
 file.

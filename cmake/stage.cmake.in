@@ -1,0 +1,17 @@
+# Use the normal install rules, including RPATH fixes and relative symlinks.
+# Install into a fresh temporary root first so failed builds keep the last package.
+set(package_root "@CMAKE_BINARY_DIR@/package-root")
+file(REMOVE_RECURSE "${package_root}")
+execute_process(
+    COMMAND "@CMAKE_COMMAND@" -E env "DESTDIR=${package_root}"
+            "@CMAKE_COMMAND@" --install "@CMAKE_BINARY_DIR@"
+            --config "${OPENLOOK_INSTALL_CONFIG}" --strip
+    RESULT_VARIABLE result
+    OUTPUT_FILE "@CMAKE_BINARY_DIR@/package-install.log"
+    ERROR_VARIABLE errors)
+if(NOT result EQUAL 0)
+    message(FATAL_ERROR "Installation failed: ${errors}\nSee @CMAKE_BINARY_DIR@/package-install.log")
+endif()
+# This destination is validated at configure time; it contains generated files only.
+file(REMOVE_RECURSE "@OPENLOOK_STAGE_DIR@")
+file(RENAME "${package_root}" "@OPENLOOK_STAGE_DIR@")

@@ -79,7 +79,7 @@ int main(argc,argv)
 	if ((openwinDir = getenv("OPENWINHOME")) != 0)
 		(void)strcpy(localePath,openwinDir);
 	else
-#ifndef OPENWINHOME_DEFAULT
+#ifdef OPENWINHOME_DEFAULT
 		/* martin-2.buck@student.uni-ulm.de */
 		(void)strcpy(localePath,OPENWINHOME_DEFAULT);
 #else

@@ -17,6 +17,6 @@ endif()
 
 # Install the accessories alongside the window manager.
 
-install(TARGETS cmdtool textedit clock props xtoolplaces olwmslave disktool
+install(TARGETS filemgr cmdtool textedit clock props xtoolplaces olwmslave disktool
     RUNTIME DESTINATION bin
 )

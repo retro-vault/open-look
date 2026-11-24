@@ -28,7 +28,7 @@ static char     sccsid[] = "@(#)help_file.c 1.17 90/12/04";
 #include <xview_private/i18n_impl.h>
 #endif
 
-#define DEFAULT_HELP_DIRECTORY "/usr/lib/help"
+#define DEFAULT_HELP_DIRECTORY OPENWINHOME_DEFAULT "/share/openlook/help:/usr/lib/help"
 #define MAX_MORE_HELP_CMD 128
 
 static FILE    *help_file;

@@ -1,0 +1,46 @@
+name: Build OpenLook
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Linux x86_64
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Compile the full project
+        run: bash .vscode/openlook-docker.sh build
+
+      - name: Check the installation tree
+        run: python3 tests/check-install-tree.py bin
+
+      - name: Test the installed applications
+        run: bash tests/run-installed-smoke.sh
+
+      - name: Archive the installation tree
+        run: |
+          tar --owner=0 --group=0 -C bin -czf build/openlook-linux-x86_64.tar.gz .
+          cd build
+          sha256sum openlook-linux-x86_64.tar.gz > openlook-linux-x86_64.tar.gz.sha256
+
+      - name: Upload the installable package
+        uses: actions/upload-artifact@v7
+        with:
+          name: openlook-linux-x86_64
+          path: |
+            build/openlook-linux-x86_64.tar.gz
+            build/openlook-linux-x86_64.tar.gz.sha256
+          if-no-files-found: error
+          compression-level: 0

@@ -46,9 +46,10 @@ files in the source tree.
   in `tests/data/`.
 - `build/` contains CMake state, object files, dependency files, and other
   intermediate build products.
-- `bin/` is the generated OPENWINHOME staging tree. CMake places final
-  executables, libraries, public headers, manual pages, fonts, and runtime
-  resources there.
+- `bin/` is the clean Linux installation root: configuration in `etc/openlook`
+  and runtime executables, libraries, manuals, fonts, and data in `usr/local`.
+  CMake assembles it through install rules; build files, SDK headers/static
+  libraries, and debug helpers do not belong there.
 
 Do not create nested build directories under `apps/`, `src/`, `lib/`,
 `resources/`, or `tests/`.
@@ -204,15 +205,17 @@ Run sanitizer builds only in an environment where the X11 and runtime
 dependencies are compatible with the selected sanitizer. Report any
 external-library limitation rather than silently skipping the check.
 
-Object files and CMake state must remain in `build/`. Final artifacts are
-expected in `bin/` because the top-level CMake project intentionally stages a
-complete local OPENWINHOME tree there. Docker keeps intermediates in
-`build/docker/` and stages into the same `bin/` tree. Keep debug launch paths
-and test scripts aligned with `bin/bin` and the other staged directories.
+Object files, CMake state, debug helpers, and unstripped binaries must remain
+in `build/`. The top-level `openlook_stage` target runs the normal CMake install
+rules with DESTDIR and refreshes `bin/` as a clean Linux root. Docker's runnable
+development tree is `build/docker/runtime/`; native builds use `build/runtime/`.
+Keep debug launch paths and test scripts aligned with those development trees.
 
-Build and install must provide matching runtime layouts: exported headers,
-images and bitmap compatibility paths, menus, defaults, help, manuals, locale
-resources, compiled terminfo, indexed fonts, and the environment helper.
+Default installs contain runtime deliverables only: shared libraries, images,
+bitmaps, menus, defaults, help, manuals, locales, terminfo, fonts, and session
+setup. Public headers and static libraries use the optional Development install
+component. Configuration belongs in `/etc/openlook`; platform-independent data
+belongs in `<prefix>/share`, not `lib` or `include`.
 Generate `fonts.dir` with `mkfontdir` during the build; install the generated
 font tree with its aliases and indexes. Preserve `DESTDIR` and install-prefix
 support. Installed programs must find packaged libraries and resources without

@@ -10,7 +10,8 @@ if [[ "${1:-}" != --inside ]]; then
         --workdir "$ROOT_DIR" --entrypoint /bin/bash openlook-dev:local \
         "$ROOT_DIR/tests/run-calculator-smoke.sh" --inside
 fi
-export OPENWINHOME="$PWD/bin"
+export OPENWINHOME="$PWD/build/docker/runtime"
+export OPENLOOK_CONFIG_DIR="$OPENWINHOME/etc/openlook"
 export LD_LIBRARY_PATH="$OPENWINHOME/lib"
 export XENVIRONMENT="$PWD/config/Xdefaults"
 export XV_USE_XGETVISUALINFO_ALL=1

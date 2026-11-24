@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=OpenLook
+Comment=OpenLook desktop and window manager
+Exec=@CMAKE_INSTALL_PREFIX@/bin/openlook-session
+TryExec=@CMAKE_INSTALL_PREFIX@/bin/olwm
+Type=Application
+DesktopNames=OpenLook;

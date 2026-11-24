@@ -5,7 +5,7 @@
       "name": "Debug workspace (OpenLook Docker)",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/bin/olwm",
+      "program": "${workspaceFolder}/build/docker/runtime/bin/olwm",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
@@ -40,22 +40,26 @@
       "name": "Debug workspace (OpenLook)",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/bin/olwm",
+      "program": "${workspaceFolder}/build/runtime/bin/olwm",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [
         {
           "name": "OPENWINHOME",
-          "value": "${workspaceFolder}/bin"
+          "value": "${workspaceFolder}/build/runtime"
+        },
+        {
+          "name": "OPENLOOK_CONFIG_DIR",
+          "value": "${workspaceFolder}/build/runtime/etc/openlook"
         },
         {
           "name": "LD_LIBRARY_PATH",
-          "value": "${workspaceFolder}/bin/lib:${env:LD_LIBRARY_PATH}"
+          "value": "${workspaceFolder}/build/runtime/lib:${env:LD_LIBRARY_PATH}"
         },
         {
           "name": "PATH",
-          "value": "${workspaceFolder}/bin/bin:${env:PATH}"
+          "value": "${workspaceFolder}/build/runtime/bin:${env:PATH}"
         },
         {
           "name": "DISPLAY",
@@ -75,7 +79,7 @@
       "miDebuggerPath": "/usr/bin/gdb",
       "preLaunchTask": "prepare workspace (OpenLook Debug)",
       "postDebugTask": "openlook: stop session (:2)",
-      "additionalSOLibSearchPath": "${workspaceFolder}/bin/lib",
+      "additionalSOLibSearchPath": "${workspaceFolder}/build/runtime/lib",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
