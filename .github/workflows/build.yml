@@ -29,6 +29,16 @@ jobs:
       - name: Test the installed applications
         run: bash tests/run-installed-smoke.sh
 
+      - name: Upload test failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: installed-smoke-diagnostics
+          path: |
+            build/installed-smoke/*.log
+            build/installed-smoke/*.png
+          if-no-files-found: ignore
+
       - name: Archive the installation tree
         run: |
           tar --owner=0 --group=0 -C bin -czf build/openlook-linux-x86_64.tar.gz .

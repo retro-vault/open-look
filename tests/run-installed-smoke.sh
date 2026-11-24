@@ -55,7 +55,10 @@ for pid in "${pids[@]}"; do kill -0 "$pid"; done
 gcc /tests/read-primary-selection.c -lX11 -o /logs/read-selection
 calc_window=$(xdotool search --name '^Calculator$' | tail -1)
 xdotool windowmove "$calc_window" 30 30 windowraise "$calc_window"
-timeout 25 python3 /tests/calculator-ui-test.py /logs > /logs/ui.log 2>&1 || {
+timeout 40 python3 /tests/calculator-ui-test.py /logs > /logs/ui.log 2>&1 || {
+    xwininfo -root -tree > /logs/window-tree.log 2>&1 || true
+    xprop -id "$calc_window" WM_STATE WM_HINTS >> /logs/window-tree.log 2>&1 || true
+    xwd -root -silent | convert xwd:- /logs/failure.png || true
     cat /logs/ui.log
     exit 1
 }

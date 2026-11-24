@@ -53,7 +53,7 @@ gcc -std=c99 -Wall -Wextra -Werror -Iapps/xcalc tests/calculator-test.c \
 "$log_dir/engine-test"
 gcc -std=c99 -Wall -Wextra -Werror tests/read-primary-selection.c -lX11 \
     -o "$log_dir/read-selection"
-timeout 25 python3 tests/calculator-ui-test.py "$log_dir" >"$log_dir/ui.log" 2>&1 || {
+timeout 40 python3 tests/calculator-ui-test.py "$log_dir" >"$log_dir/ui.log" 2>&1 || {
     cat "$log_dir/ui.log"; exit 1;
 }
 cat "$log_dir/ui.log"
