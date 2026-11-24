@@ -37,6 +37,7 @@
 #include "evbind.h"
 #include "mem.h"
 #include "olwm.h"
+#include "virtual-desktop.h"
 #include "win.h"
 #include "menu.h"
 #include "defaults.h"
@@ -329,6 +330,7 @@ olwm: Warning: '%s' is invalid locale for the LC_CTYPE category,\n\
 	InitScreens(DefDpy);
 	GrabKeys(DefDpy, True);
 	GrabButtons(DefDpy, True);
+	virtual_desktop_init(DefDpy);
 	ReparentScreens(DefDpy);
 	if (!GRV.FocusFollowsMouse)
 	    ClientFocusTopmost(DefDpy, GetFirstScrInfo(), CurrentTime);
@@ -679,6 +681,7 @@ cleanup()
 	/*
 	 * destroy all pinned menus
 	 */
+	virtual_desktop_shutdown(DefDpy);
 	DestroyPinnedMenuClients();
 
 	/*

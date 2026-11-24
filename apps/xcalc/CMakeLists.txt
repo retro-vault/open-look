@@ -1,0 +1,8 @@
+add_library(xcalc_engine STATIC math.c actions.c word.c)
+target_compile_options(xcalc_engine PRIVATE -Wall -Wextra -Werror)
+target_link_libraries(xcalc_engine PUBLIC m)
+add_executable(xcalc xcalc.c drawing.c)
+target_link_libraries(xcalc PRIVATE xcalc_engine app_icons)
+target_compile_options(xcalc PRIVATE -Wall -Wextra -Werror)
+install(TARGETS xcalc RUNTIME DESTINATION bin)
+install(FILES COPYING DESTINATION share/doc/openlook/xcalc)

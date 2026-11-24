@@ -1,0 +1,60 @@
+.TH XCALC 1 "November 2026" "OpenLook"
+.SH NAME
+xcalc \- OPEN LOOK scientific calculator
+.SH SYNOPSIS
+.B xcalc
+.RB [ -rpn ]
+.RI [ XView-options ]
+.SH DESCRIPTION
+The native XView port of X.Org xcalc provides algebraic and reverse Polish
+notation (RPN) scientific and programmer calculation. Press F2 or Control-R,
+or use the right-click menu, to change mode. Switching modes resets the
+calculation and memory registers. The rounded keys are custom drawn in blue,
+white and sand tones, with pressed and keyboard-focus feedback.
+The supplied calculator icon is used when the window is minimized.
+.SH OPERATIONS
+Algebraic mode supports operator precedence and parentheses. In RPN mode,
+Enter pushes a number onto the four-level stack; Roll rotates the stack
+and X:Y exchanges the top two values.
+.PP
+DRG cycles between degrees, radians and grads. INV changes sine, cosine and
+tangent to their inverse functions, log to ten-to-the-power, ln to exponential,
+and square root to square. INV followed by DRG converts the displayed angle
+to the next unit.
+.PP
+STO, RCL, SUM and EXC store, recall, add to, and exchange with memory.
+In RPN mode, follow STO, RCL or SUM with a register digit from 0 to 9.
+EXC exchanges with register zero.
+.PP
+CE/C clears the entry; pressing it twice in algebraic mode clears pending
+operations. AC resets the entire calculator. Backspace edits the current entry.
+Invalid domains, division by zero, overflow and exhausted expression stacks
+show Error. Clear the error with CE/C or AC before continuing.
+.SH PROGRAMMER FUNCTIONS
+The base key cycles decimal, hexadecimal and octal (DEC/HEX/OCT).
+A through F enter hexadecimal digits. The not, and, or, xor, shl, shr and
+mod keys operate on unsigned 32-bit integers. Shifts accept counts from 0 to 31;
+left shifts discard bits beyond bit 31. The trunc key removes a fractional part.
+Negative, fractional or out-of-range word operands, invalid shifts, and modulus
+by zero report Error. Base conversion also requires an unsigned 32-bit integer.
+.SH KEYBOARD
+Digits, decimal point, +, -, *, /, ^, parentheses and ! enter the corresponding
+operations. Return evaluates in algebraic mode or pushes the RPN stack.
+Backspace edits; Escape performs AC; Control-Q closes the calculator.
+Tab, Shift-Tab and arrow keys move keyboard focus; Space activates that key.
+Return always evaluates or pushes the RPN stack. Dragging off a pressed key
+and releasing cancels the click.
+.PP
+Other shortcuts: p for pi, e for Euler's number, E for exponent entry,
+s/c/t for sine/cosine/tangent, l for natural logarithm, r for square root,
+i for inverse, d for angle units, and n for sign change.
+Programmer shortcuts: b for base, % for mod, & for and, | for or, x for xor,
+~ for not, and < or > for shifts. Uppercase A-F enter hexadecimal digits;
+E selects exponent entry in decimal mode.
+.SH NOTES
+The calculation engine is derived from X.Org xcalc 1.1.3. Its scientific
+display uses eight significant digits for computed decimal results; hexadecimal
+and octal words are exact. Xt action resources are not used.
+No network connection is needed at build time or runtime.
+.SH SEE ALSO
+.BR olwm (1)

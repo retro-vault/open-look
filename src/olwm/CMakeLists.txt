@@ -12,6 +12,7 @@ set(OLWM_SOURCES
     wingframe.c winicon.c winipane.c winmenu.c
     winnofoc.c winpane.c winpinmenu.c winpush.c
     winresize.c winroot.c fallback_allplanes.c
+    virtual-desktop.c desktop-protocol.c
 )
 
 # Defines
@@ -37,6 +38,8 @@ endif()
 
 # Executable
 add_executable(olwm ${OLWM_SOURCES})
+set_source_files_properties(virtual-desktop.c desktop-protocol.c PROPERTIES
+    COMPILE_OPTIONS "-Wall;-Wextra;-Werror")
 
 # Includes: local + possibly OPENWINHOME (if emulated)
 target_include_directories(olwm

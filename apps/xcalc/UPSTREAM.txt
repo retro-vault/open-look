@@ -1,0 +1,26 @@
+X.Org xcalc 1.1.3, adapted to native XView / OPEN LOOK
+
+Official source archive:
+https://www.x.org/releases/individual/app/xcalc-1.1.3.tar.xz
+SHA-256:
+86e157b6174678675a4a912995dccd0ff4e2ce32b01bdd6f91bfe93333324980
+
+Upstream project: https://gitlab.freedesktop.org/xorg/app/xcalc
+Downloaded 2026-11-24. License: retained in COPYING and source notices.
+
+math.c and xcalc.h originate from this release. The native actions.c retains
+the scientific/programmer action mappings. xcalc.c and drawing.c replace the
+Xt/Athena interface with custom XView canvas keys, a native selectable LCD,
+a mode menu, keyboard navigation and the shared application icon loader.
+The build uses this repository's CMake, XView and OLGX, with no Xt/Xaw dependency
+and no download during configure/build.
+
+Local engine changes: explicit finite-result/domain/overflow checks instead of
+signal recovery; safe overlapping sign edits; corrected precedence reduction;
+sticky stack failures; exponent backspace and decimal-entry fixes; complete
+mode/reset initialization. word.c supplies checked unsigned 32-bit conversion,
+bit operations and shifts, replacing the original unchecked long casts.
+Legacy engine names and structure are retained.
+
+This port exposes scientific, algebraic, RPN and programmer functions.
+Xt resource/action customization is not exposed by the native interface. See docs/man/xcalc.man for current controls and shortcuts.

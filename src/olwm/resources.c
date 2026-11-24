@@ -178,7 +178,7 @@ ResourceItem LocaleItemTable[] = {
 ResourceItem MainItemTable[] = {
 
 {   "titleFont",		"TitleFont",
-    "-adobe-helvetica-bold-r-normal--14-*-*-*-*-*-iso8859-1",
+    "-adobe-helvetica-bold-r-normal--12-*-*-*-*-*-iso8859-1",
 #ifdef OW_I18N_L4
     &(GRV.TitleFontSetInfo),	cvtFontSet,		updTitleFont,
 #else

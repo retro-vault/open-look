@@ -22,6 +22,7 @@
 #include "ollocale.h"
 #include "mem.h"
 #include "olwm.h"
+#include "virtual-desktop.h"
 #include "win.h"
 #include "group.h"
 #include "globals.h"
@@ -1090,12 +1091,13 @@ WinPane *ourWinInfo;
 	 * In a future major release we should change this.
 	 */
 	cli->wmState = initstate;
+	virtual_desktop_add(cli);
 
 	switch ( initstate ) {
 	case NormalState:
 	    XMapRaised(dpy, winFrame->core.self);
 	    XMapRaised(dpy, winPane->core.self);
-	    if (!fexisting) {
+	    if (!fexisting && virtual_desktop_visible(cli)) {
 		FrameWarpPointer(cli);
 		if (GRV.AutoInputFocus)
 		    ClientSetFocus(cli, True, CurrentTime);
@@ -1318,6 +1320,8 @@ Time	timestamp;
 
 	/* Zero event mask to cut down on unneeded events */
 	XSelectInput(dpy,PANEWINOFCLIENT(cli),NoEventMask);
+        XDeleteProperty(dpy, PANEWINOFCLIENT(cli),
+                        XInternAtom(dpy, "_NET_WM_DESKTOP", False));
 
 	/*
 	 * Transition from the various states

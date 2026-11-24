@@ -408,6 +408,68 @@ Run the isolated resize and mouse-drag regression test after building:
 bash tests/run-resize-smoke.sh
 ```
 
+## Calculator
+
+**Programs → Calculator** opens the native OPEN LOOK port of X.Org xcalc.
+The source is in `apps/xcalc`, including its original calculation engine,
+license, and [upstream provenance](apps/xcalc/UPSTREAM.txt). It builds locally
+with CMake and XView, without downloading sources or requiring Xt/Athena.
+
+The calculator has custom rounded pastel keys, a recessed display, algebraic
+and RPN modes, trigonometry, logarithms, powers, factorials, parentheses, memory
+and programmer functions. Use **F2**, **Ctrl+R**, or the right-click menu to
+change modes; switching resets the calculation and memory.
+Type arithmetic directly, use Enter to evaluate (or push in RPN), Backspace
+to edit and Escape to clear. Results support native text selection and copying.
+The supplied `calculator.png` is packaged through the shared icon pipeline.
+
+Run `bin/bin/xcalc` (or `xcalc -rpn`) in the OpenLook environment. See `man xcalc`
+for scientific shortcuts and memory-register behavior. The **base** key cycles
+DEC/HEX/OCT. Programmer operations use checked unsigned 32-bit words; invalid
+operands and shift counts show Error. Tab/arrows select a key and Space presses
+it. Xt action resources are not used.
+
+After building, `bash tests/run-calculator-smoke.sh` checks the arithmetic
+engine and real XView controls in an isolated Xephyr desktop, including keyboard
+and mouse input, RPN, error recovery, selected results, the icon and normal close.
+
+## Virtual desktops
+
+**Programs → Virtual Desktops** opens the native overview and enables a 3×2
+grid in the existing `olwm`. This is an optional extension of our window
+manager; it does not install or switch to `olvwm`. Ordinary sessions start
+with one desktop unless configured otherwise.
+
+- Click anywhere in a desktop, including a miniature, to switch; **Ctrl+Alt+arrow** moves
+  to an adjacent desktop.
+- Drag a miniature window into another cell to move it and its dependent
+  dialogs. Double-click a miniature to restore and activate that window.
+- Middle-click a miniature to pin it on every desktop; middle-click again
+  to put it on the current desktop.
+- Resize the pager to add or remove rows and columns. It snaps to fixed
+  **80×72-pixel panes**, with 1–4 panes per axis. Shrink it to **1×1** to bring
+  all windows back to a single desktop, preserving their minimized state.
+  Existing panes keep their grid positions; windows from removed panes move
+  to the last remaining pane. There is no Properties dialog.
+
+The compact overview has dashed desktop separators and no toolbar or footer.
+The current desktop’s separators become solid; the canvas has no inset border.
+It uses `assets/icons/bw-theme/vwm.png`. Closing it leaves the
+desktops active; opening it again raises the existing overview if present.
+The grid, current desktop and assignments survive **Restart WM** on the same
+X server. Exiting the WM restores access to all windows. New X sessions do
+not retain assignments. To start a fresh session with six desktops, add
+`OpenWindows.VirtualDesktop: 3x2` to your X resources.
+
+Each desktop is screen-sized. Resizing Xephyr adjusts window bounds within
+their assigned desktop; it does not expose hidden desktops. This version
+provides a grid of separate desktops, rather than continuous panning across
+one oversized workspace. The overview shows outlines and window names.
+
+Builds and installs include `bin/vwm` and `man vwm`. Run the focused nested
+Xephyr tests with `bash tests/run-virtual-desktop-smoke.sh`. Implementation
+notes are in [docs/architecture/virtual-desktops.md](docs/architecture/virtual-desktops.md).
+
 ## File Manager
 
 **Programs → File Manager** launches the original Sun DeskSet File Manager

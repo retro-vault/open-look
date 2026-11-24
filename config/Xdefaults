@@ -38,7 +38,7 @@ OpenWindows.SelectDisplaysMenu:		True
 OpenWindows.MenuAccelerators:		True
 OpenWindows.WindowMenuAccelerators:	True
 
-OpenWindows.TitleFont:  -adobe-helvetica-bold-r-normal--14-*-*-*-*-*-iso8859-1
+OpenWindows.TitleFont:  -adobe-helvetica-bold-r-normal--12-*-*-*-*-*-iso8859-1
 OpenWindows.TextFont:   -adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1
 OpenWindows.ButtonFont: -adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1
 OpenWindows.IconFont:   -adobe-helvetica-medium-r-normal--10-*-*-*-*-*-iso8859-1

@@ -976,7 +976,7 @@ Default value: black.
 .BI ButtonFont " (font name)"
 Font to be used for buttons in menus and notices.
 .I
-Default value: Lucida-Sans-12.
+Default value: Helvetica medium, 12 pixels.
 .TP
 .BI ClickMoveThreshold " (integer)"
 This value is used when bringing up a menu.  If the pointer moves more than
@@ -1426,7 +1426,8 @@ See the section on Locale Handling for more details.
 .BI TitleFont " (font name)"
 Font used in title bars atop windows and menus.
 .I
-Default: Lucida-Sans-12 Bold.
+Default: Helvetica bold, 12 pixels, matching the menu button font's family
+and size.
 .TP
 .BI TransientsSaveUnder " (boolean)"
 Specifies whether the save-under attribute of frames of transient windows is

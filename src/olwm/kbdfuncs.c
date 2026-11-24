@@ -17,6 +17,7 @@
 #include "i18n.h"
 #include "ollocale.h"
 #include "olwm.h"
+#include "virtual-desktop.h"
 #include "win.h"
 #include "menu.h"
 #include "globals.h"
@@ -270,6 +271,9 @@ findClient(cli, closure)
     Client *cli;
     FindClosure *closure;
 {
+    if (!virtual_desktop_visible(cli))
+        return NULL;
+
     switch (compareClients(cli, closure->cur, closure->prev)) {
     case -1:
 	/* this is earlier in the sort order; ignore */
@@ -369,7 +373,7 @@ selectNextPrevApp(dpy, ke, prev)
     for (cli = ListEnum(&l); cli != NULL; cli = ListEnum(&l)) {
 
 	/* skip special screen clients (including NoFocus client) */
-	if (cli->framewin == NULL)
+	if (cli->framewin == NULL || !virtual_desktop_visible(cli))
 	    continue;
 
 	/* skip dependent followers */

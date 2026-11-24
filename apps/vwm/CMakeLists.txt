@@ -1,0 +1,5 @@
+add_executable(vwm vwm.c model.c overview.c grid.c)
+target_include_directories(vwm PRIVATE "${PROJECT_SOURCE_DIR}/src/olwm")
+target_link_libraries(vwm PRIVATE app_icons)
+target_compile_options(vwm PRIVATE -Wall -Wextra -Werror)
+install(TARGETS vwm RUNTIME DESTINATION bin)

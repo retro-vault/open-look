@@ -23,6 +23,7 @@
 #include "events.h"
 #include "mem.h"
 #include "olwm.h"
+#include "virtual-desktop.h"
 #include "win.h"
 #include "group.h"
 #include "globals.h"
@@ -558,6 +559,7 @@ Client *cli;
 	List	    *l;
 	Client	    *tcli;
 
+	virtual_desktop_forget(cli);
 	UnTrackSubwindows(cli, True);
 	if (IsSelected(cli))
 		RemoveSelection(cli);
@@ -701,6 +703,7 @@ ClientSetWMState(cli,wmState)
 		wmState = IconicState;
 
 	PropSetWMState(cli->dpy,pane,wmState,icon);
+	virtual_desktop_state(cli);
 }
 
 
@@ -1386,6 +1389,9 @@ Client *cli;
 Bool sendTF;
 Time evtime;
 {
+	if (!virtual_desktop_visible(cli))
+	    return;
+
 	if (fir.inhibited) {
 	    fir.cli = cli;
 	    fir.sendTF = sendTF;
@@ -1504,7 +1510,7 @@ ClientActivate(dpy, cli, time)
      * If we are being asked to activate a NULL client, or a client without a 
      * frame (i.e. a root client), activate the NoFocus client.
      */
-    if (cli == NULL) {
+    if (cli == NULL || !virtual_desktop_visible(cli)) {
 	NoFocusTakeFocus(dpy, time, NULL);
     } else if (cli->framewin == NULL) {
 	NoFocusTakeFocus(dpy, time, cli->scrInfo);
@@ -1558,7 +1564,8 @@ ClientFocusTopmost(dpy, scrinfo, time)
 	win = WIGetInfo(children[i]);
 	if (win != NULL
 	    && win->core.kind == WIN_FRAME
-	    && win->core.client->wmState == NormalState)
+	    && win->core.client->wmState == NormalState
+            && virtual_desktop_visible(win->core.client))
 	{
 	    topframeclient = win->core.client;
 	    break;

@@ -1,0 +1,52 @@
+.TH VWM 1 "November 2026" "OpenLook"
+.SH NAME
+vwm \- native overview of olwm virtual desktops
+.SH SYNOPSIS
+.B vwm
+.RI [ XView-options ]
+.SH DESCRIPTION
+.B vwm
+opens an overview of the optional screen-sized desktops managed by olwm.
+It is an XView application, not a replacement window manager.
+Opening it in a single-desktop session enables a three-column, two-row grid.
+Opening it again raises the existing overview, including when minimized.
+The overview is visible on every desktop and uses the packaged vwm icon.
+.SH CONTROLS
+The compact window contains only the desktop grid, with dashed separators.
+Click anywhere in a desktop, including over a miniature, to switch to it.
+Drag a miniature window to another cell to move that window and its
+dependent dialogs. Double-click a miniature to switch to its desktop,
+restore it if minimized, raise it and give it focus.
+.PP
+Middle-click a miniature to show the window and its dependent dialogs on
+every desktop. Middle-click it again to place them on the current desktop.
+.PP
+Control-Alt-Left, Control-Alt-Right, Control-Alt-Up and Control-Alt-Down
+switch to adjacent desktops while multiple desktops are enabled.
+.SH RESIZING
+Resize the pager to change the grid. Each pane remains 80 by 72 pixels;
+the window snaps to whole panes, with one to four columns and rows.
+Growing adds panes when they fit. Existing panes retain their row and column.
+Shrinking removes panes and moves windows
+from removed desktops to the last remaining desktop.
+Resizing to one pane disables desktop switching and brings all windows onto
+the single desktop without changing their minimized state.
+There is no Properties dialog; right-click does not open one.
+.SH LIFETIME
+Closing the overview leaves desktops and shortcuts active.
+Desktop assignments, the current desktop and the grid survive Restart WM
+on the same X server. Exiting olwm restores access to every client window.
+Desktop assignments are not saved across new X server sessions.
+.SH RESOURCES
+.TP
+.B OpenWindows.VirtualDesktop
+Initial grid for a fresh olwm session, in columns-by-rows notation.
+The default is 1x1. For example, 3x2 enables six desktops at startup.
+A grid retained on the root window by Restart WM takes precedence.
+.SH NOTES
+Requires this project's updated olwm. Each desktop has the physical screen's
+dimensions; continuous panning and windows spanning desktop cells are not
+implemented. The overview polls geometry four times per second and displays
+window outlines and names, not live application screenshots.
+.SH SEE ALSO
+.BR olwm (1)

@@ -23,6 +23,7 @@
 #include "i18n.h"
 #include "ollocale.h"
 #include "olwm.h"
+#include "virtual-desktop.h"
 #include "win.h"
 #include "debug.h"
 #include "globals.h"
@@ -170,6 +171,9 @@ WinGeneric *winInfo;
 	    DebugEvent(event, "Dispatch - debug");
 
 	saveTimestamp( event );
+
+	if (virtual_desktop_event(dpy, event))
+	    return;
 
 	if (winInfo == NULL)
 	{

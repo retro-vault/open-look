@@ -42,6 +42,8 @@ set(OPENLOOK_MAN_PAGES
     props
     textedit
     xtoolplaces
+    vwm
+    xcalc
 )
 
 set(OPENLOOK_MAN_STAGE_COMMANDS)

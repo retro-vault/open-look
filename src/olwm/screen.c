@@ -28,6 +28,7 @@
 #include "ollocale.h"
 #include "mem.h"
 #include "olwm.h"
+#include "virtual-desktop.h"
 #include "defaults.h"
 #include "globals.h"
 #include "resources.h"
@@ -2405,5 +2406,6 @@ ScreenResizeEvent(Display *dpy, XEvent *event)
             WinCallConfig(dpy, (WinGeneric *)frame, NULL);
         }
     }
+    virtual_desktop_resize(si);
     return True;
 }

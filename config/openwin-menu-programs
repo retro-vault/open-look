@@ -11,5 +11,7 @@
 
 "Command Tool..." 		exec $OPENWINHOME/bin/cmdtool
 "Clock..."			exec $OPENWINHOME/bin/clock
+"Calculator..."			exec "$OPENWINHOME/bin/xcalc"
 "Text Editor..."			exec $OPENWINHOME/bin/textedit
 "Properties..."			exec $OPENWINHOME/bin/props
+"Virtual Desktops..."		exec "$OPENWINHOME/bin/vwm"
