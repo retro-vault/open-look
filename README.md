@@ -123,6 +123,12 @@ an **openlook-linux-x86_64** artifact containing the installation archive and
 its SHA-256 checksum. The archive contains `etc/` and `usr/` directly and
 preserves executable modes and symlinks. Archives and logs stay in `build/`.
 
+Successful version-tag pushes also publish a **GitHub Release** for that tag,
+with the tested installation archive and checksum attached as release assets.
+Manual runs build, test, and upload an Actions artifact without publishing a
+release. The release job runs only after the build succeeds and is the only
+job with permission to write repository contents.
+
 ### Build and debug with Docker
 
 The optional Docker configuration uses

@@ -54,3 +54,42 @@ jobs:
             build/openlook-linux-x86_64.tar.gz.sha256
           if-no-files-found: error
           compression-level: 0
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Download the tested installation package
+        uses: actions/download-artifact@v8
+        with:
+          name: openlook-linux-x86_64
+          path: dist
+
+      - name: Verify the package checksum
+        working-directory: dist
+        run: sha256sum -c openlook-linux-x86_64.tar.gz.sha256
+
+      - name: Publish the tagged version
+        working-directory: dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" \
+              openlook-linux-x86_64.tar.gz \
+              openlook-linux-x86_64.tar.gz.sha256 --clobber
+          else
+            gh release create "$RELEASE_TAG" \
+              openlook-linux-x86_64.tar.gz \
+              openlook-linux-x86_64.tar.gz.sha256 \
+              --verify-tag --title "OpenLook $RELEASE_TAG" --generate-notes
+          fi
+          gh release edit "$RELEASE_TAG" --draft=false
