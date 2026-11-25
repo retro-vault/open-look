@@ -4,7 +4,7 @@ add_executable(disktool
 
 target_link_libraries(disktool
     PRIVATE
-        xview
+        app_icons
 )
 
 install(FILES COPYRIGHT DESTINATION share/doc/openlook/disktool)

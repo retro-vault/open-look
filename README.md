@@ -185,14 +185,15 @@ are in `apps/mosaix/icons/`.
 
 Application icons use the artwork in `assets/icons/bw-theme/`: browser for
 MosaiX, terminal for Cmdtool/Shelltool, text-editor for Text Editor, folder for
-File Manager, waste for Wastebasket, and properties for Workspace Properties.
+File Manager, waste for Wastebasket, properties for Workspace Properties, and
+disk-tool for Disk tool. Disk tool uses the label `Disk tool` for both its window
+and minimized icon.
 Clock keeps its original face in the open window and uses the supplied square
 frame with live hour/minute hands only in its minimized icon. Digital mode and
 the seconds/date options remain available. Its icon label shows local time in
 24-hour `HH:MM` format. MosaiX uses the label `MosaiX`, and an unnamed Text Editor
 document uses `No file`. Theme artwork is shifted up eight pixels within each
-64px PNG to leave room for the native labels. Disk Tool retains its existing
-icon because the theme has no match.
+64px PNG to leave room for the native labels.
 Regenerate the checked-in XPM files with `python3 tools/convert-app-icons.py`
 (Pillow is needed only for regeneration). The build stages them in
 `build/docker/runtime/share/openlook/icons/bw-theme/` for Docker; installation copies them to

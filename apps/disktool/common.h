@@ -24,7 +24,7 @@ RESPONSIBILITY FOR ANY PROBLEMS OR DAMAGES CAUSED BY USE OF `disktool'.
 #define GREEN 2
 #define BLACK 3
 #define NUM_COLORS 4
-#define DT_LABEL "Disktool 2.0"
+#define DT_LABEL "Disk tool"
 #define OKCOLOR GREEN         /* Change this to any of the above colors     */
 #define CRITCOL RED           /* Change this to any of the above colors     */
 #define MINSPACING 50         /* Min. spacing value allowed before autocalc */

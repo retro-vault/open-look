@@ -73,6 +73,7 @@ RESPONSIBILITY FOR ANY PROBLEMS OR DAMAGES CAUSED BY USE OF `disktool'.
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 #include "common.h"
+#include "app-icon.h"
 /* ==========================================================================*/
 void get_date(datestring)
 char *datestring;
@@ -245,6 +246,7 @@ get_values()
 	 }	    
       }
    }
+   /* Only swap the legacy fallback artwork; keep the theme icon unchanged. */
    if (critical && xv_get(icon, ICON_IMAGE) == image_ok)
    xv_set(icon, ICON_IMAGE, image_crit, NULL);
    if (!critical && xv_get(icon, ICON_IMAGE) == image_crit)
@@ -646,7 +648,6 @@ char *argv[];
    char         dirname[MAXPATHLEN];
    char         *cmd = 0;
    char         *arg_v[128];
-   char         icon_label[MAXHOSTNAMELEN];
    char         cmd_label[30];
    Panel_item   prop_panel;
    Menu         appmenu;
@@ -668,12 +669,6 @@ char *argv[];
 
    arg_c = argc - 1;
    for(n=1;n < argc;++n) arg_v[n-1] = argv[n];
-
-   if (gethostname(icon_label, MAXHOSTNAMELEN))
-   {
-      fprintf(stderr, "Problem getting HOSTNAME\n");
-      sprintf(icon_label, "disktool");
-   }
 
    for(n=0;n < MAX_GAUGES;++n)
    {
@@ -726,8 +721,9 @@ char *argv[];
    icon = (Icon)xv_create(frame, ICON,
 			  ICON_IMAGE,       image_ok,
 			  ICON_MASK_IMAGE,  image_mask,
-			  ICON_LABEL,       icon_label,
+			  ICON_LABEL,       DT_LABEL,
 			  NULL);
+   app_icon_apply(icon, "disk-tool");
    xv_set(frame, FRAME_ICON, icon, NULL);
 
    for(n = 1;n < argc;++n)
